@@ -1,6 +1,7 @@
 {
   "name": "quiz-funil-vendas",
   "version": "1.0.0",
+  "private": true,
   "type": "module",
   "license": "MIT",
   "scripts": {
@@ -49,8 +50,8 @@
     "nanoid": "^5.1.5",
     "next-themes": "^0.4.6",
     "react": "^18.3.1",
-    "react-day-picker": "^9.11.1",
     "react-dom": "^18.3.1",
+    "react-day-picker": "^9.11.1",
     "react-hook-form": "^7.64.0",
     "react-resizable-panels": "^3.0.6",
     "recharts": "^2.15.2",
