@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Shield, Clock, CheckCircle } from "lucide-react";
 
 export default function SalesPage() {
-  const CHECKOUT_URL = "https://go.centerpag.com/PPU38CQ5BRF";
+  const CHECKOUT_URL = "https://pay.hotmart.com/N103636478Y";
 
   const handleCheckout = () => {
     window.location.href = CHECKOUT_URL;
