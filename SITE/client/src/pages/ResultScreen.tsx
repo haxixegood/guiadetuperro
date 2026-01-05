@@ -113,6 +113,29 @@ export default function ResultScreen() {
           </div>
         </motion.div>
 
+        {/* URGENCY DIAGNOSIS */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5 }}
+          className="bg-red-50 border-2 border-red-200 rounded-2xl p-6 shadow-sm"
+        >
+          <div className="flex items-start gap-4">
+            <div className="bg-red-100 p-3 rounded-full">
+              <TrendingUp className="w-6 h-6 text-red-600" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-red-700 mb-2">Diagnóstico de Alerta ⚠️</h3>
+              <p className="text-slate-700 leading-relaxed">
+                El perfil de <strong>{quizData.name || 'tu perro'}</strong> indica una tendencia a desarrollar
+                comportamientos ansiosos y destructivos si no se corrigen en las próximas semanas.
+                <br /><br />
+                Es crucial iniciar un protocolo de <strong>calma y límites positivos</strong> inmediatamente para evitar que estos hábitos se vuelvan permanentes.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Trainer section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -184,6 +207,6 @@ export default function ResultScreen() {
           </div>
         </motion.div>
       </motion.div>
-    </div>
+    </div >
   );
 }

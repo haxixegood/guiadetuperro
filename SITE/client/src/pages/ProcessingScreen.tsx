@@ -12,18 +12,18 @@ interface ProcessingTask {
 export default function ProcessingScreen() {
   const { goToNextStep, quizData } = useQuiz();
   const [tasks, setTasks] = useState<ProcessingTask[]>([
-    { label: 'Identificando problemas comportamentais para corrigir', progress: 0 },
-    { label: 'Avaliando compreensão atual de comandos', progress: 0 },
-    { label: `Adaptando lições para um cachorro ${quizData.breed || 'especial'}`, progress: 0 },
-    { label: 'Construindo seu plano de treinamento personalizado', progress: 0 },
+    { label: 'Identificando problemas de comportamiento para corregir', progress: 0 },
+    { label: 'Evaluando la comprensión actual de comandos', progress: 0 },
+    { label: `Adaptando lecciones para un perro ${quizData.breed || 'especial'}`, progress: 0 },
+    { label: 'Construyendo su plan de entrenamiento personalizado', progress: 0 },
   ]);
-  
+
   const [showModal, setShowModal] = useState(false);
-  
+
   useEffect(() => {
     // Animar progresso das tarefas
     const intervals: NodeJS.Timeout[] = [];
-    
+
     tasks.forEach((_, index) => {
       const interval = setInterval(() => {
         setTasks(prev => {
@@ -34,28 +34,28 @@ export default function ProcessingScreen() {
           return newTasks;
         });
       }, 200 + index * 100);
-      
+
       intervals.push(interval);
     });
-    
+
     // Mostrar modal após 2 segundos
     const modalTimeout = setTimeout(() => {
       setShowModal(true);
     }, 2000);
-    
+
     return () => {
       intervals.forEach(clearInterval);
       clearTimeout(modalTimeout);
     };
   }, []);
-  
+
   const handleModalAnswer = (answer: string) => {
     updateQuizData({ enjoyTime: answer });
     goToNextStep();
   };
-  
+
   const { updateQuizData } = useQuiz();
-  
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4 pt-16 bg-gradient-to-br from-background via-primary/5 to-accent/5">
       <motion.div
@@ -71,13 +71,13 @@ export default function ProcessingScreen() {
           className="text-center space-y-2"
         >
           <h2 className="text-3xl md:text-4xl font-bold">
-            Preparando Seu Plano de Treinamento...
+            Preparando Su Plan de Entrenamiento...
           </h2>
           <p className="text-muted-foreground">
-            Estamos criando um plano personalizado para {quizData.name || 'seu cachorro'}
+            Estamos creando un plan personalizado para {quizData.name || 'su perro'}
           </p>
         </motion.div>
-        
+
         {/* Progress tasks */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -101,7 +101,7 @@ export default function ProcessingScreen() {
             </motion.div>
           ))}
         </motion.div>
-        
+
         {/* Reviews carousel */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -110,9 +110,9 @@ export default function ProcessingScreen() {
           className="space-y-4"
         >
           <p className="text-center text-sm text-muted-foreground">
-            Enquanto isso, veja o que nossos clientes dizem:
+            Mientras tanto, mira lo que dicen nuestros clientes:
           </p>
-          
+
           <div className="bg-card rounded-2xl p-6 shadow-md">
             <div className="flex items-start gap-4">
               <img
@@ -123,21 +123,21 @@ export default function ProcessingScreen() {
               <div className="flex-1">
                 <p className="font-semibold">@maria_silva</p>
                 <p className="text-sm text-muted-foreground mt-1">
-                  "Fantástico! Acabei de terminar o programa de obediência com meu cachorro, eu amo! 👏"
+                  "¡Fantástico! Acabo de terminar el programa de obediencia con mi perro, ¡me encanta! 👏"
                 </p>
               </div>
             </div>
           </div>
         </motion.div>
       </motion.div>
-      
+
       {/* Modal overlay */}
       {showModal && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          onClick={() => {}}
+          onClick={() => { }}
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
@@ -146,15 +146,15 @@ export default function ProcessingScreen() {
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="text-2xl font-bold mb-4 text-center">
-              Você gosta de passar tempo com seu cachorro?
+              ¿Te gusta pasar tiempo con tu perro?
             </h3>
-            
+
             <div className="space-y-3">
               {[
-                { value: 'love-it', label: 'Sim, eu amo!', icon: '😊' },
-                { value: 'sometimes', label: 'Às vezes, quando estamos no clima', icon: '😐' },
-                { value: 'not-much', label: 'Não tanto quanto gostaria', icon: '😕' },
-                { value: 'challenge', label: 'Honestamente, pode ser um desafio', icon: '😰' },
+                { value: 'love-it', label: '¡Sí, me encanta!', icon: '😊' },
+                { value: 'sometimes', label: 'A veces, cuando estamos de humor', icon: '😐' },
+                { value: 'not-much', label: 'No tanto como me gustaría', icon: '😕' },
+                { value: 'challenge', label: 'Honestamente, puede ser un desafío', icon: '😰' },
               ].map((option) => (
                 <button
                   key={option.value}

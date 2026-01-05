@@ -59,8 +59,8 @@ export default function WelcomeScreen() {
           className="relative h-64 md:h-80 rounded-3xl overflow-hidden shadow-2xl"
         >
           <img
-            src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&h=600&fit=crop"
-            alt="Tutor feliz con su perro"
+            src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&h=600&fit=crop"
+            alt="Perro confundido ladeando la cabeza"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />

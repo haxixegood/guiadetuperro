@@ -20,23 +20,23 @@ export default function DiscountWheelScreen() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [showResult, setShowResult] = useState(false);
-  
+
   const selectedPrize = DISCOUNT_PRIZES[selectedIndex];
-  
+
   const spinWheel = () => {
     if (isSpinning) return;
-    
+
     setIsSpinning(true);
     setShowResult(false);
-    
+
     // Simular spin da roleta
     const spins = Math.floor(Math.random() * 5) + 5; // 5-9 voltas
     const randomIndex = Math.floor(Math.random() * DISCOUNT_PRIZES.length);
-    
+
     let currentRotation = 0;
     const rotationPerItem = 360 / DISCOUNT_PRIZES.length;
     const finalRotation = spins * 360 + (randomIndex * rotationPerItem);
-    
+
     const interval = setInterval(() => {
       currentRotation += 20;
       if (currentRotation >= finalRotation) {
@@ -47,15 +47,15 @@ export default function DiscountWheelScreen() {
       }
     }, 30);
   };
-  
+
   const claimDiscount = () => {
-    updateQuizData({ 
+    updateQuizData({
       discountClaimed: true,
       selectedGift: `${selectedPrize.discount}% OFF`
     });
     goToNextStep();
   };
-  
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/20 via-background to-accent/20 flex items-center justify-center p-4">
       <motion.div
@@ -71,13 +71,13 @@ export default function DiscountWheelScreen() {
         >
           <Gift className="w-16 h-16 mx-auto text-accent animate-bounce" />
           <h1 className="text-4xl md:text-5xl font-bold">
-            Espera! Você ganhou um prêmio! 🎁
+            ¡Espera! ¡Ganaste un premio! 🎁
           </h1>
           <p className="text-lg text-muted-foreground">
-            Gire a roleta e descubra seu desconto extra
+            Gira la ruleta y descubre tu descuento extra
           </p>
         </motion.div>
-        
+
         {/* Wheel */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -100,14 +100,14 @@ export default function DiscountWheelScreen() {
                 const angle = (360 / DISCOUNT_PRIZES.length) * index;
                 const startAngle = (angle * Math.PI) / 180;
                 const endAngle = ((angle + 360 / DISCOUNT_PRIZES.length) * Math.PI) / 180;
-                
+
                 const x1 = 200 + 180 * Math.cos(startAngle);
                 const y1 = 200 + 180 * Math.sin(startAngle);
                 const x2 = 200 + 180 * Math.cos(endAngle);
                 const y2 = 200 + 180 * Math.sin(endAngle);
-                
+
                 const largeArc = 360 / DISCOUNT_PRIZES.length > 180 ? 1 : 0;
-                
+
                 return (
                   <g key={index}>
                     <path
@@ -128,7 +128,7 @@ export default function DiscountWheelScreen() {
                         <stop offset="100%" stopColor={prize.color.split(' ')[3]} />
                       </linearGradient>
                     </defs>
-                    
+
                     {/* Text */}
                     <text
                       x={200 + 120 * Math.cos((startAngle + endAngle) / 2)}
@@ -147,12 +147,12 @@ export default function DiscountWheelScreen() {
               })}
             </svg>
           </motion.div>
-          
+
           {/* Center pointer */}
           <div className="absolute inset-0 flex items-start justify-center pointer-events-none">
             <div className="w-0 h-0 border-l-8 border-r-8 border-t-12 border-l-transparent border-r-transparent border-t-accent mt-4" />
           </div>
-          
+
           {/* Center circle */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-24 h-24 rounded-full bg-background border-4 border-primary flex items-center justify-center shadow-lg">
@@ -160,7 +160,7 @@ export default function DiscountWheelScreen() {
             </div>
           </div>
         </motion.div>
-        
+
         {/* Result */}
         {showResult && (
           <motion.div
@@ -169,21 +169,21 @@ export default function DiscountWheelScreen() {
             className="space-y-6"
           >
             <div className="bg-gradient-to-r from-accent to-primary text-white rounded-3xl p-8 shadow-2xl">
-              <p className="text-lg mb-2">Você ganhou</p>
+              <p className="text-lg mb-2">Ganaste</p>
               <p className="text-6xl font-black">{selectedPrize.discount}% OFF</p>
-              <p className="text-sm mt-2">Desconto adicional para sua compra!</p>
+              <p className="text-sm mt-2">¡Descuento adicional para tu compra!</p>
             </div>
-            
+
             <Button
               onClick={claimDiscount}
               size="lg"
               className="w-full quiz-button text-xl py-6"
             >
-              Usar Meu Desconto
+              Usar Mi Descuento
             </Button>
           </motion.div>
         )}
-        
+
         {/* Spin button */}
         {!showResult && (
           <motion.button
@@ -194,7 +194,7 @@ export default function DiscountWheelScreen() {
             className="mx-auto flex items-center gap-3 bg-gradient-to-r from-accent to-primary text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <RotateCw className={`w-5 h-5 ${isSpinning ? 'animate-spin' : ''}`} />
-            {isSpinning ? 'Girando...' : 'Girar Roleta'}
+            {isSpinning ? 'Girando...' : 'Girar Ruleta'}
           </motion.button>
         )}
       </motion.div>
