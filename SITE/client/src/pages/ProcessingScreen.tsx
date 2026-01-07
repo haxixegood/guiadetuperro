@@ -29,19 +29,21 @@ export default function ProcessingScreen() {
         setTasks(prev => {
           const newTasks = [...prev];
           if (newTasks[index].progress < 100) {
-            newTasks[index].progress = Math.min(newTasks[index].progress + 10, 100);
+            // Incremetos menores e mais lentos para realismo (2% a 5% por tick)
+            const increment = Math.floor(Math.random() * 3) + 2;
+            newTasks[index].progress = Math.min(newTasks[index].progress + increment, 100);
           }
           return newTasks;
         });
-      }, 200 + index * 100);
+      }, 150 + index * 120);
 
       intervals.push(interval);
     });
 
-    // Avanzar automaticamente ao final de 3 segundos
+    // Avanzar automaticamente ao final de 8 segundos (mais tempo para "processar")
     const autoAdvance = setTimeout(() => {
       goToNextStep();
-    }, 4000);
+    }, 8000);
 
     return () => {
       intervals.forEach(clearInterval);
@@ -113,20 +115,55 @@ export default function ProcessingScreen() {
             Mientras tanto, mira lo que dicen nuestros clientes:
           </p>
 
-          <div className="bg-card rounded-2xl p-6 shadow-md">
-            <div className="flex items-start gap-4">
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop"
-                alt="Cliente"
-                className="w-12 h-12 rounded-full object-cover"
-              />
-              <div className="flex-1">
-                <p className="font-semibold">@maria_silva</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  "¡Fantástico! Acabo de terminar el programa de obediencia con mi perro, ¡me encanta! 👏"
-                </p>
-              </div>
-            </div>
+          <div className="relative h-32 overflow-hidden">
+            <motion.div
+              animate={{
+                y: [0, -400, 0],
+              }}
+              transition={{
+                duration: 20,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              className="space-y-4"
+            >
+              {[
+                {
+                  name: "@maria_silva",
+                  text: "¡Fantástico! Acabo de terminar el programa de obediencia con mi perro, ¡me encanta! 👏",
+                  img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop"
+                },
+                {
+                  name: "@juan_perez92",
+                  text: "Increíble cómo cambió Gunther en solo 2 semanas. Muy recomendable.",
+                  img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop"
+                },
+                {
+                  name: "@ana_dogs_mx",
+                  text: "Probé muchos cursos pero este es el único que funcionó para mi departamento.",
+                  img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop"
+                },
+                {
+                  name: "@roberto_guia",
+                  text: "Lo mejor fue aprender sin gritos. Mi perro ahora confía más en mí.",
+                  img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"
+                }
+              ].map((testimonial, i) => (
+                <div key={i} className="bg-card rounded-2xl p-4 shadow-sm border border-primary/10 flex items-start gap-3">
+                  <img
+                    src={testimonial.img}
+                    alt="Cliente"
+                    className="w-10 h-10 rounded-full object-cover border border-primary/20"
+                  />
+                  <div className="flex-1">
+                    <p className="font-bold text-xs">{testimonial.name}</p>
+                    <p className="text-[11px] text-muted-foreground mt-0.5 leading-tight">
+                      {testimonial.text}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
           </div>
         </motion.div>
       </motion.div>

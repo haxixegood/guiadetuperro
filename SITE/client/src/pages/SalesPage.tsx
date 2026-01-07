@@ -34,69 +34,107 @@ export default function SalesPage() {
     <div className="min-h-screen bg-background">
 
       {/* HERO */}
-      <section className="py-12 md:py-20 px-4 bg-gradient-to-br from-primary/10 via-background to-accent/10 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-500 to-red-600 animate-pulse" />
+      <section className="py-16 md:py-28 px-4 bg-gradient-to-br from-primary/10 via-background to-accent/10 relative overflow-hidden">
+        {/* Floating Elements */}
+        <motion.div
+          animate={{
+            y: [0, -20, 0],
+            rotate: [0, 5, 0],
+          }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-20 left-[5%] text-primary/10 select-none pointer-events-none"
+        >
+          <TrendingUp className="w-32 h-32" />
+        </motion.div>
 
-        <div className="container max-w-4xl text-center space-y-8 relative z-10">
+        <motion.div
+          animate={{
+            y: [0, 20, 0],
+            rotate: [0, -5, 0],
+          }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-20 right-[5%] text-accent/10 select-none pointer-events-none"
+        >
+          <Gift className="w-40 h-40" />
+        </motion.div>
 
-          <div className="inline-block bg-red-100 text-red-600 px-4 py-1.5 rounded-full text-sm font-bold mb-4 border border-red-200 animate-bounce">
-            🔥 OFERTA POR TIEMPO LIMITADO
-          </div>
+        <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-red-600 via-yellow-500 to-red-600 bg-[length:200%_100%] animate-gradient-x" />
 
-          <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
-            Transforma al perro más rebelde en un compañero obediente en 21 días
+        <div className="container max-w-5xl text-center space-y-10 relative z-10">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="inline-flex items-center gap-2 bg-red-600 text-white px-6 py-2 rounded-full text-sm font-black uppercase tracking-wider shadow-lg shadow-red-500/20"
+          >
+            <Clock className="w-4 h-4 animate-spin-slow" />
+            Oferta por tiempo limitado
+          </motion.div>
+
+          <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-none text-slate-900">
+            Transforma al perro más rebelde en un{' '}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+              compañero ideal
+            </span>{' '}
+            en 21 días
           </h1>
 
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Sin gastar miles en adiestradores, sin castigos y con solo <span className="text-primary font-bold">15 minutos al día</span>.
-            Un método probado que entiende la mente de tu perro.
+          <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+            Sin gastar miles en adiestradores, sin castigos y con solo{' '}
+            <span className="text-primary font-bold underline decoration-primary/30 underline-offset-4">
+              15 minutos al día
+            </span>.
           </p>
 
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4 pt-4">
-            <div className="flex items-center gap-2 text-sm font-medium bg-background/80 backdrop-blur px-4 py-2 rounded-lg border shadow-sm">
-              <CheckCircle className="w-5 h-5 text-green-500" />
-              <span>Resultados desde la 1ª semana</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm font-medium bg-background/80 backdrop-blur px-4 py-2 rounded-lg border shadow-sm">
-              <Shield className="w-5 h-5 text-blue-500" />
-              <span>100% Garantía de Satisfacción</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm font-medium bg-background/80 backdrop-blur px-4 py-2 rounded-lg border shadow-sm">
-              <Clock className="w-5 h-5 text-orange-500" />
-              <span>Acceso de por vida</span>
-            </div>
+          <div className="flex flex-wrap items-center justify-center gap-6 pt-6">
+            {[
+              { icon: CheckCircle, text: 'Resultados Rápidos', color: 'text-green-500' },
+              { icon: Shield, text: 'Garantía Total', color: 'text-blue-500' },
+              { icon: Clock, text: 'Acceso de por vida', color: 'text-amber-500' },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 + i * 0.1 }}
+                className="flex items-center gap-2.5 text-sm font-bold bg-white/60 backdrop-blur-md px-5 py-3 rounded-2xl border border-white shadow-xl shadow-slate-200/50"
+              >
+                <item.icon className={`w-5 h-5 ${item.color}`} />
+                <span>{item.text}</span>
+              </motion.div>
+            ))}
           </div>
-
         </div>
       </section>
 
       {/* BENEFICIOS */}
-      <section className="py-16 px-4">
-        <div className="container max-w-4xl space-y-8">
-
-          <h2 className="text-3xl font-bold text-center">
-            ¿Qué incluye la guía?
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              "📘 Guía completa en PDF (programa de 4 semanas)",
-              "⏱️ Rutina diaria de solo 10–15 minutos",
-              "🏠 Ejercicios prácticos para aplicar en casa",
-              "🧠 Métodos positivos, sin castigos",
-              "📈 Progreso claro y gradual",
-              "🐕 Ideal para perros de todas las edades",
-            ].map((text, i) => (
-              <div
-                key={i}
-                className="bg-card rounded-2xl p-6 shadow-md flex items-center gap-3"
-              >
-                <CheckCircle className="text-primary" />
-                <p className="font-medium">{text}</p>
-              </div>
-            ))}
+      <section className="py-24 px-4 bg-white">
+        <div className="container max-w-5xl space-y-12">
+          <div className="text-center space-y-4">
+            <h2 className="text-4xl font-extrabold text-slate-900 tracking-tight">
+              ¿Qué incluye la guía para tu perro?
+            </h2>
+            <div className="h-1.5 w-24 bg-primary mx-auto rounded-full" />
           </div>
 
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { text: "Guía completa en PDF (programa de 4 semanas)", icon: "📘" },
+              { text: "Rutina diaria de solo 10–15 minutos", icon: "⏱️" },
+              { text: "Ejercicios prácticos para aplicar en casa", icon: "🏠" },
+              { text: "Métodos positivos, sin castigos", icon: "🧠" },
+              { text: "Progreso claro y gradual", icon: "📈" },
+              { text: "Ideal para perros de todas las edades", icon: "🐕" },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ y: -5, scale: 1.02 }}
+                className="group bg-slate-50 border border-slate-100 rounded-3xl p-8 hover:bg-white hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 flex flex-col items-center text-center gap-4"
+              >
+                <div className="text-4xl group-hover:scale-110 transition-transform">{item.icon}</div>
+                <p className="font-bold text-slate-700 leading-snug">{item.text}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -202,15 +240,17 @@ export default function SalesPage() {
       <section className="py-16 px-4 bg-gradient-to-br from-primary via-primary/90 to-accent text-white relative overflow-hidden">
         <div className="container max-w-md text-center space-y-8 relative z-10">
 
-          <div className="space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold">
-              Última oportunidad para cambiar la vida con tu perro
+          <div className="space-y-6">
+            <h2 className="text-4xl md:text-5xl font-black">
+              Tu perro merece lo mejor, y tú también.
             </h2>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4 inline-block">
-              <p className="text-sm font-medium mb-1 opacity-90">La oferta expira en:</p>
-              <p className="text-3xl font-mono font-bold tracking-widest">
-                {formatTime(timeLeft)}
-              </p>
+            <div className="flex justify-center">
+              <div className="bg-white/20 backdrop-blur-xl border border-white/30 rounded-3xl p-6 shadow-2xl inline-flex flex-col items-center gap-2 min-w-[200px]">
+                <p className="text-xs font-black tracking-widest uppercase opacity-80">La oferta expira en:</p>
+                <p className="text-4xl font-black font-mono tabular-nums tracking-tighter">
+                  {formatTime(timeLeft)}
+                </p>
+              </div>
             </div>
           </div>
 
