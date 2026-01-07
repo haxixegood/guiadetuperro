@@ -38,14 +38,14 @@ export default function ProcessingScreen() {
       intervals.push(interval);
     });
 
-    // Mostrar modal após 2 segundos
-    const modalTimeout = setTimeout(() => {
-      setShowModal(true);
-    }, 2000);
+    // Avanzar automaticamente ao final de 3 segundos
+    const autoAdvance = setTimeout(() => {
+      goToNextStep();
+    }, 4000);
 
     return () => {
       intervals.forEach(clearInterval);
-      clearTimeout(modalTimeout);
+      clearTimeout(autoAdvance);
     };
   }, []);
 
@@ -130,45 +130,6 @@ export default function ProcessingScreen() {
           </div>
         </motion.div>
       </motion.div>
-
-      {/* Modal overlay */}
-      {showModal && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          onClick={() => { }}
-        >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-card rounded-3xl p-8 max-w-md w-full shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="text-2xl font-bold mb-4 text-center">
-              ¿Te gusta pasar tiempo con tu perro?
-            </h3>
-
-            <div className="space-y-3">
-              {[
-                { value: 'love-it', label: '¡Sí, me encanta!', icon: '😊' },
-                { value: 'sometimes', label: 'A veces, cuando estamos de humor', icon: '😐' },
-                { value: 'not-much', label: 'No tanto como me gustaría', icon: '😕' },
-                { value: 'challenge', label: 'Honestamente, puede ser un desafío', icon: '😰' },
-              ].map((option) => (
-                <button
-                  key={option.value}
-                  onClick={() => handleModalAnswer(option.value)}
-                  className="w-full p-4 rounded-xl border-2 border-border bg-background hover:border-primary hover:bg-primary/5 transition-all duration-200 flex items-center gap-3 text-left"
-                >
-                  <span className="text-2xl">{option.icon}</span>
-                  <span className="font-medium">{option.label}</span>
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
     </div>
   );
 }

@@ -46,7 +46,6 @@ export default function PixelTracker() {
             // Verificamos tanto a URL quanto se o Step é de vendas (fallback)
             if (location === "/sales") {
                 window.fbq("track", "ViewContent", { content_name: "Página de Vendas" });
-                window.fbq("track", "InitiateCheckout");
             }
 
             // Se for a página de obrigado

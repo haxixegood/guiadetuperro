@@ -6,17 +6,17 @@ import { Award, TrendingUp, Heart, Star } from 'lucide-react';
 export default function ResultScreen() {
   const { goToNextStep, quizData } = useQuiz();
 
-  const commandsCount = quizData.knownCommands?.length || 0;
-  const issuesCount =
-    (quizData.homeIssues?.length || 0) +
-    (quizData.walkingIssues?.length || 0);
+  const issuesCount = quizData['daily-habits']?.length || 0;
+  const sizeLabel = {
+    chico: 'Pequeño',
+    mediano: 'Mediano',
+    grande: 'Grande'
+  }[quizData.size as string] || 'No especificada';
 
-  // Determinar nivel según comandos conocidos
+  // Determinar nivel según el compromiso (simulado para el diagnóstico)
   const getLevel = () => {
-    if (commandsCount === 0) return 'Principiante';
-    if (commandsCount <= 3) return 'En aprendizaje';
-    if (commandsCount <= 6) return 'Intermedio';
-    return 'Avanzado';
+    if (quizData.motivation === 'no-punish') return 'Comprometido';
+    return 'En aprendizaje';
   };
 
   return (
@@ -71,34 +71,25 @@ export default function ResultScreen() {
           {/* Stats grid */}
           <div className="grid grid-cols-2 gap-4 mb-6">
             <div className="bg-background rounded-xl p-4 text-center">
-              <p className="text-sm text-muted-foreground mb-1">Raza</p>
+              <p className="text-sm text-muted-foreground mb-1">Talla</p>
               <p className="font-bold text-lg">
-                {quizData.breed || 'No especificada'}
+                {sizeLabel}
               </p>
             </div>
 
             <div className="bg-background rounded-xl p-4 text-center">
               <p className="text-sm text-muted-foreground mb-1">Edad</p>
               <p className="font-bold text-lg">
-                {quizData.age || 'No especificada'}
+                {quizData.age === '0-6' ? 'Cachorro' : quizData.age === '1-7' ? 'Adulto' : 'Senior'}
               </p>
             </div>
 
-            <div className="bg-background rounded-xl p-4 text-center">
+            <div className="bg-background rounded-xl p-4 text-center col-span-2">
               <p className="text-sm text-muted-foreground mb-1">
-                Problemas de comportamiento
+                Retos identificados
               </p>
               <p className="font-bold text-lg text-accent">
-                {issuesCount}
-              </p>
-            </div>
-
-            <div className="bg-background rounded-xl p-4 text-center">
-              <p className="text-sm text-muted-foreground mb-1">
-                Comandos aprendidos
-              </p>
-              <p className="font-bold text-lg text-primary">
-                {commandsCount}
+                {issuesCount} comportamientos detectados
               </p>
             </div>
           </div>

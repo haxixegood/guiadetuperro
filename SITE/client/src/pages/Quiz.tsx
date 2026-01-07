@@ -3,20 +3,15 @@ import ProgressBar from '@/components/ProgressBar';
 import BackButton from '@/components/BackButton';
 
 import WelcomeScreen from './WelcomeScreen';
-import SocialProofScreen from './SocialProofScreen';
-import EmpathyScreen from './EmpathyScreen';
 import ProcessingScreen from './ProcessingScreen';
 import ResultScreen from './ResultScreen';
-import GiftScreen from './GiftScreen';
 import SalesPage from './SalesPage';
-import DiscountWheelScreen from './DiscountWheelScreen';
 import ThankYou from './thank-you';
 
 import SingleChoice from '@/components/questions/SingleChoice';
 import MultipleChoice from '@/components/questions/MultipleChoice';
 import TextInput from '@/components/questions/TextInput';
 import SliderQuestion from '@/components/questions/SliderQuestion';
-import BreedSearch from '@/components/questions/BreedSearch';
 import EmailInput from '@/components/questions/EmailInput';
 
 import { QUIZ_STEPS } from '@/types/quiz';
@@ -51,40 +46,21 @@ export default function Quiz() {
 
   const renderStep = () => {
     switch (step.id) {
-      case 'welcome':
-        return <WelcomeScreen />;
-
-      case 'social-proof-1':
-        return <SocialProofScreen breed={quizData.breed} />;
-
-      case 'empathy':
-        return <EmpathyScreen />;
+      case 'environment':
+        return (
+          <SingleChoice
+            question={question}
+            options={step.options || []}
+            category={step.category}
+            onAnswer={handleAnswer}
+          />
+        );
 
       case 'processing':
         return <ProcessingScreen />;
 
       case 'result':
         return <ResultScreen />;
-
-      case 'gift':
-        return <GiftScreen />;
-
-      case 'sales':
-        return <SalesPage />;
-
-      case 'thank-you':
-        return <ThankYou />;
-
-      case 'discount':
-        goToNextStep();
-        return (
-          <div className="min-h-[60vh] flex items-center justify-center">
-            <div className="text-center">Procesando...</div>
-          </div>
-        );
-
-      case 'discount-wheel':
-        return <DiscountWheelScreen />;
 
       case 'email':
         return (
@@ -94,15 +70,6 @@ export default function Quiz() {
             category={step.category}
             placeholder={step.placeholder}
             skipText={step.skipText}
-            onAnswer={handleAnswer}
-          />
-        );
-
-      case 'opt-in':
-        return (
-          <SingleChoice
-            question={question}
-            options={step.options || []}
             onAnswer={handleAnswer}
           />
         );
@@ -181,17 +148,17 @@ export default function Quiz() {
     }
   };
 
- return (
-  <div className="min-h-screen bg-background flex flex-col">
-    <ProgressBar />
-    <BackButton />
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      <ProgressBar />
+      <BackButton />
 
-    <main className="flex-1 flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl quiz-card animate-slide-up-fade">
-        {renderStep()}
-      </div>
-    </main>
-  </div>
-);
+      <main className="flex-1 flex items-center justify-center p-4">
+        <div className="w-full max-w-2xl quiz-card animate-slide-up-fade">
+          {renderStep()}
+        </div>
+      </main>
+    </div>
+  );
 
 }

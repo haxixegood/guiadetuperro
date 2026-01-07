@@ -22,6 +22,11 @@ export default function SalesPage() {
   };
 
   const handleCheckout = () => {
+    // Rastreamento de conversão
+    if (typeof window.fbq === 'function') {
+      window.fbq("track", "InitiateCheckout");
+      window.fbq("trackCustom", "BuyButtonClick");
+    }
     window.location.href = CHECKOUT_URL;
   };
 
