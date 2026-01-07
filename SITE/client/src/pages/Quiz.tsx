@@ -45,105 +45,107 @@ export default function Quiz() {
   };
 
   const renderStep = () => {
+    switch (step.id) {
       case 'welcome':
-  return <WelcomeScreen />;
+        return <WelcomeScreen />;
 
       case 'environment':
-  return (
-    <SingleChoice
-      question={question}
-      options={step.options || []}
-      category={step.category}
-      onAnswer={handleAnswer}
-    />
-  );
+        return (
+          <SingleChoice
+            question={question}
+            options={step.options || []}
+            category={step.category}
+            onAnswer={handleAnswer}
+          />
+        );
 
       case 'processing':
-  return <ProcessingScreen />;
+        return <ProcessingScreen />;
 
       case 'result':
-  return <ResultScreen />;
+        return <ResultScreen />;
 
       case 'email':
-  return (
-    <EmailInput
-      question={question}
-      subtitle={step.subtitle}
-      category={step.category}
-      placeholder={step.placeholder}
-      skipText={step.skipText}
-      onAnswer={handleAnswer}
-    />
-  );
+        return (
+          <EmailInput
+            question={question}
+            subtitle={step.subtitle}
+            category={step.category}
+            placeholder={step.placeholder}
+            skipText={step.skipText}
+            onAnswer={handleAnswer}
+          />
+        );
 
       default:
-  switch (step.type) {
-    case 'single':
-      return (
-        <SingleChoice
-          question={question}
-          options={step.options || []}
-          category={step.category}
-          skipText={step.skipText}
-          onAnswer={handleAnswer}
-        />
-      );
+        switch (step.type) {
+          case 'single':
+            return (
+              <SingleChoice
+                question={question}
+                options={step.options || []}
+                category={step.category}
+                skipText={step.skipText}
+                onAnswer={handleAnswer}
+              />
+            );
 
-    case 'multiple':
-      return (
-        <MultipleChoice
-          question={question}
-          subtitle={step.subtitle}
-          options={step.options || []}
-          category={step.category}
-          skipText={step.skipText}
-          onAnswer={handleAnswer}
-        />
-      );
+          case 'multiple':
+            return (
+              <MultipleChoice
+                question={question}
+                subtitle={step.subtitle}
+                options={step.options || []}
+                category={step.category}
+                skipText={step.skipText}
+                onAnswer={handleAnswer}
+              />
+            );
 
-    case 'text':
-      return (
-        <TextInput
-          question={question}
-          subtitle={step.subtitle}
-          category={step.category}
-          placeholder={step.placeholder}
-          skipText={step.skipText}
-          type="text"
-          onAnswer={handleAnswer}
-        />
-      );
+          case 'text':
+            return (
+              <TextInput
+                question={question}
+                subtitle={step.subtitle}
+                category={step.category}
+                placeholder={step.placeholder}
+                skipText={step.skipText}
+                type="text"
+                onAnswer={handleAnswer}
+              />
+            );
 
-    case 'slider':
-      return (
-        <SliderQuestion
-          question={question}
-          subtitle={step.subtitle}
-          category={step.category}
-          min={step.min}
-          max={step.max}
-          minLabel={step.minLabel}
-          maxLabel={step.maxLabel}
-          illustration={step.illustration}
-          onAnswer={handleAnswer}
-        />
-      );
+          case 'slider':
+            return (
+              <SliderQuestion
+                question={question}
+                subtitle={step.subtitle}
+                category={step.category}
+                min={step.min}
+                max={step.max}
+                minLabel={step.minLabel}
+                maxLabel={step.maxLabel}
+                illustration={step.illustration}
+                onAnswer={handleAnswer}
+              />
+            );
 
-    case 'info':
-      return null; // Info steps usually have their own screen or are handled by specific IDs
+          case 'info':
+            return null; // Info steps usually have their own screen or are handled by specific IDs
 
-    default:
-      return (
-        <div className="p-8 text-center bg-card rounded-2xl shadow-lg border">
-          <h3 className="text-xl font-bold mb-2">Ops!</h3>
-          <p className="text-muted-foreground">
-            Tipo de pergunta não implementado: <b>{step.type}</b>
-          </p>
-        </div>
-      );
-  }
-}
+          default:
+            return (
+              <div className="p-8 text-center bg-card rounded-2xl shadow-lg border">
+                <h3 className="text-xl font-bold mb-2">Ops!</h3>
+                <p className="text-muted-foreground">
+                  Tipo de pergunta não implementado: <b>{step.type}</b>
+                </p>
+              </div>
+            );
+        }
+    }
   };
+};
 
 return (
   <div className="min-h-screen bg-background flex flex-col">
