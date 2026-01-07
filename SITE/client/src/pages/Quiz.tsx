@@ -145,19 +145,17 @@ export default function Quiz() {
         }
     }
   };
-};
 
-return (
-  <div className="min-h-screen bg-background flex flex-col">
-    <ProgressBar />
-    <BackButton />
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      <ProgressBar />
+      <BackButton />
 
-    <main className="flex-1 flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl quiz-card animate-slide-up-fade">
-        {renderStep()}
-      </div>
-    </main>
-  </div>
-);
-
+      <main className="flex-1 flex items-center justify-center p-4">
+        <div className="w-full max-w-2xl quiz-card animate-slide-up-fade">
+          {renderStep()}
+        </div>
+      </main>
+    </div>
+  );
 }
