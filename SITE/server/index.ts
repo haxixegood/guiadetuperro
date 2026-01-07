@@ -12,7 +12,17 @@ async function startServer() {
   // Serve static files from dist in production
   const staticPath = path.resolve(__dirname, "..", "dist");
 
-  app.use(express.static(staticPath));
+  app.use(express.json());
+
+  // Webhook da Hotmart
+  app.post("/api/webhooks/hotmart", (req, res) => {
+    const data = req.body;
+    console.log(`[Hotmart Webhook] Evento: ${data.event} - Email: ${data.data?.buyer?.email}`);
+
+    // Aqui você pode adicionar lógica para salvar no banco ou enviar email
+
+    res.status(200).send("OK");
+  });
 
   // Handle client-side routing - serve index.html for all routes
   app.get("*", (_req: express.Request, res: Response) => {
