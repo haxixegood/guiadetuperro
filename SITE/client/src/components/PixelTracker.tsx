@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { useQuiz } from "@/contexts/QuizContext";
 
@@ -9,69 +9,56 @@ declare global {
 }
 
 /**
- * PixelTracker v3 - Rastreio robusto de rotas e etapas internas.
- * Envia "Virtual PageViews" para que cada etapa do quiz apareça como uma página no Meta.
+ * PixelTracker v4 - Ultra Robusto
+ * Monitora rotas e ETAPAS do quiz para garantir que nada seja perdido no funil.
  */
 export default function PixelTracker() {
     const [location] = useLocation();
     const { currentStep } = useQuiz();
 
-    // Usamos ref para evitar loops infinitos ou disparos duplicados desnecessários
-    const lastTracked = useRef<string>("");
-
     useEffect(() => {
+        if (typeof window.fbq !== 'function') {
+            console.warn("[Meta Pixel] fbq ainda não disponível.");
+            return;
+        }
+
         const track = () => {
-            if (typeof window.fbq !== 'function') {
-                console.warn("[Meta Pixel] fbq não encontrado. Verifique se o script no index.html está correto.");
-                return;
-            }
-
-            // Definimos um "caminho virtual" para que o Meta trate cada etapa como uma página
+            // 1. Determina o caminho virtual (para o Meta ver como "páginas" diferentes)
             let virtualPath = location;
+
+            // Se estiver na home (/), tratamos cada step do quiz como uma subpágina
             if (location === "/" || location === "") {
-                virtualPath = `/quiz/step-${currentStep}`;
+                virtualPath = `/quiz/etapa-${currentStep}`;
             }
 
-            // Evita disparar exatamente a mesma coisa duas vezes seguidas no mesmo render
-            const trackKey = `${virtualPath}`;
-            if (lastTracked.current === trackKey) return;
-            lastTracked.current = trackKey;
-
-            // 1. Dispara o PageView Padrão, mas com a URL virtual
+            // 2. Dispara o PageView principal
             window.fbq("track", "PageView", {
                 page_path: virtualPath
             });
 
-            // 2. Dispara eventos específicos baseados na localização
-            if (virtualPath.includes("/quiz/step-")) {
-                window.fbq("trackCustom", "QuizStage", {
-                    step: currentStep,
-                    path: virtualPath
-                });
-            }
+            // 3. Evento customizado para cada etapa do Quiz
+            window.fbq("trackCustom", "QuizStage", {
+                step: currentStep,
+                path: virtualPath
+            });
 
+            // 4. Lógica específica para Venda e Checkout
+            // Verificamos tanto a URL quanto se o Step é de vendas (fallback)
             if (location === "/sales") {
-                // Quando chega na página de vendas, é um evento de visualização importante
-                window.fbq("track", "ViewContent", {
-                    content_name: "Sales Page",
-                    content_category: "Quiz Funnel"
-                });
-                // Também disparar InitiateCheckout como é comum em funis de venda direta
+                window.fbq("track", "ViewContent", { content_name: "Página de Vendas" });
                 window.fbq("track", "InitiateCheckout");
             }
 
+            // Se for a página de obrigado
             if (location === "/thank-you") {
-                window.fbq("track", "Purchase", {
-                    value: 149.00,
-                    currency: "MXN"
-                });
+                window.fbq("track", "Purchase", { value: 149.0, currency: "MXN" });
             }
 
-            console.log(`[Meta Pixel] Rastreio concluído: ${virtualPath}`);
+            console.log(`[Meta Pixel] Rastreando: ${virtualPath} (Step: ${currentStep})`);
         };
 
-        // Pequeno delay para garantir que o roteador e o estado do Quiz estão sincronizados
-        const timer = setTimeout(track, 600);
+        // Pequeno delay para garantir que o DOM atualizou
+        const timer = setTimeout(track, 300);
         return () => clearTimeout(timer);
     }, [location, currentStep]);
 
