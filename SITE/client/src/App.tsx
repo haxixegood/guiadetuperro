@@ -9,6 +9,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { QuizProvider } from "./contexts/QuizContext";
 import Quiz from "./pages/Quiz";
+import PixelTracker from "./components/PixelTracker";
 
 function Router() {
   return (
@@ -45,6 +46,7 @@ function App() {
       <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <QuizProvider>
+            <PixelTracker />
             <Toaster />
             <Router />
           </QuizProvider>
