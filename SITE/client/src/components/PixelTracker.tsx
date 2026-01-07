@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import { useQuiz } from "@/contexts/QuizContext";
 
@@ -9,35 +9,69 @@ declare global {
 }
 
 /**
- * Componente que monitora mudanças de rota e etapas do quiz,
- * disparando o evento PageView do Meta Pixel a cada mudança.
+ * PixelTracker v3 - Rastreio robusto de rotas e etapas internas.
+ * Envia "Virtual PageViews" para que cada etapa do quiz apareça como uma página no Meta.
  */
 export default function PixelTracker() {
     const [location] = useLocation();
     const { currentStep } = useQuiz();
 
+    // Usamos ref para evitar loops infinitos ou disparos duplicados desnecessários
+    const lastTracked = useRef<string>("");
+
     useEffect(() => {
-        // Função para disparar o rastreio
-        const trackEvent = () => {
-            if (typeof window.fbq === 'function') {
-                // Dispara PageView padrão
-                window.fbq("track", "PageView");
-
-                // Dispara um evento customizado com o nome do passo para maior precisão no Meta
-                window.fbq("trackCustom", "QuizStage", {
-                    stage_index: currentStep,
-                    url_path: location
-                });
-
-                console.log(`[Meta Pixel] Evento disparado: ${location} (Etapa: ${currentStep})`);
-            } else {
-                console.warn("[Meta Pixel] Script ainda não carregado ou bloqueado.");
+        const track = () => {
+            if (typeof window.fbq !== 'function') {
+                console.warn("[Meta Pixel] fbq não encontrado. Verifique se o script no index.html está correto.");
+                return;
             }
+
+            // Definimos um "caminho virtual" para que o Meta trate cada etapa como uma página
+            let virtualPath = location;
+            if (location === "/" || location === "") {
+                virtualPath = `/quiz/step-${currentStep}`;
+            }
+
+            // Evita disparar exatamente a mesma coisa duas vezes seguidas no mesmo render
+            const trackKey = `${virtualPath}`;
+            if (lastTracked.current === trackKey) return;
+            lastTracked.current = trackKey;
+
+            // 1. Dispara o PageView Padrão, mas com a URL virtual
+            window.fbq("track", "PageView", {
+                page_path: virtualPath
+            });
+
+            // 2. Dispara eventos específicos baseados na localização
+            if (virtualPath.includes("/quiz/step-")) {
+                window.fbq("trackCustom", "QuizStage", {
+                    step: currentStep,
+                    path: virtualPath
+                });
+            }
+
+            if (location === "/sales") {
+                // Quando chega na página de vendas, é um evento de visualização importante
+                window.fbq("track", "ViewContent", {
+                    content_name: "Sales Page",
+                    content_category: "Quiz Funnel"
+                });
+                // Também disparar InitiateCheckout como é comum em funis de venda direta
+                window.fbq("track", "InitiateCheckout");
+            }
+
+            if (location === "/thank-you") {
+                window.fbq("track", "Purchase", {
+                    value: 149.00,
+                    currency: "MXN"
+                });
+            }
+
+            console.log(`[Meta Pixel] Rastreio concluído: ${virtualPath}`);
         };
 
-        // Pequeno delay para garantir que o conteúdo da nova etapa foi renderizado
-        const timer = setTimeout(trackEvent, 500);
-
+        // Pequeno delay para garantir que o roteador e o estado do Quiz estão sincronizados
+        const timer = setTimeout(track, 600);
         return () => clearTimeout(timer);
     }, [location, currentStep]);
 
