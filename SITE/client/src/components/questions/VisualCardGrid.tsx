@@ -89,7 +89,8 @@ export default function VisualCardGrid({
             </div>
 
             {/* Bottom Area - Continue Button */}
-            <div className="w-full max-w-lg mx-auto pt-8 mt-auto">
+            <div className="flex-1" />
+            <div className="w-full max-w-lg mx-auto pt-8 pb-8">
                 <motion.div
                     animate={selected.length >= minSelection ? { scale: [1, 1.02, 1], transition: { repeat: Infinity, duration: 2 } } : {}}
                 >
@@ -98,10 +99,8 @@ export default function VisualCardGrid({
                         disabled={selected.length < minSelection}
                         className={`
                             w-full h-16 rounded-full text-lg font-black tracking-wide uppercase shadow-lg transition-all duration-300
-                            ${selected.length >= minSelection
-                                ? 'bg-[#FFD700] text-black hover:bg-[#F0C000] hover:shadow-xl cursor-pointer'
-                                : 'bg-gray-100 text-gray-300 border border-gray-200 cursor-not-allowed shadow-none'
-                            }
+                            bg-[#FFD700] text-black hover:bg-[#F0C000] hover:shadow-xl cursor-pointer
+                            disabled:opacity-40 disabled:grayscale-[0.5] disabled:cursor-not-allowed disabled:hover:scale-100
                         `}
                     >
                         {selected.length >= minSelection ? 'CONTINUAR' : 'SELECCIONA 1 OPCIÓN'}

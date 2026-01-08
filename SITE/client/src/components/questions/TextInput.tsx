@@ -45,7 +45,7 @@ export default function TextInput({
     <div className="w-full h-full flex flex-col items-center px-6 pt-12 pb-12 font-sans relative z-10">
 
       {/* Top/Middle Section: Header + Input */}
-      <div className="flex-1 flex flex-col items-center justify-center w-full max-w-sm">
+      <div className="flex-1 flex flex-col items-center justify-center w-full max-w-sm pt-12">
 
         {/* Header - Optimized Typography */}
         <motion.div
@@ -90,8 +90,11 @@ export default function TextInput({
         </motion.div>
       </div>
 
+      {/* Spacer to push button down precisely */}
+      <div className="flex-1" />
+
       {/* Bottom Section: Action Button + Skip Link */}
-      <div className="w-full max-w-sm space-y-6 mt-auto">
+      <div className="w-full max-w-sm space-y-6 pb-8">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -104,10 +107,8 @@ export default function TextInput({
             className={`
                 w-full h-16 rounded-full text-xl font-black tracking-widest uppercase
                 transition-all duration-300 flex items-center justify-center gap-2
-                ${value.trim()
-                ? 'bg-[#FFD700] text-black hover:bg-[#F0C000] hover:scale-[1.02] shadow-xl shadow-yellow-400/20 cursor-pointer'
-                : 'bg-gray-100 text-gray-300 cursor-not-allowed shadow-none'
-              }
+                bg-[#FFD700] text-black hover:bg-[#F0C000] hover:scale-[1.02] shadow-xl shadow-yellow-400/20 cursor-pointer
+                disabled:opacity-40 disabled:grayscale-[0.5] disabled:cursor-not-allowed disabled:hover:scale-100
               `}
           >
             CONTINUAR

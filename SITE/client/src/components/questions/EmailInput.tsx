@@ -168,8 +168,11 @@ export default function EmailInput({
         </motion.p>
       </motion.div>
 
+      {/* Spacer to push button down precisely */}
+      <div className="flex-1" />
+
       {/* Bottom Section: Action Button */}
-      <div className="w-full max-w-sm mt-auto space-y-4">
+      <div className="w-full max-w-sm pb-8 space-y-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -179,7 +182,8 @@ export default function EmailInput({
             onClick={handleContinue}
             className={`
                 w-full h-16 rounded-full text-xl font-black tracking-widest uppercase shadow-lg transition-all duration-300
-                ${value.trim() && value.includes('@') && value.includes('.') ? 'bg-[#FFD700] text-black hover:bg-[#F0C000] hover:scale-[1.02] shadow-yellow-400/20 shadow-xl' : 'bg-gray-100 text-gray-300 cursor-not-allowed shadow-none'}
+                bg-[#FFD700] text-black hover:bg-[#F0C000] hover:scale-[1.02] shadow-yellow-400/20 shadow-xl
+                disabled:opacity-40 disabled:grayscale-[0.5] disabled:cursor-not-allowed disabled:hover:scale-100
               `}
             disabled={!value.trim() || !value.includes('@')}
           >

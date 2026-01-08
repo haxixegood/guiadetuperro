@@ -119,8 +119,11 @@ export default function SliderQuestion({
         </motion.div>
       </motion.div>
 
+      {/* Spacer to push button down */}
+      <div className="flex-1" />
+
       {/* Bottom Section: Continue Button */}
-      <div className="w-full max-w-sm mt-auto">
+      <div className="w-full max-w-sm pb-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

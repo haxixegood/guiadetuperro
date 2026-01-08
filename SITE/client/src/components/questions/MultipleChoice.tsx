@@ -84,17 +84,16 @@ export default function MultipleChoice({ question, subtitle, options, onAnswer, 
       </div>
 
       {/* Bottom Area */}
-      <div className="w-full max-w-md mx-auto pt-8 space-y-6 mt-auto">
+      <div className="flex-1" />
+      <div className="w-full max-w-md mx-auto pt-8 space-y-6 pb-8">
         <Button
           onClick={() => onAnswer(selected)}
           disabled={selected.length === 0}
           className={`
             w-full h-16 rounded-full text-xl font-black tracking-widest uppercase shadow-lg
             transition-all duration-300
-            ${selected.length > 0
-              ? 'bg-[#FFD700] text-black hover:bg-[#F0C000] hover:scale-[1.02] shadow-yellow-400/20'
-              : 'bg-gray-100 text-gray-300 cursor-not-allowed shadow-none'
-            }
+            bg-[#FFD700] text-black hover:bg-[#F0C000] hover:scale-[1.02] shadow-yellow-400/20
+            disabled:opacity-40 disabled:grayscale-[0.5] disabled:cursor-not-allowed disabled:hover:scale-100
           `}
         >
           CONTINUAR

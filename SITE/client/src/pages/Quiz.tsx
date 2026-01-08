@@ -121,7 +121,7 @@ export default function Quiz() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col relative overflow-hidden font-sans">
+    <div className="min-h-[100dvh] bg-white flex flex-col relative overflow-hidden font-sans">
       {currentStep > 0 && <BackButton />}
 
       <main className="flex-1 flex flex-col relative z-10">
@@ -131,7 +131,7 @@ export default function Quiz() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.4, ease: "easeInOut" }}
-          className="w-full h-full max-w-md mx-auto flex flex-col pt-24 pb-24"
+          className="w-full h-full max-w-md mx-auto flex flex-col pt-24 pb-24 px-4"
         >
           {renderStep()}
         </motion.div>
