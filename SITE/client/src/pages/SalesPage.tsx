@@ -58,14 +58,24 @@ export default function SalesPage() {
   return (
     <div className="min-h-screen bg-white text-[#1A1A1A] font-sans selection:bg-[#FFD700]/30 pb-40">
 
-      {/* SCARCITY HEADER */}
-      <div className="fixed top-0 left-0 right-0 z-[100] bg-[#1A1A1A] text-white py-2 px-4 shadow-sm flex justify-center">
-        <div className="w-full max-w-4xl flex justify-between items-center font-bold text-[10px] md:text-xs uppercase tracking-wide">
-          <span className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-            Oferta Limitada México
-          </span>
-          <span className="font-mono text-[#FFD700]">{formatTime(timeLeft)}</span>
+      {/* SCARCITY HEADER - HIGH CONVERSION DESIGN */}
+      <div className="fixed top-0 left-0 right-0 z-[100] bg-red-600 text-white py-2.5 px-4 shadow-[0_4px_20px_rgba(220,38,38,0.4)] transition-all">
+        <div className="w-full max-w-4xl mx-auto flex justify-between items-center">
+          <motion.div
+            animate={{ opacity: [1, 0.8, 1] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+            className="flex items-center gap-2 font-black text-[10px] md:text-xs uppercase tracking-widest"
+          >
+            <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+            <span>Oferta Limitada: <span className="text-white underline decoration-white/30 decoration-2">México</span></span>
+          </motion.div>
+
+          <div className="flex items-center gap-3 bg-black/10 px-3 py-1 rounded-full border border-white/10">
+            <span className="text-[9px] font-black uppercase text-white/80 tracking-widest hidden xs:inline">Expira en:</span>
+            <span className="font-mono text-[13px] font-black text-yellow-300 tabular-nums">
+              {formatTime(timeLeft)}
+            </span>
+          </div>
         </div>
       </div>
 
