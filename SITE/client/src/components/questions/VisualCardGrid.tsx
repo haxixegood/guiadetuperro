@@ -105,15 +105,15 @@ export default function VisualCardGrid({
                 <Button
                     onClick={handleContinue}
                     disabled={selected.length < minSelection}
-                    className="yellow-cta w-full py-8 text-xl font-black disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="yellow-cta w-full py-6 md:py-8 text-sm md:text-lg font-black disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                     {selected.length >= minSelection ? (
                         <>
-                            ¡CONTINUAR ANÁLISIS!
-                            <span className="text-sm opacity-70">({selected.length} marcados)</span>
+                            ¡CONTINUAR!
+                            <span className="hidden md:inline text-xs opacity-70">({selected.length} marcados)</span>
                         </>
                     ) : (
-                        'Selecciona al menos uno para continuar'
+                        <span className="text-xs md:text-base">Selecciona al menos uno</span>
                     )}
                 </Button>
             </div>

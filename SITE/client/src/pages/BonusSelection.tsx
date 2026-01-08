@@ -172,9 +172,9 @@ export default function BonusSelection({ onBonusSelected }: BonusSelectionProps)
                 <Button
                     onClick={handleClaim}
                     disabled={!selectedBonus}
-                    className="yellow-cta w-full py-10 text-2xl font-black shimmer animate-pulse-glow disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="yellow-cta w-full py-8 text-base md:text-xl font-black shimmer animate-pulse-glow disabled:opacity-30 disabled:cursor-not-allowed"
                 >
-                    {selectedBonus ? '¡RECLAMAR MI BONO AHORA!' : 'Selecciona un bono para continuar'}
+                    {selectedBonus ? '¡RECLAMAR AHORA!' : 'Selecciona un bono'}
                 </Button>
             </div>
 
