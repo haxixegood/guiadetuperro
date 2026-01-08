@@ -36,7 +36,7 @@ export default function WelcomeScreen() {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative z-10 flex-1 flex flex-col items-center justify-center w-full min-h-0 -mt-10"
+        className="relative z-10 flex-1 flex flex-col items-center justify-center w-full min-h-0 -mt-4"
       >
         <div className="relative w-full max-w-[320px] aspect-square flex items-center justify-center">
           <div className="absolute inset-0 bg-yellow-100/50 rounded-full blur-3xl opacity-60 scale-90" />

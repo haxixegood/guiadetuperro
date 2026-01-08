@@ -131,15 +131,15 @@ export default function Quiz() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.4, ease: "easeInOut" }}
-          className="w-full h-full max-w-md mx-auto flex flex-col pt-24 pb-24 px-4"
+          className="w-full h-full max-w-md mx-auto flex flex-col pt-32 pb-40 px-4"
         >
           {renderStep()}
         </motion.div>
       </main>
 
-      {/* FIXED HUD ELEMENTS - Minimalist */}
-      <div className="fixed top-0 left-0 w-full h-32 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none z-20" />
-      <div className="fixed bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none z-20" />
+      {/* FIXED HUD ELEMENTS - Minimalist & Softened */}
+      <div className="fixed top-0 left-0 w-full h-28 bg-gradient-to-b from-white via-white/70 to-transparent pointer-events-none z-20" />
+      <div className="fixed bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white via-white/70 to-transparent pointer-events-none z-20" />
 
     </div>
   );

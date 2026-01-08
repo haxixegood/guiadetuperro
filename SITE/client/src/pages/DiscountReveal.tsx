@@ -34,7 +34,7 @@ export default function DiscountReveal({ onContinue }: DiscountRevealProps) {
     const strokeDashoffset = circumference - (progress / 100) * circumference;
 
     return (
-        <div className="w-full max-w-md mx-auto min-h-screen flex flex-col items-center justify-between py-10 px-6 font-sans bg-white relative overflow-hidden text-[#1A1A1A]">
+        <div className="w-full max-w-md mx-auto min-h-screen flex flex-col items-center justify-between pt-20 pb-12 px-6 font-sans bg-white relative overflow-hidden text-[#1A1A1A]">
 
             {/* Header */}
             <motion.div

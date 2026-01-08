@@ -66,7 +66,7 @@ export default function ProcessingScreen() {
   }, [goToNextStep, quizData.name]);
 
   return (
-    <div className="w-full max-w-md mx-auto flex flex-col pt-6 px-6 font-sans relative overflow-hidden text-[#1A1A1A]">
+    <div className="w-full max-w-md mx-auto flex flex-col pt-12 px-6 font-sans relative overflow-hidden text-[#1A1A1A]">
 
       {/* Header - Compact Layout */}
       <div className="text-center space-y-3 mb-8 relative z-10">

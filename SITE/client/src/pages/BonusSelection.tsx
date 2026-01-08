@@ -42,7 +42,7 @@ export default function BonusSelection({ onBonusSelected }: BonusSelectionProps)
     };
 
     return (
-        <div className="w-full max-w-md mx-auto flex flex-col items-center pt-8 px-4 font-sans relative overflow-hidden">
+        <div className="w-full max-w-md mx-auto flex flex-col items-center pt-14 px-4 font-sans relative overflow-hidden">
 
             {/* Header - Optimized */}
             <motion.div

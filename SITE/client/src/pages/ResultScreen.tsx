@@ -17,7 +17,7 @@ export default function ResultScreen() {
     }, []);
 
     return (
-        <div className="w-full max-w-md mx-auto flex flex-col pt-4 px-4 font-sans relative pb-24">
+        <div className="w-full max-w-md mx-auto flex flex-col pt-14 px-4 font-sans relative pb-24">
 
             {/* HEADER - Clean & Tight */}
             <div className="text-center mb-6 relative z-10">
