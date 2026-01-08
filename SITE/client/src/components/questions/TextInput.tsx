@@ -43,99 +43,118 @@ export default function TextInput({
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#FDFDF8] flex flex-col relative overflow-hidden font-sans">
 
-      {/* HUD Elements (Background) */}
-      <div className="absolute top-4 left-4 opacity-20 pointer-events-none text-[8px] font-black uppercase tracking-[0.3em]">
-        <div className="flex items-center gap-1"><Wifi className="w-3 h-3" /> SYSTEM_ONLINE</div>
-      </div>
-      <div className="absolute top-4 right-4 opacity-20 pointer-events-none text-[8px] font-black uppercase tracking-[0.3em]">
-        <div className="flex items-center gap-1">BAT_OPTIMIZED <Battery className="w-3 h-3" /></div>
-      </div>
+      {/* Top Status Bar Placeholder (Clean Space) */}
+      <div className="w-full h-12" />
 
-      {/* Background Watermark (Dog Paw) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] pointer-events-none opacity-[0.03] z-0">
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full text-black">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.22-7.52-3.22V17.5zm7.5-6.78l-7.51 3.22 7.51 3.22V10.72z" />
-          {/* Simple Paw representation or abstract shape */}
-          <circle cx="12" cy="12" r="10" />
-        </svg>
-      </div>
+      {/* Main Content Container */}
+      <div className="flex-1 flex flex-col items-center px-8 pt-10 z-10 max-w-md mx-auto w-full">
 
-      {/* Main Content Area */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md relative z-10 space-y-10"
-      >
-        {/* Header */}
-        <div className="text-center space-y-4">
-          <motion.h2 className="text-3xl md:text-5xl font-black text-black uppercase leading-[0.9] drop-shadow-[2px_2px_0px_#FFD700]">
-            {question}
-          </motion.h2>
-          {subtitle && <p className="text-sm font-bold text-gray-400">{subtitle}</p>}
+        {/* Back Arrow Placeholder (if needed, or just clean space) */}
+        <div className="w-full flex justify-start mb-8 text-gray-300">
+          {/* Insert Back Icon here if navigation exists, otherwise empty */}
         </div>
 
-        {/* Input Area */}
-        <div className="relative">
-          {/* Dog Peek Animation */}
-          <motion.div
-            animate={isFocused ? { y: -15, rotate: 5 } : { y: 0, rotate: 0 }}
-            className="absolute -top-24 right-0 w-24 md:w-32 z-0 pointer-events-none"
-          >
-            <img src="/assets/dog-hero.png" alt="Dog Peek" className="w-full drop-shadow-xl" />
-          </motion.div>
+        {/* Question Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full text-center space-y-6 mb-12"
+        >
+          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-[1.4] tracking-tight">
+            Para empezar este análisis personalizado,<br />
+            ¿cómo se llama tu perrito?
+          </h2>
+        </motion.div>
 
-          <div className="relative z-10">
-            <Input
-              type={type}
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              onKeyPress={handleKeyPress}
-              placeholder={placeholder || 'Escribe aquí su nombre...'}
-              className={`
-                        text-center text-xl font-bold h-16 rounded-full border-2 
-                        transition-all duration-300 bg-white placeholder:text-gray-300
-                        ${isFocused
-                  ? 'border-[#FFD700] shadow-[0_0_30px_rgba(255,215,0,0.3)] scale-105'
-                  : 'border-gray-200'
-                }
-                    `}
-              autoFocus
-            />
-          </div>
-        </div>
+        {/* Input Field */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.1 }}
+          className="w-full relative group"
+        >
+          <Input
+            type={type}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            onKeyPress={handleKeyPress}
+            placeholder={placeholder || 'Nombre de tu mejor amigo'}
+            className={`
+                    w-full h-16 px-6 rounded-full text-lg font-medium text-center
+                    bg-white border-2 outline-none transition-all duration-300
+                    placeholder:text-gray-300 text-gray-800
+                    ${isFocused
+                ? 'border-[#FFD700] shadow-[0_4px_20px_rgba(255,215,0,0.15)] ring-0'
+                : 'border-gray-100 shadow-sm'
+              }
+                `}
+            autoFocus
+          />
+        </motion.div>
 
-        {/* Skip Option */}
+        {/* Skip Link */}
         {skipText && (
-          <div className="text-center">
-            <button
-              onClick={handleSkip}
-              className="text-xs font-bold text-gray-400 border-b border-gray-300 pb-0.5 hover:text-black hover:border-black transition-colors"
-            >
-              {skipText}
-            </button>
-          </div>
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            onClick={handleSkip}
+            className="mt-6 text-sm font-medium text-gray-400 hover:text-gray-600 transition-colors border-b border-transparent hover:border-gray-300"
+          >
+            Prefiero no decir el nombre
+          </motion.button>
         )}
 
-        {/* Primary Action */}
-        <div className="pt-4">
+        {/* Action Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="w-full mt-12"
+        >
           <Button
             onClick={handleContinue}
             disabled={!value.trim()}
-            className="yellow-cta w-full py-8 text-xl tracking-wide shadow-xl animate-pulse-glow"
+            className={`
+                w-full h-16 rounded-full text-lg font-bold tracking-wide uppercase
+                transition-all duration-300 shadow-lg
+                ${value.trim()
+                ? 'bg-[#FFD700] text-[#1A1A1A] hover:bg-[#FFC400] hover:scale-[1.02] hover:shadow-xl'
+                : 'bg-[#FFD700]/50 text-[#1A1A1A]/50 cursor-not-allowed'
+              }
+              `}
           >
             SIGUIENTE
           </Button>
-        </div>
+        </motion.div>
 
+      </div>
+
+      {/* Floating Dog Image - Bottom Right */}
+      <motion.div
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
+        className="absolute bottom-0 right-[-20px] w-48 md:w-64 z-20 pointer-events-none"
+      >
+        {/* Using the Golden Retriever happy side image or similar high quality one */}
+        <img
+          src="/assets/dog-hero.png"
+          alt="Golden Retriever"
+          className="w-full h-auto object-contain drop-shadow-2xl"
+        />
       </motion.div>
 
-      {/* Floating HUD Corner Elements */}
-      <div className="fixed top-20 right-6 w-2 h-2 bg-primary rounded-full animate-pulse" />
-      <div className="fixed bottom-32 left-6 w-2 h-2 bg-black/10 rounded-full" />
+      {/* Subtle Background Elements (Optional Clean texture) */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0 opacity-[0.02]">
+        <div className="absolute top-20 right-20 w-64 h-64 bg-yellow-400 rounded-full blur-[120px]" />
+        <div className="absolute bottom-20 left-20 w-64 h-64 bg-yellow-400 rounded-full blur-[120px]" />
+      </div>
+
     </div>
   );
 }

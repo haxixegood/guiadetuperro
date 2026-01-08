@@ -72,11 +72,12 @@ export const QUIZ_STEPS: QuizStep[] = [
     id: 'size',
     category: 'COMPORTAMIENTO',
     type: 'single',
-    question: '¿De que tamaño es {name}? El gasto de energía varía según su peso.',
+    question: '¿De qué tamaño es {name}?',
+    subtitle: 'El gasto de energía varía según su peso.',
     options: [
-      { value: 'chico', label: 'Chico (0-10kg)', icon: '🐶' },
-      { value: 'mediano', label: 'Mediano (11-25kg)', icon: '🐕' },
-      { value: 'grande', label: 'Grande (+26kg)', icon: '🐘' },
+      { value: 'chico', label: 'Chico (0-10kg)', icon: 'dog-sm' },
+      { value: 'mediano', label: 'Mediano (11-25kg)', icon: 'dog-md' },
+      { value: 'grande', label: 'Grande (+26kg)', icon: 'dog-lg' },
     ],
   },
 
@@ -85,11 +86,12 @@ export const QUIZ_STEPS: QuizStep[] = [
     id: 'environment',
     category: 'ANÁLISIS DE ENTORNO',
     type: 'single',
-    question: '¿Dónde vive {name}? El espacio influye directamente en su nivel de estrés.',
+    question: '¿Dónde vive tu perrito?',
+    subtitle: 'El entorno influye en su nivel de estrés.',
     options: [
-      { value: 'apt', label: 'Departamento (Espacio limitado)', icon: '🏢' },
-      { value: 'house', label: 'Casa con patio (Más estímulos)', icon: '🏡' },
-      { value: 'other', label: 'Otro / Terreno (Libertad total)', icon: '🌳' },
+      { value: 'apt', label: 'Departamento - Espacio limitado', icon: 'building' },
+      { value: 'house', label: 'Casa con patio - Más estímulos', icon: 'home' },
+      { value: 'other', label: 'Otro / Terreno - Libertad total', icon: 'tree' },
     ],
   },
 
@@ -147,9 +149,9 @@ export const QUIZ_STEPS: QuizStep[] = [
     type: 'single',
     question: '¿Qué tan urgente es resolver esto?',
     options: [
-      { value: 'critical', label: 'Crítico - No puedo más con esto', icon: '🚨' },
-      { value: 'high', label: 'Alto - Necesito solución pronto', icon: '⚠️' },
-      { value: 'moderate', label: 'Moderado - Puedo esperar un poco', icon: '📅' },
+      { value: 'critical', label: 'Crítico - No puedo más con esto', icon: 'urgency-critical' },
+      { value: 'high', label: 'Alto - Necesito solución pronto', icon: 'urgency-high' },
+      { value: 'moderate', label: 'Moderado - Puedo esperar un poco', icon: 'urgency-moderate' },
     ],
   },
 
@@ -160,9 +162,9 @@ export const QUIZ_STEPS: QuizStep[] = [
     type: 'single',
     question: 'Si pudieras elegir un solo beneficio hoy, ¿cuál sería?',
     options: [
-      { value: 'no-punish', label: 'Educar con amor, sin gritos ni castigos', icon: '❤️' },
-      { value: 'fast', label: 'Resultados reales con solo 15 min al día', icon: '⚡' },
-      { value: 'bonding', label: 'Tener una conexión profunda e inquebrantable', icon: '🤝' },
+      { value: 'no-punish', label: 'Educar con amor, sin gritos ni castigos', icon: 'goal-love' },
+      { value: 'fast', label: 'Resultados reales con solo 15 min al día', icon: 'goal-speed' },
+      { value: 'bonding', label: 'Tener una conexión profunda e inquebrantable', icon: 'goal-bond' },
     ],
   },
 

@@ -1,138 +1,150 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Sparkles, TrendingDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { CheckCircle2 } from 'lucide-react';
 
 interface DiscountRevealProps {
     onContinue: () => void;
 }
 
 export default function DiscountReveal({ onContinue }: DiscountRevealProps) {
-    const [discount, setDiscount] = useState(0);
-    const [showFinalMessage, setShowFinalMessage] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-        // Animate discount from 0 to 53
-        const duration = 2000; // 2 seconds
-        const steps = 53;
-        const stepDuration = duration / steps;
+        // Animate progress from 0 to 80
+        const duration = 1500;
+        const target = 80;
+        const stepTime = duration / target;
 
         let current = 0;
-        const interval = setInterval(() => {
-            current++;
-            setDiscount(current);
+        const timer = setInterval(() => {
+            current += 1;
+            setProgress(current);
+            if (current >= target) clearInterval(timer);
+        }, stepTime);
 
-            if (current >= 80) {
-                clearInterval(interval);
-                setTimeout(() => setShowFinalMessage(true), 500);
-            }
-        }, stepDuration);
-
-        return () => clearInterval(interval);
+        return () => clearInterval(timer);
     }, []);
 
+    // Circular Progress Params
+    const radius = 80;
+    const stroke = 16;
+    const normalizedRadius = radius - stroke * 2;
+    const circumference = normalizedRadius * 2 * Math.PI;
+    const strokeDashoffset = circumference - (progress / 100) * circumference;
+
     return (
-        <div className="w-full max-w-2xl mx-auto space-y-12 py-10">
+        <div className="w-full max-w-md mx-auto min-h-screen flex flex-col items-center justify-between py-10 px-6 font-sans bg-white relative overflow-hidden text-[#1A1A1A]">
+
             {/* Header */}
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-center space-y-4"
+                className="text-center space-y-2 mt-4 relative z-10"
             >
                 <motion.div
-                    animate={{
-                        rotate: [0, 360],
-                        scale: [1, 1.2, 1]
-                    }}
-                    transition={{
-                        rotate: { duration: 2, repeat: Infinity, ease: "linear" },
-                        scale: { duration: 1, repeat: Infinity }
-                    }}
-                    className="w-20 h-20 mx-auto bg-primary/20 rounded-full flex items-center justify-center border-4 border-primary"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                    className="w-16 h-16 mx-auto bg-[#F9F9F9] rounded-full flex items-center justify-center mb-6"
                 >
-                    <Sparkles className="w-10 h-10 text-primary" />
+                    <CheckCircle2 className="w-8 h-8 text-[#FFD700]" />
                 </motion.div>
 
-                <h1 className="text-3xl md:text-4xl font-black glow-text-yellow uppercase leading-tight">
-                    ¡RECOMPENSA DESBLOQUEADA!
+                <h1 className="text-3xl font-black text-[#1A1A1A] tracking-tight leading-none">
+                    Análisis Finalizado
                 </h1>
-                <p className="text-base text-white/70">
-                    Por completar el análisis completo de tu perrhijo...
+                <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">
+                    Perfil completado con éxito
                 </p>
             </motion.div>
 
-            {/* Discount Display */}
-            <div className="organic-card p-8 md:p-10 text-center space-y-6 bg-primary/5 border-primary/30">
-                <div className="space-y-2">
-                    <TrendingDown className="w-10 h-10 mx-auto text-primary" />
-                    <p className="text-xs font-black text-white/60 uppercase tracking-widest">
-                        Descuento Exclusivo Activado
+            {/* Main Content Card: Gauge */}
+            <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+                className="w-full bg-white rounded-[32px] p-8 shadow-[0_20px_60px_rgba(0,0,0,0.06)] border border-[#F0F0F0] flex flex-col items-center justify-center space-y-6 relative z-10"
+            >
+                {/* Context */}
+                <span className="text-xs font-bold text-gray-400 uppercase tracking-wider text-center">
+                    Nivel de compatibilidad con el<br />Protocolo Sync
+                </span>
+
+                {/* Circular Gauge */}
+                <div className="relative w-64 h-64 flex items-center justify-center">
+                    {/* SVG Circle */}
+                    <svg
+                        height={radius * 2}
+                        width={radius * 2}
+                        className="transform -rotate-90"
+                    >
+                        {/* Background Circle */}
+                        <circle
+                            stroke="#F5F5F5"
+                            strokeWidth={stroke}
+                            fill="transparent"
+                            r={normalizedRadius}
+                            cx={radius}
+                            cy={radius}
+                        />
+                        {/* Progress Circle */}
+                        <circle
+                            stroke="#FFD700"
+                            strokeWidth={stroke}
+                            strokeDasharray={circumference + ' ' + circumference}
+                            style={{ strokeDashoffset, transition: 'stroke-dashoffset 0.1s linear' }}
+                            strokeLinecap="round"
+                            fill="transparent"
+                            r={normalizedRadius}
+                            cx={radius}
+                            cy={radius}
+                        />
+                    </svg>
+
+                    {/* Center Text */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                        <span className="text-6xl font-black text-[#1A1A1A] tracking-tighter">
+                            {progress}%
+                        </span>
+                        <span className="text-xs font-bold text-[#FFD700] uppercase tracking-widest mt-1">
+                            Alta Compatibilidad
+                        </span>
+                    </div>
+
+                    {/* Decorative Element */}
+                    <div className="absolute top-0 right-10">
+                        <motion.div
+                            animate={{ y: [0, -5, 0] }}
+                            transition={{ repeat: Infinity, duration: 2 }}
+                            className="w-6 h-6 text-[#FFD700]"
+                        >
+                            ⚡
+                        </motion.div>
+                    </div>
+                </div>
+
+                <div className="text-center px-4">
+                    <p className="text-sm text-gray-500 font-medium leading-relaxed">
+                        Según las respuestas, tu perro es el candidato ideal para el método sin castigos.
                     </p>
                 </div>
 
-                {/* Animated Discount Number */}
-                <motion.div
-                    animate={{
-                        scale: discount >= 80 ? [1, 1.1, 1] : 1
-                    }}
-                    transition={{ duration: 0.5 }}
-                    className="space-y-1"
+            </motion.div>
+
+            {/* CTA Button */}
+            <div className="w-full relative z-20">
+                <Button
+                    onClick={onContinue}
+                    className="w-full h-16 rounded-full bg-[#FFD700] hover:bg-[#F0C000] text-[#1A1A1A] text-lg font-black shadow-[0_10px_30px_rgba(255,215,0,0.3)] transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
-                    <div className="flex items-center justify-center gap-2">
-                        <motion.span
-                            key={discount}
-                            initial={{ scale: 1.5, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            className="text-7xl md:text-8xl font-black text-primary"
-                        >
-                            {discount}%
-                        </motion.span>
-                    </div>
-                    <p className="text-xl font-black text-white uppercase">
-                        DE DESCUENTO
-                    </p>
-                </motion.div>
-
-                {/* Final Message */}
-                {showFinalMessage && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="space-y-3 pt-4 border-t border-white/10"
-                    >
-                        <p className="text-base font-bold text-white/80">
-                            Este descuento es <span className="text-primary">válido solo hoy</span>
-                        </p>
-                        <div className="flex items-center justify-center gap-3 text-white/60">
-                            <span className="line-through text-lg">$197 MXN</span>
-                            <span className="text-3xl font-black text-primary animate-pulse">$39 MXN</span>
-                        </div>
-                    </motion.div>
-                )}
-            </div>
-
-            {/* Continue Button */}
-            {showFinalMessage && (
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="pb-20"
-                >
-                    <Button
-                        onClick={onContinue}
-                        className="yellow-cta w-full py-8 text-xl font-black shimmer animate-pulse-glow"
-                    >
-                        ¡VER MI OFERTA ESPECIAL!
-                    </Button>
-                </motion.div>
-            )}
-
-            {/* Footer Note */}
-            <div className="text-center">
-                <p className="text-xs font-bold text-white/40">
-                    🔒 Precio protegido por las próximas 24 horas
+                    VER MI PLAN PERSONALIZADO
+                </Button>
+                <p className="text-center text-[10px] text-gray-300 font-bold mt-4 uppercase tracking-widest">
+                    Plan generado por IA basado en etología canina
                 </p>
             </div>
+
         </div>
     );
 }

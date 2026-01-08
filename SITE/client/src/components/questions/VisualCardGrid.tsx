@@ -73,7 +73,7 @@ export default function VisualCardGrid({
             </div>
 
             {/* Visual Cards Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 gap-4">
                 {behaviors.map((behavior, index) => (
                     <VisualCard
                         key={behavior.id}
