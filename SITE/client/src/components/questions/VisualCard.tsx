@@ -31,9 +31,10 @@ export default function VisualCard({ id, label, emoji, image, selected, onClick,
       `}
         >
             {/* Clean Background Gradient */}
-            absolute inset-0 bg-gradient-to-br from-black/5 to-transparent
-            ${selected ? 'opacity-100' : 'opacity-0'}
-            transition-opacity duration-300
+            <div className={`
+                absolute inset-0 bg-gradient-to-br from-black/5 to-transparent
+                ${selected ? 'opacity-100' : 'opacity-0'}
+                transition-opacity duration-300
             `} />
 
             {/* Glitch Effect on Selection */}
