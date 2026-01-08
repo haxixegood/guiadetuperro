@@ -91,27 +91,42 @@ export const QUIZ_STEPS: QuizStep[] = [
     ],
   },
 
-  // 6. Main Challenges
+  // 4. Comportamentos Indesejados (VISUAL CARDS)
   {
-    id: 'daily-habits',
-    category: 'PROBLEMAS DE CONDUCTA',
+    id: 'behaviors',
+    category: 'ANÁLISIS DE COMPORTAMIENTO',
     type: 'multiple',
-    question: '¿Qué comportamientos de {name} te están causando más frustración hoy?',
+    question: 'Marca todo lo que {name} hace en casa',
+    subtitle: 'Selecciona todos los comportamientos que quieres eliminar',
     options: [
-      { value: 'accidents', label: 'Hace sus necesidades en el lugar equivocado', icon: '🏠' },
-      { value: 'barking', label: 'Ladridos excesivos que molestan a todos', icon: '🔊' },
-      { value: 'biting', label: 'Muerde manos, muebles o destruye cosas', icon: '🦷' },
-      { value: 'pulling', label: 'Tira de la correa como si quisiera escapar', icon: '💪' },
-      { value: 'alone', label: 'No soporta quedarse solo (Ansiedad)', icon: '😟' },
+      { value: 'pulling', label: 'Tira de la correa', icon: '🦮' },
+      { value: 'peeing', label: 'Hace pipí en lugares incorrectos', icon: '💧' },
+      { value: 'biting', label: 'Muerde muebles o manos', icon: '🦷' },
+      { value: 'barking', label: 'Ladra excesivamente', icon: '🔊' },
+      { value: 'jumping', label: 'Salta sobre las personas', icon: '🐕' },
+      { value: 'alone', label: 'Ansiedad al quedarse solo', icon: '😟' },
     ],
   },
 
-  // 7. Motivation
+  // 5. Nivel de Urgencia
   {
-    id: 'motivation',
+    id: 'urgency',
+    category: 'PRIORIDAD',
+    type: 'single',
+    question: '¿Qué tan urgente es resolver esto?',
+    options: [
+      { value: 'critical', label: 'Crítico - No puedo más con esto', icon: '🚨' },
+      { value: 'high', label: 'Alto - Necesito solución pronto', icon: '⚠️' },
+      { value: 'moderate', label: 'Moderado - Puedo esperar un poco', icon: '📅' },
+    ],
+  },
+
+  // 6. Objetivo Principal
+  {
+    id: 'goal',
     category: 'TU OBJETIVO',
     type: 'single',
-    question: 'Si pudieras elegir un solo beneficio ahora, ¿cuál sería?',
+    question: 'Si pudieras elegir un solo beneficio hoy, ¿cuál sería?',
     options: [
       { value: 'no-punish', label: 'Educar con amor, sin gritos ni castigos', icon: '❤️' },
       { value: 'fast', label: 'Resultados reales con solo 15 min al día', icon: '⚡' },
@@ -119,14 +134,23 @@ export const QUIZ_STEPS: QuizStep[] = [
     ],
   },
 
-  // 8. Final Conversion Block
+  // 7. Bonus Selection (GAMIFICATION)
+  { id: 'bonus-selection', type: 'info' },
+
+  // 8. Discount Reveal (GAMIFICATION)
+  { id: 'discount-reveal', type: 'info' },
+
+  // 9. Processing
   { id: 'processing', type: 'info' },
+
+  // 10. Result
   { id: 'result', type: 'info' },
+
+  // 11. Email (Optional - can be removed if going straight to sales)
   {
     id: 'email',
     type: 'text',
     question: '¡Diagnóstico casi listo! ¿A qué email enviamos el plan de {name}?',
     placeholder: 'Introduce tu email principal'
   },
-  { id: 'sales', type: 'info' },
 ];
