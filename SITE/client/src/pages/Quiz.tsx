@@ -146,8 +146,8 @@ export default function Quiz() {
       <div className="fixed top-1/4 -left-20 w-40 h-40 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="fixed bottom-1/4 -right-20 w-40 h-40 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* Sticky Reinforcement Banner - LIGHT MODE (Hidden on size/environment/urgency/goal steps) */}
-      {step.id !== 'size' && step.id !== 'environment' && step.id !== 'urgency' && step.id !== 'goal' && (
+      {/* Sticky Reinforcement Banner - LIGHT MODE (Hidden on size/environment/urgency/goal/bonus-selection/result steps) */}
+      {step.id !== 'size' && step.id !== 'environment' && step.id !== 'urgency' && step.id !== 'goal' && step.id !== 'bonus-selection' && step.id !== 'result' && (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t-4 border-primary py-3 z-30 shadow-[0_-5px_20px_rgba(0,0,0,0.05)]">
           <div className="flex items-center justify-center gap-2 text-center">
             <span className="text-primary animate-pulse">⚡</span>

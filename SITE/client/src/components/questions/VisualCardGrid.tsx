@@ -47,26 +47,41 @@ export default function VisualCardGrid({
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-8"
+            className="space-y-8 w-full max-w-lg mx-auto"
         >
+            {/* Top Progress Bar - Hardcoded 50% for this view logic, ideally dynamic */}
+            <div className="w-full mb-2 space-y-1">
+                <div className="flex justify-between text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                    <span>Progreso</span>
+                    <span>60%</span>
+                </div>
+                <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <motion.div
+                        initial={{ width: "50%" }}
+                        animate={{ width: "60%" }}
+                        className="h-full bg-[#FFD700] rounded-full"
+                    />
+                </div>
+            </div>
+
             {/* Header */}
-            <div className="space-y-4 text-center md:text-left">
+            <div className="space-y-3 text-center">
                 {category && (
-                    <motion.span
+                    <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="text-[10px] font-black text-primary uppercase tracking-[0.3em] block"
+                        className="inline-block bg-black/5 text-[#1A1A1A] text-[10px] font-black uppercase tracking-[0.2em] px-4 py-1.5 rounded-full mb-1"
                     >
-                        {category} // Análisis Visual
-                    </motion.span>
+                        {category}
+                    </motion.div>
                 )}
 
-                <h2 className="text-2xl md:text-4xl font-black leading-tight text-black glow-text-yellow">
+                <h2 className="text-2xl md:text-3xl font-black leading-tight text-[#1A1A1A] px-4">
                     {question}
                 </h2>
 
                 {subtitle && (
-                    <p className="text-base md:text-lg font-bold text-gray-500">
+                    <p className="text-sm font-bold text-gray-400 px-6 leading-snug">
                         {subtitle}
                     </p>
                 )}
@@ -88,44 +103,33 @@ export default function VisualCardGrid({
                 ))}
             </div>
 
-            {/* Selection Counter */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-center"
-            >
-                <p className="text-sm font-bold text-gray-400">
-                    {selected.length === 0
-                        ? 'Selecciona al menos uno'
-                        : `${selected.length} comportamiento${selected.length > 1 ? 's' : ''} seleccionado${selected.length > 1 ? 's' : ''}`
-                    }
-                </p>
-            </motion.div>
-
             {/* Continue Button */}
-            <div className="pt-4">
-                <Button
-                    onClick={handleContinue}
-                    disabled={selected.length < minSelection}
-                    className="yellow-cta w-full py-6 md:py-8 text-sm md:text-lg font-black disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            <div className="pt-6">
+                <motion.div
+                    animate={selected.length >= minSelection ? { scale: [1, 1.02, 1], transition: { repeat: Infinity, duration: 2 } } : {}}
                 >
-                    {selected.length >= minSelection ? (
-                        <>
-                            ¡CONTINUAR!
-                            <span className="hidden md:inline text-xs opacity-70">({selected.length} marcados)</span>
-                        </>
-                    ) : (
-                        <span className="text-xs md:text-base">Selecciona al menos uno</span>
-                    )}
-                </Button>
+                    <Button
+                        onClick={handleContinue}
+                        disabled={selected.length < minSelection}
+                        className={`
+                            w-full py-7 rounded-full text-lg font-black tracking-wide uppercase shadow-lg transition-all duration-300
+                            ${selected.length >= minSelection
+                                ? 'bg-[#FFD700] text-black hover:bg-[#F0C000] hover:shadow-xl cursor-pointer'
+                                : 'bg-gray-100 text-gray-300 border border-gray-200 cursor-not-allowed'
+                            }
+                        `}
+                    >
+                        {selected.length >= minSelection ? 'CONTINUAR' : 'SELECCIONA 1 OPCIÓN'}
+                    </Button>
+                </motion.div>
+
+                {selected.length > 0 && (
+                    <p className="text-center text-xs font-bold text-gray-400 mt-3 uppercase tracking-wider animate-in fade-in slide-in-from-bottom-2">
+                        {selected.length} comportamiento{selected.length > 1 ? 's' : ''} seleccionado{selected.length > 1 ? 's' : ''}
+                    </p>
+                )}
             </div>
 
-            {/* Reinforcement Banner */}
-            <div className="text-center pt-4">
-                <p className="text-xs font-black text-gray-300 uppercase tracking-widest">
-                    📱 Cada problema tiene solución en 15 minutos
-                </p>
-            </div>
         </motion.div>
     );
 }

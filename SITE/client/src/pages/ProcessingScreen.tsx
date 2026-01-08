@@ -5,9 +5,10 @@ import { useQuiz } from '@/contexts/QuizContext';
 
 export default function ProcessingScreen() {
   const { goToNextStep, quizData } = useQuiz();
-  const [stage, setStage] = useState(0);
+  const [stage, setStage] = useState(0); // 0, 1, 2, 3(Done)
   const [progress, setProgress] = useState(0);
   const [showGift, setShowGift] = useState(false);
+  const [statusText, setStatusText] = useState('Analizando datos...');
 
   const stages = [
     { label: 'Analizando perfil conductual...', icon: <Smartphone className="w-5 h-5" /> },
@@ -16,54 +17,87 @@ export default function ProcessingScreen() {
   ];
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress(prev => {
-        const next = prev + 1;
-        if (next > 40 && !showGift) setShowGift(true); // Show gift at 40%
-        if (next >= 100) {
-          clearInterval(timer);
-          setTimeout(goToNextStep, 2000);
-          return 100;
-        }
-        return next;
-      });
-    }, 50);
+    // Total Loading Time: 6 seconds for 100%
+    const duration = 6000;
+    const interval = 50;
+    const steps = duration / interval;
+    const increment = 100 / steps;
 
-    const stageTimer = setInterval(() => {
-      setStage(prev => (prev < stages.length - 1 ? prev + 1 : prev));
-    }, 1500);
+    const timer = setInterval(() => {
+      setProgress(prev => Math.min(prev + increment, 100));
+    }, interval);
+
+    // STAGE TIMELINE
+    // T=0s: Stage 0 (Scanning)
+
+    // T=2s: Stage 1 (Optimizing)
+    const t1 = setTimeout(() => {
+      setStage(1);
+      setStatusText(`Detectando patrones de ${quizData.name || 'tu perro'}...`);
+    }, 2000);
+
+    // T=4s: Stage 2 (Finalizing)
+    const t2 = setTimeout(() => {
+      setStage(2);
+      setStatusText("Generando plan de acción...");
+    }, 4000);
+
+    // T=6s: Stage 3 (Done)
+    const t3 = setTimeout(() => {
+      setStage(3);
+      setStatusText("¡Análisis Completado!");
+    }, 6000);
+
+    // T=6.5s: SHOW GIFT (Dopamine hit)
+    const tGift = setTimeout(() => {
+      setShowGift(true);
+    }, 6500);
+
+    // T=8.5s: NAVIGATE
+    const tExit = setTimeout(() => {
+      goToNextStep();
+    }, 8500);
 
     return () => {
       clearInterval(timer);
-      clearInterval(stageTimer);
+      clearTimeout(t1); clearTimeout(t2); clearTimeout(t3);
+      clearTimeout(tGift); clearTimeout(tExit);
     };
-  }, [goToNextStep, stages.length, showGift]);
+  }, [goToNextStep, quizData.name]);
 
   return (
-    <div className="w-full max-w-md mx-auto min-h-screen flex flex-col py-12 px-6 font-sans bg-white relative overflow-hidden text-[#1A1A1A]">
+    <div className="w-full max-w-md mx-auto min-h-screen flex flex-col pt-6 pb-12 px-6 font-sans bg-white relative overflow-hidden text-[#1A1A1A]">
 
-      {/* Header */}
-      <div className="text-center space-y-4 mb-10 relative z-10">
+      {/* Header - Compact Layout */}
+      <div className="text-center space-y-3 mb-8 relative z-10">
         <motion.div
-          animate={{ scale: [1, 1.1, 1] }}
+          animate={{
+            scale: [1, 1.1, 1],
+            rotate: [0, 5, -5, 0]
+          }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="w-16 h-16 mx-auto bg-yellow-50 rounded-full flex items-center justify-center border-2 border-[#FFD700] border-dashed"
+          className="w-14 h-14 mx-auto bg-yellow-50 rounded-full flex items-center justify-center border-2 border-[#FFD700] border-dashed"
         >
-          <span className="text-2xl">🔍</span>
+          <span className="text-xl">🔍</span>
         </motion.div>
 
         <div className="space-y-1">
-          <p className="text-xs font-bold text-[#FFD700] uppercase tracking-widest">
-            Analizando datos...
-          </p>
-          <h2 className="text-3xl font-black text-[#1A1A1A] leading-tight">
+          <motion.p
+            key={statusText}
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-[10px] font-bold text-[#FFD700] uppercase tracking-widest h-4"
+          >
+            {statusText}
+          </motion.p>
+          <h2 className="text-2xl font-black text-[#1A1A1A] leading-none">
             PROCESANDO<br />DIAGNÓSTICO
           </h2>
         </div>
       </div>
 
       {/* Progress Bar */}
-      <div className="space-y-2 mb-10 relative z-10">
+      <div className="space-y-2 mb-8 relative z-10">
         <div className="flex justify-between items-end px-1">
           <span className="text-xs font-bold text-gray-300 uppercase tracking-wider">Progreso</span>
           <span className="text-lg font-black text-[#FFD700]">{Math.round(progress)}%</span>
@@ -72,72 +106,84 @@ export default function ProcessingScreen() {
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
+            transition={{ ease: "linear", duration: 0.1 }} // Smooth steps
             className="h-full bg-[#FFD700] rounded-full shadow-sm"
           />
         </div>
       </div>
 
       {/* Status Checklist */}
-      <div className="space-y-4 relative z-10">
+      <div className="space-y-3 relative z-10">
         {stages.map((s, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, x: -20 }}
             animate={{
-              opacity: i <= stage ? 1 : 0.3,
+              opacity: i <= stage ? 1 : 0.4, // Dim future steps
               x: 0,
-              scale: i === stage ? 1.02 : 1
+              scale: i === stage && stage < 3 ? 1.02 : 1, // Pulse active step
+              borderColor: i === stage && stage < 3 ? '#FFD700' : 'transparent'
             }}
             className={`
-                            relative bg-white rounded-2xl p-4 flex items-center justify-between border transition-all duration-300
-                            ${i === stage ? 'border-[#FFD700] shadow-md' : 'border-gray-100 shadow-sm'}
-                        `}
+                relative bg-white rounded-xl p-4 flex items-center justify-between border transition-all duration-300
+                ${i < stage ? 'border-green-100 shadow-sm' : ''} 
+                ${i === stage && stage < 3 ? 'border-[#FFD700] shadow-md bg-yellow-50/10' : 'border-gray-50'}
+            `}
           >
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <div className={`
-                                w-8 h-8 rounded-full flex items-center justify-center
-                                ${i <= stage ? 'bg-yellow-50 text-[#FFD700]' : 'bg-gray-50 text-gray-300'}
-                            `}>
-                {s.icon}
+                  w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300
+                  ${i < stage ? 'bg-green-100 text-green-600' : (i === stage ? 'bg-yellow-100 text-[#FFD700]' : 'bg-gray-50 text-gray-300')}
+              `}>
+                {i < stage ? <CheckCircle2 className="w-5 h-5" /> : s.icon}
               </div>
-              <span className={`text-sm font-bold ${i <= stage ? 'text-[#1A1A1A]' : 'text-gray-300'}`}>
+              <span className={`text-xs md:text-sm font-bold leading-tight ${i <= stage ? 'text-[#1A1A1A]' : 'text-gray-300'}`}>
                 {s.label}
               </span>
             </div>
-            {i < stage && <CheckCircle2 className="w-5 h-5 text-[#FFD700]" />}
-            {i === stage && <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }} className="w-4 h-4 border-2 border-gray-200 border-t-[#FFD700] rounded-full" />}
+            {/* Spinning Loader for Active Step */}
+            {i === stage && stage < 3 && (
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
+                className="w-4 h-4 border-2 border-gray-200 border-t-[#FFD700] rounded-full"
+              />
+            )}
+            {/* Checkmark for Done Step */}
+            {i < stage && <CheckCircle2 className="w-5 h-5 text-green-500" />}
           </motion.div>
         ))}
       </div>
 
-      {/* Surprise Gift Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: showGift ? 1 : 0, y: showGift ? 0 : 50 }}
-        transition={{ type: "spring", bounce: 0.4 }}
-        className="mt-8 relative w-full"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-yellow-100 to-orange-50 blur-xl opacity-50 rounded-3xl" />
-        <div className="relative bg-white border border-[#FFD700]/30 rounded-[24px] p-5 flex items-center gap-4 shadow-[0_10px_30px_rgba(255,215,0,0.15)] overflow-hidden">
-          {/* "Ribbon" decoration */}
-          <div className="absolute top-0 right-0 w-16 h-16 bg-[#FFD700]/10 rounded-bl-[100px]" />
+      {/* Surprise Gift Card - DELAYED REVEAL */}
+      {showGift && (
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
+          className="mt-6 relative w-full z-20"
+        >
+          <div className="relative bg-white border-2 border-[#FFD700] rounded-[24px] p-5 flex items-center gap-4 shadow-[0_15px_40px_rgba(255,215,0,0.2)] overflow-hidden">
+            {/* "Ribbon" decoration */}
+            <div className="absolute top-0 right-0 w-16 h-16 bg-[#FFD700]/20 rounded-bl-[100px]" />
 
-          <div className="w-14 h-14 bg-yellow-50 rounded-2xl flex items-center justify-center flex-shrink-0 animate-bounce-slow">
-            <Gift className="w-7 h-7 text-[#FFD700]" />
+            <div className="w-14 h-14 bg-yellow-100 rounded-2xl flex items-center justify-center flex-shrink-0 animate-bounce">
+              <Gift className="w-7 h-7 text-[#FFD700]" />
+            </div>
+            <div>
+              <p className="text-[9px] font-black text-[#FFD700] uppercase tracking-widest mb-1">
+                ¡DESBLOQUEADO!
+              </p>
+              <h3 className="text-lg font-black text-[#1A1A1A] leading-none mb-1">
+                REGALO SURPRESA
+              </h3>
+              <p className="text-[10px] text-gray-400 font-bold">
+                Se ha añadido un bono extra a tu plan
+              </p>
+            </div>
           </div>
-          <div>
-            <p className="text-[10px] font-black text-[#FFD700] uppercase tracking-widest">
-              ¡DESBLOQUEADO!
-            </p>
-            <h3 className="text-lg font-black text-[#1A1A1A]">
-              REGALO SORPRESA
-            </h3>
-            <p className="text-xs text-gray-400 font-medium">
-              Se ha añadido un bono extra a tu plan
-            </p>
-          </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      )}
 
     </div>
   );

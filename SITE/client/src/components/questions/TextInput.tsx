@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
-import { Wifi, Battery } from 'lucide-react';
 
 interface TextInputProps {
   question: string;
@@ -43,37 +42,60 @@ export default function TextInput({
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFDF8] flex flex-col relative overflow-hidden font-sans">
+    <div className="w-full relative font-sans flex flex-col items-center">
 
-      {/* Top Status Bar Placeholder (Clean Space) */}
-      <div className="w-full h-12" />
+      {/* Dog Image - Peeking from Top Right (Non-intrusive) */}
+      <motion.div
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        className="absolute -top-12 -right-6 w-24 md:w-32 z-0 opacity-90 pointer-events-none transform rotate-12"
+      >
+        <img
+          src="/assets/dog-hero.png"
+          alt="Happy Dog"
+          className="w-full h-auto drop-shadow-lg"
+        />
+      </motion.div>
 
-      {/* Main Content Container */}
-      <div className="flex-1 flex flex-col items-center px-8 pt-10 z-10 max-w-md mx-auto w-full">
-
-        {/* Back Arrow Placeholder (if needed, or just clean space) */}
-        <div className="w-full flex justify-start mb-8 text-gray-300">
-          {/* Insert Back Icon here if navigation exists, otherwise empty */}
+      {/* Discrete Progress Bar */}
+      <div className="w-full max-w-md mb-8 space-y-1">
+        <div className="flex justify-between text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+          <span>Progreso</span>
+          <span>10%</span>
         </div>
+        <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: "10%" }}
+            className="h-full bg-[#FFD700] rounded-full"
+          />
+        </div>
+      </div>
 
-        {/* Question Header */}
+      <div className="flex-1 flex flex-col items-center w-full max-w-sm z-10 relative">
+
+        {/* Header - Optimized Typography */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full text-center space-y-6 mb-12"
+          className="w-full text-center space-y-3 mb-8"
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-[1.4] tracking-tight">
-            Para empezar este análisis personalizado,<br />
+          <div className="inline-block bg-yellow-50 text-[#B8860B] text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-[#FFD700]/20 mb-2">
+            Paso 1: Personalización
+          </div>
+          <h2 className="text-2xl md:text-3xl font-black text-gray-900 leading-tight tracking-tight">
+            Para empezar,<br />
             ¿cómo se llama tu perrito?
           </h2>
         </motion.div>
 
-        {/* Input Field */}
+        {/* Input Field - High Visibility & Contrast */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1 }}
-          className="w-full relative group"
+          className="w-full relative group mb-2"
         >
           <Input
             type={type}
@@ -82,79 +104,57 @@ export default function TextInput({
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             onKeyPress={handleKeyPress}
-            placeholder={placeholder || 'Nombre de tu mejor amigo'}
+            placeholder={placeholder || 'Escribe su nombre aquí...'}
             className={`
-                    w-full h-16 px-6 rounded-full text-lg font-medium text-center
-                    bg-white border-2 outline-none transition-all duration-300
-                    placeholder:text-gray-300 text-gray-800
-                    ${isFocused
-                ? 'border-[#FFD700] shadow-[0_4px_20px_rgba(255,215,0,0.15)] ring-0'
-                : 'border-gray-100 shadow-sm'
+                w-full h-16 px-6 rounded-2xl text-lg font-bold text-center
+                bg-white border transition-all duration-300
+                text-gray-900 placeholder:text-gray-400
+                ${isFocused
+                ? 'border-[#FFD700] shadow-[0_8px_30px_rgba(255,215,0,0.2)] ring-2 ring-[#FFD700]/20'
+                : 'border-gray-300 shadow-sm hover:border-gray-400'
               }
-                `}
+            `}
             autoFocus
           />
         </motion.div>
 
-        {/* Skip Link */}
-        {skipText && (
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            onClick={handleSkip}
-            className="mt-6 text-sm font-medium text-gray-400 hover:text-gray-600 transition-colors border-b border-transparent hover:border-gray-300"
-          >
-            Prefiero no decir el nombre
-          </motion.button>
-        )}
-
-        {/* Action Button */}
+        {/* Action Button - High Contrast */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="w-full mt-12"
+          transition={{ delay: 0.2 }}
+          className="w-full mt-8"
         >
           <Button
             onClick={handleContinue}
             disabled={!value.trim()}
             className={`
-                w-full h-16 rounded-full text-lg font-bold tracking-wide uppercase
-                transition-all duration-300 shadow-lg
+                w-full h-16 rounded-full text-xl font-black tracking-wide uppercase
+                transition-all duration-300 shadow-lg flex items-center justify-center gap-2
                 ${value.trim()
-                ? 'bg-[#FFD700] text-[#1A1A1A] hover:bg-[#FFC400] hover:scale-[1.02] hover:shadow-xl'
-                : 'bg-[#FFD700]/50 text-[#1A1A1A]/50 cursor-not-allowed'
+                ? 'bg-[#FFD700] text-black hover:bg-[#F0C000] hover:scale-[1.02] hover:shadow-xl cursor-pointer'
+                : 'bg-gray-100 text-gray-300 border border-gray-200 cursor-not-allowed'
               }
               `}
           >
-            SIGUIENTE
+            {value.trim() ? '¡VAMOS!' : 'ESCRIBE SU NOMBRE'}
           </Button>
         </motion.div>
 
+        {/* Skip Link - Better Spacing */}
+        {skipText && (
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            onClick={handleSkip}
+            className="mt-8 text-xs font-bold text-gray-400 hover:text-gray-600 transition-colors uppercase tracking-wider py-2"
+          >
+            Prefiero no decirlo por ahora
+          </motion.button>
+        )}
+
       </div>
-
-      {/* Floating Dog Image - Bottom Right */}
-      <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
-        className="absolute bottom-0 right-[-20px] w-48 md:w-64 z-20 pointer-events-none"
-      >
-        {/* Using the Golden Retriever happy side image or similar high quality one */}
-        <img
-          src="/assets/dog-hero.png"
-          alt="Golden Retriever"
-          className="w-full h-auto object-contain drop-shadow-2xl"
-        />
-      </motion.div>
-
-      {/* Subtle Background Elements (Optional Clean texture) */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0 opacity-[0.02]">
-        <div className="absolute top-20 right-20 w-64 h-64 bg-yellow-400 rounded-full blur-[120px]" />
-        <div className="absolute bottom-20 left-20 w-64 h-64 bg-yellow-400 rounded-full blur-[120px]" />
-      </div>
-
     </div>
   );
 }

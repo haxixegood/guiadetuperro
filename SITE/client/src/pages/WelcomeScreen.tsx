@@ -1,26 +1,45 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useQuiz } from '@/contexts/QuizContext';
+import { Zap, ShieldCheck, Smartphone } from 'lucide-react';
 
 export default function WelcomeScreen() {
   const { goToNextStep } = useQuiz();
 
-  return (
-    <div className="flex flex-col items-center justify-between min-h-screen bg-white px-6 py-10 relative overflow-hidden font-sans text-gray-900">
+  const titleVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 10,
+        staggerChildren: 0.1
+      }
+    }
+  };
 
-      {/* Background Ambience (Subtle) */}
+  const letterVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-between h-[100dvh] bg-white px-6 py-6 relative overflow-hidden font-sans text-gray-900">
+
+      {/* Background Ambience */}
       <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-gray-50 to-transparent z-0 pointer-events-none" />
 
       {/* Top Section: Imagery */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative z-10 w-full flex-1 flex flex-col items-center justify-center mt-4"
+        transition={{ duration: 0.8 }}
+        className="relative z-10 flex-1 flex flex-col items-center justify-center w-full min-h-0"
       >
-        {/* Main Dog Portrait */}
-        <div className="relative w-64 md:w-80 aspect-square rounded-full flex items-center justify-center mb-8">
-          <div className="absolute inset-0 bg-yellow-50 rounded-full blur-3xl opacity-60 scale-110" />
+        <div className="relative w-full max-w-[280px] aspect-square flex items-center justify-center">
+          <div className="absolute inset-0 bg-yellow-100/50 rounded-full blur-3xl opacity-60 scale-90" />
           <img
             src="/assets/dog-hero.png"
             alt="Golden Retriever Portrait"
@@ -30,54 +49,46 @@ export default function WelcomeScreen() {
       </motion.div>
 
       {/* Content Section */}
-      <div className="relative z-20 w-full max-w-sm text-center space-y-2 mb-12">
+      <div className="relative z-20 w-full max-w-sm text-center space-y-4 mb-8">
 
-        {/* Headline */}
+        {/* Animated Headline */}
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="text-4xl md:text-5xl font-black text-black leading-none tracking-tight"
+          initial="hidden"
+          animate="visible"
+          variants={titleVariants}
+          className="text-4xl md:text-5xl font-black text-black leading-[0.9] tracking-tight"
         >
-          REPRO<span className="text-[#FFD700]">GRAMA</span><br />
-          SU MENTE
+          <motion.span variants={letterVariants}>REPRO</motion.span>
+          <motion.span variants={letterVariants} className="text-[#FFD700]">GRAMA</motion.span>
+          <br />
+          <motion.span variants={letterVariants}>SU MENTE</motion.span>
         </motion.h1>
 
-        {/* Divider */}
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: "40px" }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className="h-1 bg-[#FFD700] mx-auto rounded-full my-4"
-        />
-
-        {/* Value Proposition */}
+        {/* Value Proposition - Fixed Visibility */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-sm md:text-base font-medium text-gray-400 uppercase tracking-widest"
+          className="text-sm font-bold text-gray-500 uppercase tracking-widest"
         >
-          Método práctico: 15 min al día en tu celular
+          Método práctico: 15 min al día
         </motion.p>
 
       </div>
 
       {/* Call to Action */}
-      <div className="relative z-20 w-full max-w-sm mb-4 space-y-6">
+      <div className="relative z-20 w-full max-w-sm space-y-6 pb-2">
         <Button
           onClick={goToNextStep}
-          className="w-full h-16 rounded-full bg-[#FFD700] hover:bg-[#FFC400] text-black text-lg font-bold shadow-xl shadow-yellow-400/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+          className="w-full h-14 md:h-16 rounded-full bg-[#FFD700] hover:bg-[#F0C000] text-black text-lg font-black shadow-xl shadow-yellow-400/20 transition-all hover:scale-[1.02] active:scale-[0.98] animate-pulse-glow"
         >
           ¡COMENZAR EVALUACIÓN!
         </Button>
 
-        {/* Trust Indicators (Minimal) */}
-        <div className="flex justify-center gap-8 opacity-30 grayscale items-center">
-          {/* Simple geometric icons representing trust/speed */}
-          <div className="w-4 h-6 border-2 border-black rounded-sm" />
-          <div className="w-4 h-6 border-black relative"><span className="absolute inset-0 flex items-center justify-center font-bold text-xs">⚡</span></div>
-          <div className="w-5 h-5 border-2 border-black rounded-full grid place-items-center text-[10px]">✨</div>
+        {/* Footer Info - High Contrast & No Borders */}
+        <div className="flex items-center justify-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+          <Zap className="w-3 h-3 text-[#FFD700] fill-[#FFD700]" />
+          <span>Resultados desde el primer día</span>
         </div>
       </div>
 

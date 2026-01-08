@@ -61,9 +61,9 @@ export const QUIZ_STEPS: QuizStep[] = [
     question: '¿Qué edad tiene {name}?',
     subtitle: 'Su etapa de vida define el método de aprendizaje.',
     options: [
-      { value: '0-6', label: 'Cachorro (0–12 meses) - Etapa crítica' },
-      { value: '1-7', label: 'Adulto (1–7 años) - Hábitos formados' },
-      { value: '7+', label: 'Senior (Más de 7 años) - Sabio pero terco' },
+      { value: '0-6', label: 'Cachorro (0–12 meses) - Etapa crítica', icon: 'age-puppy' },
+      { value: '1-7', label: 'Adulto (1–7 años) - Hábitos formados', icon: 'age-adult' },
+      { value: '7+', label: 'Senior (Más de 7 años) - Sabio pero terco', icon: 'age-senior' },
     ],
   },
 
@@ -86,12 +86,12 @@ export const QUIZ_STEPS: QuizStep[] = [
     id: 'environment',
     category: 'ANÁLISIS DE ENTORNO',
     type: 'single',
-    question: '¿Dónde vive tu perrito?',
+    question: '¿Dónde vive {name}?',
     subtitle: 'El entorno influye en su nivel de estrés.',
     options: [
-      { value: 'apt', label: 'Departamento - Espacio limitado', icon: 'building' },
-      { value: 'house', label: 'Casa con patio - Más estímulos', icon: 'home' },
-      { value: 'other', label: 'Otro / Terreno - Libertad total', icon: 'tree' },
+      { value: 'apt', label: 'Departamento - Espacio limitado', icon: 'env-apt' },
+      { value: 'house', label: 'Casa con patio - Más estímulos', icon: 'env-house' },
+      { value: 'other', label: 'Otro / Terreno - Libertad total', icon: 'env-land' },
     ],
   },
 
@@ -100,44 +100,38 @@ export const QUIZ_STEPS: QuizStep[] = [
     id: 'behaviors',
     category: 'ANÁLISIS DE COMPORTAMIENTO',
     type: 'multiple',
-    question: 'Marca todo lo que {name} hace en casa',
-    subtitle: 'Selecciona todos los comportamientos que quieres eliminar',
+    question: '¿Qué desafíos está enfrentando tu perrito actualmente?',
+    subtitle: 'Selecciona los comportamientos que vamos a transformar. No te preocupes, todos tienen solución.',
     options: [
       {
         value: 'pulling',
         label: 'Tira de la correa',
-        icon: '🦮',
-        image: 'https://images.unsplash.com/photo-1625316709148-634ccae464b7?q=80&w=600&auto=format&fit=crop' // Dog pulling/running
+        icon: 'behavior-leash',
       },
       {
         value: 'peeing',
         label: 'Hace pipí en lugares incorrectos',
-        icon: '💧',
-        image: 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?q=80&w=600&auto=format&fit=crop' // Guilty dog
+        icon: 'behavior-pee',
       },
       {
         value: 'biting',
         label: 'Muerde muebles o manos',
-        icon: '🦷',
-        image: 'https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=600&auto=format&fit=crop' // Dog chewing
+        icon: 'behavior-biting',
       },
       {
         value: 'barking',
         label: 'Ladra excesivamente',
-        icon: '🔊',
-        image: 'https://images.unsplash.com/photo-1558550186-b4528c7c9438?q=80&w=600&auto=format&fit=crop' // Dog barking
+        icon: 'behavior-barking',
       },
       {
         value: 'jumping',
         label: 'Salta sobre las personas',
-        icon: '🐕',
-        image: 'https://images.unsplash.com/photo-1546447147-3f20b33568c0?q=80&w=600&auto=format&fit=crop' // Dog jumping
+        icon: 'behavior-jumping',
       },
       {
         value: 'alone',
         label: 'Ansiedad al quedarse solo',
-        icon: '😟',
-        image: 'https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?q=80&w=600&auto=format&fit=crop' // Sad pug
+        icon: 'behavior-alone',
       },
     ],
   },
@@ -147,11 +141,11 @@ export const QUIZ_STEPS: QuizStep[] = [
     id: 'urgency',
     category: 'PRIORIDAD',
     type: 'single',
-    question: '¿Qué tan urgente es resolver esto?',
+    question: '¿Qué tan urgente es resolver esto para {name}?',
     options: [
       { value: 'critical', label: 'Crítico - No puedo más con esto', icon: 'urgency-critical' },
       { value: 'high', label: 'Alto - Necesito solución pronto', icon: 'urgency-high' },
-      { value: 'moderate', label: 'Moderado - Puedo esperar un poco', icon: 'urgency-moderate' },
+      { value: 'moderate', label: 'Moderado - Quiero evitar que el problema empeore', icon: 'urgency-moderate' },
     ],
   },
 
@@ -160,7 +154,7 @@ export const QUIZ_STEPS: QuizStep[] = [
     id: 'goal',
     category: 'TU OBJETIVO',
     type: 'single',
-    question: 'Si pudieras elegir un solo beneficio hoy, ¿cuál sería?',
+    question: '¿Cuál de estos resultados es el más prioritario para ti y para {name} hoy?',
     options: [
       { value: 'no-punish', label: 'Educar con amor, sin gritos ni castigos', icon: 'goal-love' },
       { value: 'fast', label: 'Resultados reales con solo 15 min al día', icon: 'goal-speed' },
