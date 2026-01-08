@@ -33,10 +33,10 @@ export default function MultipleChoice({ question, subtitle, options, onAnswer, 
             Análisis de Comportamiento // {category}
           </span>
         )}
-        <h2 className="text-2xl md:text-4xl font-black leading-tight text-white glow-text-yellow">
+        <h2 className="text-2xl md:text-4xl font-black leading-tight text-black glow-text-yellow">
           {question}
         </h2>
-        {subtitle && <p className="text-sm font-bold text-white/40 italic">{subtitle}</p>}
+        {subtitle && <p className="text-sm font-bold text-gray-500 italic">{subtitle}</p>}
       </div>
 
       <div className="grid grid-cols-1 gap-3">
@@ -45,20 +45,20 @@ export default function MultipleChoice({ question, subtitle, options, onAnswer, 
             key={idx}
             onClick={() => toggle(option.value)}
             className={`organic-card flex items-center justify-between p-5 text-left transition-all ${selected.includes(option.value)
-              ? 'border-primary/40 bg-white/10'
-              : 'border-white/5'
+              ? 'border-primary shadow-md bg-yellow-50'
+              : 'border-black/5 bg-white'
               }`}
           >
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-xl">
+              <div className="w-10 h-10 rounded-xl bg-black/5 flex items-center justify-center text-xl">
                 {option.icon || '📍'}
               </div>
-              <span className="text-base font-bold text-white/80">{option.label}</span>
+              <span className="text-base font-bold text-black">{option.label}</span>
             </div>
 
             <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${selected.includes(option.value)
               ? 'bg-primary border-primary'
-              : 'border-white/10'
+              : 'border-black/10'
               }`}>
               {selected.includes(option.value) && <Check className="w-4 h-4 text-black" />}
             </div>
@@ -78,7 +78,7 @@ export default function MultipleChoice({ question, subtitle, options, onAnswer, 
         {skipText && (
           <button
             onClick={() => onAnswer(['skip'])}
-            className="w-full text-center text-[10px] font-black text-white/30 uppercase tracking-widest hover:text-white/60"
+            className="w-full text-center text-[10px] font-black text-gray-400 uppercase tracking-widest hover:text-black"
           >
             {skipText}
           </button>

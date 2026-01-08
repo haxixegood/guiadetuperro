@@ -3,28 +3,30 @@
 @tailwind utilities;
 
 /* =========================
-   Cyber-Yellow Organic System
+   Cyber-Yellow Organic System (High-Tech White)
 ========================= */
 :root {
   --radius: 2rem;
-  /* 32px */
 
-  /* Cyber Colors */
-  --cyber-black: #0A0A0C;
-  --deep-charcoal: #121212;
-  --cyber-yellow: #FFEA00;
+  /* Cyber Colors - HIGH TECH WHITE THEME */
+  --cyber-black: #1A1A1A;
+  /* Carbon Black */
+  --deep-charcoal: #F5F5F5;
+  /* Off White Background */
+  --cyber-yellow: #FFD700;
+  /* Cyber Yellow Accent */
   --electric-white: #FFFFFF;
   --soft-gold: #FFC400;
 
   --primary: var(--cyber-yellow);
   --primary-foreground: #000;
   --background: var(--deep-charcoal);
-  --foreground: var(--electric-white);
+  --foreground: var(--cyber-black);
 
-  --card: rgba(255, 255, 255, 0.05);
-  --card-foreground: #FFFFFF;
+  --card: #FFFFFF;
+  --card-foreground: var(--cyber-black);
 
-  --border: rgba(255, 255, 0, 0.1);
+  --border: rgba(0, 0, 0, 0.1);
   --ring: var(--cyber-yellow);
 }
 
@@ -37,75 +39,56 @@
     overflow-x: hidden;
   }
 
-  /* Soft Organic Gradient Background */
+  /* High-Tech Grid Background */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at top right, rgba(255, 234, 0, 0.05) 0%, transparent 60%),
-      radial-gradient(circle at bottom left, rgba(255, 234, 0, 0.05) 0%, transparent 60%);
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
     pointer-events: none;
-    z-index: 1;
+    z-index: 0;
   }
 
-  /* Floating Particles & HUD Texture */
+  /* Cyber Glow Spots (Subtle Yellow) */
   body::after {
     content: "";
     position: fixed;
     inset: 0;
-    background-image:
-      radial-gradient(1px 1px at 20px 30px, #FFFFFF, rgba(0, 0, 0, 0)),
-      radial-gradient(1px 1px at 40px 70px, rgba(255, 234, 0, 0.5), rgba(0, 0, 0, 0)),
-      radial-gradient(1px 1px at 50px 160px, #FFFFFF, rgba(0, 0, 0, 0)),
-      radial-gradient(1px 1px at 90px 40px, #FFFFFF, rgba(0, 0, 0, 0)),
-      radial-gradient(1px 1px at 130px 80px, rgba(255, 234, 0, 0.5), rgba(0, 0, 0, 0)),
-      radial-gradient(1px 1px at 160px 120px, #FFFFFF, rgba(0, 0, 0, 0));
-    background-repeat: repeat;
-    background-size: 200px 200px;
-    opacity: 0.1;
-    z-index: 0;
+    background: radial-gradient(circle at top right, rgba(255, 215, 0, 0.15) 0%, transparent 40%),
+      radial-gradient(circle at bottom left, rgba(255, 215, 0, 0.1) 0%, transparent 40%);
     pointer-events: none;
-    animation: float-bg 60s linear infinite;
-  }
-
-  @keyframes float-bg {
-    from {
-      background-position: 0 0;
-    }
-
-    to {
-      background-position: 0 -200px;
-    }
+    z-index: 0;
   }
 
   h1,
   h2,
   h3 {
     text-transform: uppercase;
-    letter-spacing: -3%;
-    /* Premium tech look */
+    letter-spacing: -2%;
     font-weight: 800;
     line-height: 0.95;
+    color: var(--cyber-black);
   }
 }
 
 @layer components {
 
-  /* Organic Glassmorphism */
+  /* Modern White Card */
   .organic-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 32px;
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
-    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1);
   }
 
   .organic-card:hover {
-    border-color: rgba(255, 234, 0, 0.3);
-    background: rgba(255, 255, 255, 0.07);
-    transform: translateY(-5px);
+    border-color: var(--cyber-yellow);
+    box-shadow: 0 20px 60px rgba(255, 215, 0, 0.15);
+    transform: translateY(-2px);
   }
 
   /* High-Dopamine Yellow Buttons */
@@ -115,31 +98,20 @@
     font-weight: 900;
     text-transform: uppercase;
     border-radius: 100px;
-    /* Fully rounded for organic feel */
-    box-shadow: 0 15px 35px rgba(255, 234, 0, 0.3);
+    box-shadow: 0 10px 25px rgba(255, 234, 0, 0.4);
     transition: all 0.3s ease;
     border: none;
     font-family: 'Inter', sans-serif;
   }
 
   .yellow-cta:hover {
-    box-shadow: 0 20px 50px rgba(255, 234, 0, 0.5);
-    transform: scale(1.05);
-    filter: brightness(1.1);
+    box-shadow: 0 15px 40px rgba(255, 234, 0, 0.6);
+    transform: scale(1.02);
+    filter: brightness(1.05);
   }
 
   .yellow-cta:active {
-    transform: scale(0.95);
-  }
-
-  /* Floating Image Enhancement */
-  .dog-float {
-    filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.4));
-    transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
-  }
-
-  .dog-float:hover {
-    transform: translateY(-20px) scale(1.02);
+    transform: scale(0.98);
   }
 
   /* Pulse Animation for Final CTA */
@@ -149,11 +121,11 @@
 
   @keyframes pulse-glow {
     0% {
-      box-shadow: 0 0 0 0 rgba(255, 234, 0, 0.7);
+      box-shadow: 0 0 0 0 rgba(255, 234, 0, 0.5);
     }
 
     70% {
-      box-shadow: 0 0 0 25px rgba(255, 234, 0, 0);
+      box-shadow: 0 0 0 15px rgba(255, 234, 0, 0);
     }
 
     100% {
@@ -174,7 +146,7 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
     animation: sweep 3s infinite linear;
     pointer-events: none;
   }
@@ -191,5 +163,6 @@
 }
 
 .glow-text-yellow {
-  text-shadow: 0 0 20px rgba(255, 234, 0, 0.4);
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+  color: var(--cyber-black);
 }

@@ -61,12 +61,12 @@ export default function VisualCardGrid({
                     </motion.span>
                 )}
 
-                <h2 className="text-2xl md:text-4xl font-black leading-tight text-white glow-text-yellow">
+                <h2 className="text-2xl md:text-4xl font-black leading-tight text-black glow-text-yellow">
                     {question}
                 </h2>
 
                 {subtitle && (
-                    <p className="text-base md:text-lg font-bold text-white/60">
+                    <p className="text-base md:text-lg font-bold text-gray-500">
                         {subtitle}
                     </p>
                 )}
@@ -94,7 +94,7 @@ export default function VisualCardGrid({
                 animate={{ opacity: 1 }}
                 className="text-center"
             >
-                <p className="text-sm font-bold text-white/40">
+                <p className="text-sm font-bold text-gray-400">
                     {selected.length === 0
                         ? 'Selecciona al menos uno'
                         : `${selected.length} comportamiento${selected.length > 1 ? 's' : ''} seleccionado${selected.length > 1 ? 's' : ''}`
@@ -122,7 +122,7 @@ export default function VisualCardGrid({
 
             {/* Reinforcement Banner */}
             <div className="text-center pt-4">
-                <p className="text-xs font-black text-white/30 uppercase tracking-widest">
+                <p className="text-xs font-black text-gray-300 uppercase tracking-widest">
                     📱 Cada problema tiene solución en 15 minutos
                 </p>
             </div>

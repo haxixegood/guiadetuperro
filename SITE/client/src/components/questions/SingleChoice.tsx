@@ -24,7 +24,7 @@ export default function SingleChoice({ question, options, onAnswer, category, sk
             {category} // Sync Protocol
           </span>
         )}
-        <h2 className="text-2xl md:text-4xl font-black leading-tight text-white glow-text-yellow">
+        <h2 className="text-2xl md:text-4xl font-black leading-tight text-black glow-text-yellow">
           {question}
         </h2>
       </div>
@@ -40,15 +40,15 @@ export default function SingleChoice({ question, options, onAnswer, category, sk
             className="organic-card group flex items-center justify-between p-5 text-left hover:border-primary/40 transition-all active:scale-[0.98]"
           >
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.8)] filter brightness-125">
+              <div className="w-12 h-12 rounded-full bg-black/5 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform text-black drop-shadow-sm filter brightness-100">
                 {option.icon || '🐾'}
               </div>
-              <span className="text-lg font-bold text-white/80 group-hover:text-white transition-colors">
+              <span className="text-lg font-bold text-gray-600 group-hover:text-black transition-colors">
                 {option.label}
               </span>
             </div>
 
-            <div className="w-6 h-6 rounded-full border-2 border-white/10 flex items-center justify-center group-hover:border-primary transition-colors">
+            <div className="w-6 h-6 rounded-full border-2 border-black/10 flex items-center justify-center group-hover:border-primary transition-colors">
               <div className="w-2 h-2 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           </motion.button>
@@ -58,7 +58,7 @@ export default function SingleChoice({ question, options, onAnswer, category, sk
       {skipText && (
         <button
           onClick={() => onAnswer('skip')}
-          className="w-full text-center text-[10px] font-black text-white/30 uppercase tracking-widest hover:text-white/60 transition-colors"
+          className="w-full text-center text-[10px] font-black text-gray-400 uppercase tracking-widest hover:text-black transition-colors"
         >
           {skipText}
         </button>

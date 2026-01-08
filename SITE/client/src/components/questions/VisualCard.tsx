@@ -26,15 +26,14 @@ export default function VisualCard({ id, label, emoji, image, selected, onClick,
         transition-all duration-300
         ${selected
                     ? 'border-[3px] border-primary bg-primary/10 shadow-[0_0_30px_rgba(255,234,0,0.4)]'
-                    : 'border-2 border-white/10 bg-white/5 hover:border-primary/30'
+                    : 'border-2 border-black/5 bg-white hover:border-black/10'
                 }
       `}
         >
             {/* Clean Background Gradient */}
-            <div className={`
-                absolute inset-0 bg-gradient-to-br from-white/5 to-transparent
-                ${selected ? 'opacity-100' : 'opacity-50'}
-                transition-opacity duration-300
+            absolute inset-0 bg-gradient-to-br from-black/5 to-transparent
+            ${selected ? 'opacity-100' : 'opacity-0'}
+            transition-opacity duration-300
             `} />
 
             {/* Glitch Effect on Selection */}
@@ -62,7 +61,7 @@ export default function VisualCard({ id, label, emoji, image, selected, onClick,
             {/* Label */}
             <p className={`
         text-sm font-bold text-center relative z-10
-        ${selected ? 'text-white' : 'text-white/70'}
+        ${selected ? 'text-black' : 'text-gray-500'}
         transition-colors duration-300
       `}>
                 {label}

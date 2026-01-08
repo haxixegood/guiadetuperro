@@ -146,11 +146,14 @@ export default function Quiz() {
       <div className="fixed top-1/4 -left-20 w-40 h-40 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="fixed bottom-1/4 -right-20 w-40 h-40 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* Sticky Reinforcement Banner */}
-      <div className="fixed bottom-0 left-0 right-0 bg-primary/10 border-t border-primary/20 py-2 z-30 backdrop-blur-sm">
-        <p className="text-center text-xs font-black text-white/60 uppercase tracking-widest">
-          📱 Solucionable en 15 min/día | ⚡ Sin gritos ni castigos
-        </p>
+      {/* Sticky Reinforcement Banner - LIGHT MODE */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t-4 border-primary py-3 z-30 shadow-[0_-5px_20px_rgba(0,0,0,0.05)]">
+        <div className="flex items-center justify-center gap-2 text-center">
+          <span className="text-primary animate-pulse">⚡</span>
+          <p className="text-xs font-black text-black uppercase tracking-widest">
+            Método Práctico: 15 min al día en tu celular
+          </p>
+        </div>
       </div>
     </div>
   );
