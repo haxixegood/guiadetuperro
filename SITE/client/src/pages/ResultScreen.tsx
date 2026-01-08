@@ -1,11 +1,13 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useQuiz } from '@/contexts/QuizContext';
-import { ShieldCheck, TrendingUp, Sparkles, Zap, Smartphone, CheckCircle2, Star } from 'lucide-react';
+import { CheckCircle2, Smartphone, Zap, Sparkles, Star, ShieldCheck, PlayCircle, Heart, Activity } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'wouter';
 
 export default function ResultScreen() {
   const { quizData } = useQuiz();
+  const [, setLocation] = useLocation();
   const [showLateBonus, setShowLateBonus] = useState(false);
   const [hasSeenBonus, setHasSeenBonus] = useState(false);
 
@@ -90,7 +92,7 @@ export default function ResultScreen() {
             animate={{ opacity: 1, x: 0 }}
             className="organic-card p-8 bg-primary/[0.03] border-primary/20 flex flex-col gap-4 relative overflow-hidden"
           >
-            <TrendingUp className="w-10 h-10 text-primary" />
+            <Activity className="w-10 h-10 text-primary" />
             <h3 className="text-2xl font-black uppercase text-primary leading-none italic">Alerta de Berrinchudo</h3>
             <p className="text-sm font-bold text-white/60 leading-relaxed">
               Detectamos una fase de <span className="text-white">fijación conductual</span>. Si no se aplica el "Hard Reset" hoy, el comportamiento rebelde será permanente.
@@ -127,7 +129,7 @@ export default function ResultScreen() {
         <div className="fixed bottom-0 left-0 right-0 p-6 z-50 bg-background/80 backdrop-blur-xl border-t border-white/5">
           <div className="max-w-xl mx-auto">
             <Button
-              onClick={() => window.location.href = '/sales'}
+              onClick={() => setLocation('/sales')}
               className="yellow-cta w-full h-18 text-xl font-black shimmer animate-pulse-glow"
             >
               ¡REPROGRAMAR MI PERRIHO AHORA! →

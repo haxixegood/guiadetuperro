@@ -15,6 +15,8 @@ import EmailInput from '@/components/questions/EmailInput';
 
 import { QUIZ_STEPS } from '@/types/quiz';
 import { useLocation } from 'wouter';
+import { Button } from '@/components/ui/button';
+import { Shield, Zap, Sparkles } from 'lucide-react';
 
 export default function Quiz() {
   const {
@@ -63,8 +65,14 @@ export default function Quiz() {
             return <SingleChoice question={question} options={step.options || []} category={step.category} skipText={step.skipText} onAnswer={handleAnswer} />;
           case 'multiple':
             return <MultipleChoice question={question} subtitle={step.subtitle} options={step.options || []} category={step.category} skipText={step.skipText} onAnswer={handleAnswer} />;
+          case 'text':
+            return <TextInput question={question} subtitle={step.subtitle} category={step.category} placeholder={step.placeholder} skipText={step.skipText} type="text" onAnswer={handleAnswer} />;
+          case 'slider':
+            return <SliderQuestion question={question} subtitle={step.subtitle} category={step.category} min={step.min} max={step.max} minLabel={step.minLabel} maxLabel={step.maxLabel} illustration={step.illustration} onAnswer={handleAnswer} />;
           case 'email':
             return <EmailInput question={question} subtitle={step.subtitle} placeholder={step.placeholder} onAnswer={handleAnswer} />;
+          case 'info':
+            return <div className="space-y-6 text-center"><h3 className="text-2xl font-black">{question}</h3><Button onClick={() => handleAnswer('next')} className="yellow-cta px-12 py-8">CONTINUAR</Button></div>;
           default:
             return <div className="organic-card p-10 text-center">Tipo não mapeado: {step.type}</div>;
         }
@@ -85,6 +93,16 @@ export default function Quiz() {
       {/* HUD DECOR CORNERS */}
       <div className="fixed top-20 left-10 w-4 h-4 border-l border-t border-white/10 pointer-events-none" />
       <div className="fixed top-20 right-10 w-4 h-4 border-r border-t border-white/10 pointer-events-none" />
+
+      {/* Floating HUD Elements */}
+      <div className="fixed top-1/4 -left-20 w-40 h-40 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="fixed bottom-1/4 -right-20 w-40 h-40 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="fixed top-1/2 left-4 -translate-y-1/2 flex flex-col gap-4 opacity-10 pointer-events-none">
+        <Shield className="w-4 h-4 text-primary" />
+        <Zap className="w-4 h-4 text-primary" />
+        <Sparkles className="w-4 h-4 text-primary" />
+      </div>
     </div>
   );
 }

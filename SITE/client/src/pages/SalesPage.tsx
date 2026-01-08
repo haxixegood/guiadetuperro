@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useQuiz } from '@/contexts/QuizContext';
-import { CheckCircle2, Smartphone, Zap, Sparkles, Star, ShieldCheck, PlayCircle, Heart } from 'lucide-react';
+import { CheckCircle2, Smartphone, Zap, Sparkles, Star, ShieldCheck, PlayCircle, Heart, Activity } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function SalesPage() {
@@ -39,19 +39,19 @@ export default function SalesPage() {
       <main className="pt-20 px-4 max-w-5xl mx-auto space-y-24">
         {/* HERO SECTION */}
         <section className="relative py-12">
-          {/* Floating Dog Overlay (PNG on top) */}
+          {/* Floating Dog Overlay (PNG on top) - FIXED with Screen Blend */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, x: 100 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            className="absolute -top-10 -right-10 md:-right-32 w-48 md:w-[600px] z-50 pointer-events-none"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="absolute -top-10 -right-10 md:-right-32 w-48 md:w-[600px] z-50 pointer-events-none mix-blend-screen"
           >
-            <img src="/assets/dog-sales-hero.png" alt="Happy Dog" className="dog-float w-full" />
+            <img src="/assets/dog-hero-new.png" alt="Happy Dog" className="dog-float w-full brightness-110 contrast-125" />
           </motion.div>
 
           <div className="space-y-10 relative z-10">
             <div className="space-y-4">
-              <span className="bg-white/5 border border-white/10 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-primary italic">
-                Entrenamiento de Bolsillo 15 Min/Día
+              <span className="bg-white/5 border border-white/10 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-primary italic flex items-center gap-2 w-fit">
+                <Zap className="w-3 h-3" /> Entrenamiento de Bolsillo 15 Min/Día
               </span>
               <h1 className="text-5xl md:text-[10rem] font-black leading-[0.85] tracking-tighter glow-text-yellow uppercase">
                 EL APP QUE <br />
@@ -61,11 +61,11 @@ export default function SalesPage() {
             </div>
 
             <p className="text-xl md:text-4xl font-bold text-white/50 leading-tight max-w-2xl">
-              Convierte tu celular en el <span className="text-white italic">manual de instrucciones</span> que <span className="text-white underline decoration-primary underline-offset-8">tu perro no trahouff</span>. Resultados permanentes desde la primera sesión.
+              Convierte tu celular en el <span className="text-white italic">manual de instrucciones</span> que <span className="text-white underline decoration-primary underline-offset-8">tu perro no trajo</span>. Resultados permanentes desde la primera sesión.
             </p>
 
             <div className="pt-6">
-              <Button onClick={() => window.location.href = '#checkout'} className="yellow-cta px-12 py-10 text-xl font-black md:text-2xl shimmer animate-pulse-glow">
+              <Button onClick={() => document.getElementById('checkout')?.scrollIntoView({ behavior: 'smooth' })} className="yellow-cta px-12 py-10 text-xl font-black md:text-2xl shimmer animate-pulse-glow">
                 ¡QUIERO UN PERRO EQUILIBRADO AHORA!
               </Button>
             </div>
