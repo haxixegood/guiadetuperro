@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Shield, Clock, CheckCircle, AlertTriangle, Gift, TrendingUp, X } from "lucide-react";
+import { Shield, Clock, CheckCircle, AlertTriangle, Gift, TrendingUp, X, Sparkles, Footprints, Star } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useQuiz } from "@/contexts/QuizContext";
 
 export default function SalesPage() {
+  const { quizData } = useQuiz();
   const CHECKOUT_URL = "https://pay.hotmart.com/N103636478Y";
 
   const [timeLeft, setTimeLeft] = useState(15 * 60); // 15 minutes in seconds
@@ -31,272 +33,311 @@ export default function SalesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#fafafc] selection:bg-primary/30">
 
-      {/* HERO */}
-      <section className="py-20 md:py-32 px-4 bg-white relative overflow-hidden paw-pattern">
-        {/* Soft Accent Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -z-10" />
+      {/* SURREAL HERO */}
+      <section className="relative min-h-[90vh] flex items-center justify-center px-4 py-20 overflow-hidden bg-white">
+        {/* Brain-Lock Background Animations */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[120px] animate-pulse-slow" />
+          <div className="absolute bottom-[-5%] right-[-5%] w-[40%] h-[40%] bg-accent/10 rounded-full blur-[100px] animate-pulse-slow delay-1000" />
 
-        <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-red-600 via-yellow-500 to-red-600 bg-[length:200%_100%] animate-gradient-x" />
-
-        <div className="container max-w-5xl text-center space-y-10 relative z-10">
+          {/* Floating Pure Elements (Trava Cérebro) */}
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center gap-2 bg-red-600 text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-wider shadow-xl shadow-red-500/20"
+            animate={{
+              y: [0, -20, 0],
+              rotate: [0, 5, -5, 0],
+              scale: [1, 1.05, 1]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[20%] right-[10%] opacity-20"
           >
-            <Clock className="w-4 h-4 animate-spin-slow" />
-            Oferta por tiempo limitado
+            <Sparkles className="w-24 h-24 text-primary" />
           </motion.div>
 
-          <h1 className="text-5xl md:text-8xl font-black tracking-tight leading-[0.95] text-slate-900 mx-auto max-w-4xl">
-            Transforma al perro más rebelde en un{' '}
-            <span className="text-primary italic">compañero ideal</span>
+          <motion.div
+            animate={{
+              y: [0, 20, 0],
+              x: [0, 10, 0],
+              rotate: [0, -10, 10, 0]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-[25%] left-[15%] opacity-10"
+          >
+            <Footprints className="w-32 h-32 text-primary" />
+          </motion.div>
+
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]" />
+        </div>
+
+        <div className="container max-w-5xl relative z-10 text-center space-y-8">
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="inline-flex items-center gap-2 bg-slate-900 text-white px-5 py-2 rounded-full text-[9px] font-black uppercase tracking-[0.2em] shadow-2xl"
+          >
+            <TrendingUp className="w-3 h-3 text-primary" />
+            Método Validado por +3,240 Tutores
+          </motion.div>
+
+          <h1 className="text-5xl md:text-9xl font-black text-slate-900 leading-[0.85] tracking-tighter">
+            DOMINA LO <span className="text-primary block md:inline italic">IMPOSIBLE</span>
           </h1>
 
-          <p className="text-xl md:text-3xl text-slate-500 font-medium max-w-3xl mx-auto leading-relaxed">
-            Sin gastar miles en adiestradores, sin castigos y con solo{' '}
-            <span className="text-primary font-black underline decoration-primary/20 underline-offset-8">
-              15 minutos al día
-            </span>.
+          <p className="text-lg md:text-3xl text-slate-600 font-bold max-w-3xl mx-auto leading-tight md:leading-snug">
+            Transforma la rebeldía de <span className="text-slate-900 underline decoration-primary/40 underline-offset-4">{quizData.name || 'tu perro'}</span> en obediencia ciega.
+            <span className="block mt-2 text-primary">Sin gritos, sin estrés y en tiempo récord.</span>
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-6 pt-6">
-            {[
-              { icon: CheckCircle, text: 'Resultados Rápidos', color: 'text-green-500' },
-              { icon: Shield, text: 'Garantía Total', color: 'text-blue-500' },
-              { icon: Clock, text: 'Acceso de por vida', color: 'text-amber-500' },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + i * 0.1 }}
-                className="flex items-center gap-2.5 text-[10px] font-black uppercase tracking-widest bg-white rounded-2xl border border-slate-100 px-6 py-4 shadow-xl shadow-slate-200/40"
-              >
-                <item.icon className={`w-4 h-4 ${item.color}`} />
-                <span>{item.text}</span>
-              </motion.div>
-            ))}
+          <div className="pt-8 flex flex-col items-center gap-8">
+            <Button
+              onClick={handleCheckout}
+              className="w-full md:w-auto px-12 md:px-24 py-12 md:py-14 text-2xl md:text-5xl font-black rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(245,158,11,0.6)] bg-primary hover:bg-primary/90 text-white border-none shimmer-button hover:scale-105 active:scale-95 transition-all relative z-20 overflow-visible"
+            >
+              ¡SÍ, QUIERO EL PLAN DE {quizData.name?.toUpperCase() || 'MI PERRO'}! →
+              <div className="absolute -top-4 -right-4 bg-red-600 text-white text-[12px] px-4 py-1.5 rounded-full animate-bounce font-black shadow-xl border-2 border-white">
+                84% OFF HOY
+              </div>
+            </Button>
+
+            <div className="flex flex-col items-center gap-4">
+              <div className="flex items-center gap-6 md:gap-12">
+                <div className="flex flex-col items-center gap-1">
+                  <Shield className="w-6 h-6 text-green-500" />
+                  <span className="text-[10px] font-black uppercase text-slate-400">Pago Seguro</span>
+                </div>
+                <div className="flex flex-col items-center gap-1">
+                  <Clock className="w-6 h-6 text-blue-500" />
+                  <span className="text-[10px] font-black uppercase text-slate-400">Acceso Vitalicio</span>
+                </div>
+                <div className="flex flex-col items-center gap-1">
+                  <CheckCircle className="w-6 h-6 text-primary" />
+                  <span className="text-[10px] font-black uppercase text-slate-400">Garantía 7 Días</span>
+                </div>
+              </div>
+
+              <p className="text-[11px] font-bold text-slate-400 max-w-xs leading-tight">
+                Únete a la comunidad de élite. Material 100% digital, acceso instantáneo tras el pago.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* BENEFICIOS */}
-      <section className="py-24 px-4 bg-white">
-        <div className="container max-w-5xl space-y-12">
-          <div className="text-center space-y-4">
-            <h2 className="text-4xl font-extrabold text-slate-900 tracking-tight">
-              ¿Qué incluye la guía para tu perro?
+      {/* PREMIUM BENEFITS - REDESIGNED FOR MAX VALUE */}
+      <section className="py-32 px-4 bg-[#fafafc] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] -z-10" />
+
+        <div className="container max-w-6xl space-y-20">
+          <div className="text-center space-y-6">
+            <h2 className="text-5xl md:text-8xl font-black text-slate-900 tracking-tighter leading-none">
+              El Arsenal <span className="text-primary italic">Inalcanzable</span>
             </h2>
-            <div className="h-1.5 w-24 bg-primary mx-auto rounded-full" />
+            <p className="text-slate-400 font-extrabold max-w-xl mx-auto uppercase text-[11px] tracking-[0.4em]">
+              Material de Alto Calibre • Entrega Instantánea
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-10">
             {[
-              { text: "Guía completa en PDF (programa de 4 semanas)", icon: "📘" },
-              { text: "Rutina diaria de solo 10–15 minutos", icon: "⏱️" },
-              { text: "Ejercicios prácticos para aplicar en casa", icon: "🏠" },
-              { text: "Métodos positivos, sin castigos", icon: "🧠" },
-              { text: "Progreso claro y gradual", icon: "📈" },
-              { text: "Ideal para perros de todas las edades", icon: "🐕" },
+              {
+                title: "Protocolo 'Paso a Paso'",
+                desc: "4 Semanas Intensivas de re-programación de conducta. El mapa exacto del éxito.",
+                icon: "📘",
+                badge: "EL CORAZÓN",
+                accent: "bg-blue-500"
+              },
+              {
+                title: "Rutina 15 Segundos",
+                desc: "Micro-lecciones de alto impacto para gente ocupada. Resultados sin excusas.",
+                icon: "⚡",
+                badge: "VELOCIDAD",
+                accent: "bg-amber-500"
+              },
+              {
+                title: "Psicología Canina Pro",
+                desc: "Entiende qué piensa antes de que actúe. Sé el líder que tu perro respeta.",
+                icon: "🧠",
+                badge: "MAESTRÍA",
+                accent: "bg-purple-500"
+              },
             ].map((item, i) => (
               <motion.div
                 key={i}
-                whileHover={{ y: -5, scale: 1.02 }}
-                className="group bg-slate-50 border border-slate-100 rounded-3xl p-8 hover:bg-white hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 flex flex-col items-center text-center gap-4"
+                whileHover={{ y: -15, scale: 1.02 }}
+                className="bg-white rounded-[3.5rem] p-12 shadow-[0_40px_80px_-15px_rgba(0,0,0,0.05)] border border-slate-100 flex flex-col gap-8 relative group overflow-hidden"
               >
-                <div className="text-4xl group-hover:scale-110 transition-transform">{item.icon}</div>
-                <p className="font-bold text-slate-700 leading-snug">{item.text}</p>
+                <div className={`absolute top-0 left-0 w-2 h-full ${item.accent} opacity-20`} />
+
+                <div className="bg-slate-50 self-start px-5 py-1.5 rounded-full text-[9px] font-black text-slate-500 tracking-[0.2em]">{item.badge}</div>
+
+                <div className="text-7xl group-hover:scale-110 transition-transform duration-500">{item.icon}</div>
+
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-black text-slate-900 leading-tight">{item.title}</h3>
+                  <p className="text-base text-slate-500 leading-relaxed font-bold opacity-80">{item.desc}</p>
+                </div>
+
+                <div className="pt-6 border-t border-slate-50 flex items-center gap-2 text-primary font-black text-[10px] tracking-widest">
+                  MATERIAL HD • PDF INTERACTIVO
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* COMPARATIVO (PRICE ANCHORING) */}
-      <section className="py-16 px-4">
-        <div className="container max-w-4xl space-y-8">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            ¿Por qué este es el método más inteligente?
-          </h2>
+      {/* COMPARATIVO - REMOVED PRICES FOR HIGHER PERCEPTION */}
+      <section className="py-24 px-4 bg-slate-900 text-white overflow-hidden relative">
+        <div className="absolute inset-0 bg-primary opacity-[0.05] pointer-events-none" />
+        <div className="container max-w-5xl space-y-16 relative z-10">
+          <div className="text-center space-y-4">
+            <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none">¿Por qué este es el <span className="text-primary italic">único</span> camino?</h2>
+            <p className="text-primary/60 font-black uppercase tracking-widest text-[11px]">Inversión Inteligente vs. Gasto Inútil</p>
+          </div>
 
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div className="grid md:grid-cols-2 gap-12 items-stretch">
             {/* Adiestrador Presencial */}
-            <div className="bg-gray-50 rounded-3xl p-8 border-2 border-dashed border-gray-200 opacity-75 hover:opacity-100 transition-opacity">
-              <h3 className="text-xl font-bold text-gray-500 mb-4">Adiestrador Presencial</h3>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 text-muted-foreground">
-                  <X className="w-5 h-5 text-red-400" />
-                  <span>Costo por sesión: $800 - $1,500</span>
+            <div className="bg-white/5 backdrop-blur-sm rounded-[3rem] p-10 border border-white/10 flex flex-col gap-8 opacity-40 hover:opacity-100 transition-opacity">
+              <h3 className="text-2xl font-black text-red-400 uppercase tracking-tighter">Adiestrador Presencial</h3>
+              <ul className="space-y-8 flex-1">
+                <li className="flex items-start gap-4">
+                  <X className="w-8 h-8 text-red-500 flex-shrink-0" />
+                  <span className="text-base font-bold opacity-70 leading-relaxed">Costos exorbitantes por cada hora que rara vez rinden frutos reales fuera de la clase.</span>
                 </li>
-                <li className="flex items-center gap-3 text-muted-foreground">
-                  <X className="w-5 h-5 text-red-400" />
-                  <span>Requiere meses de citas</span>
-                </li>
-                <li className="flex items-center gap-3 text-muted-foreground">
-                  <X className="w-5 h-5 text-red-400" />
-                  <span>Horarios fijos e inconvenientes</span>
+                <li className="flex items-start gap-4">
+                  <X className="w-8 h-8 text-red-500 flex-shrink-0" />
+                  <span className="text-base font-bold opacity-70 leading-relaxed">Pérdida de libertad: Tu agenda depende de la disponibilidad del instructor.</span>
                 </li>
               </ul>
-              <div className="text-center pt-4 border-t border-gray-200">
-                <p className="text-sm text-gray-500">Costo promedio total:</p>
-                <p className="text-3xl font-bold text-gray-400 line-through decoration-red-400">$8,000+ MXN</p>
+              <div className="pt-8 border-t border-white/10 text-center">
+                <p className="text-[11px] font-black uppercase tracking-widest opacity-40">Veredicto Económico:</p>
+                <p className="text-3xl font-black text-red-400/60">Gasto Sin Retorno</p>
               </div>
             </div>
 
             {/* Nuestra Guía */}
-            <div className="bg-white rounded-3xl p-8 border-2 border-primary shadow-2xl relative overflow-hidden transform scale-105">
-              <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-xl">
-                MEJOR OPCIÓN
+            <div className="bg-white text-slate-900 rounded-[3rem] p-12 shadow-[0_50px_100px_-20px_rgba(245,158,11,0.3)] relative overflow-hidden flex flex-col gap-8 scale-105 border-4 border-primary">
+              <div className="absolute top-0 right-0 bg-primary text-white text-[10px] font-black px-8 py-3 rounded-bl-[2rem] tracking-[0.2em] uppercase">
+                ÉXITO GARANTIZADO
               </div>
-              <h3 className="text-xl font-bold text-primary mb-4">Guía de Entrenamiento en Casa</h3>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 font-medium">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <span>Pago único y económico</span>
+              <h3 className="text-3xl font-black text-primary leading-tight">Tu Nueva Realidad <br /> en Casa</h3>
+              <ul className="space-y-8 flex-1">
+                <li className="flex items-start gap-4">
+                  <CheckCircle className="w-8 h-8 text-green-500 flex-shrink-0" />
+                  <span className="text-base font-black leading-tight text-slate-800">Tú te conviertes en el líder. Forjas un vínculo irrompible que dura para siempre.</span>
                 </li>
-                <li className="flex items-center gap-3 font-medium">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <span>A tu propio ritmo (15 min/día)</span>
-                </li>
-                <li className="flex items-center gap-3 font-medium">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <span>Acceso de por vida</span>
+                <li className="flex items-start gap-4">
+                  <CheckCircle className="w-8 h-8 text-green-500 flex-shrink-0" />
+                  <span className="text-base font-black leading-tight text-slate-800">Progreso Relámpago: Aplicas el método en tu entorno real, donde ocurre el caos.</span>
                 </li>
               </ul>
-              <div className="text-center pt-4 border-t border-gray-100">
-                <p className="text-sm text-primary font-medium">Hoy por solo:</p>
-                <p className="text-4xl font-black text-primary">$149 MXN</p>
+              <div className="pt-8 border-t border-slate-100 text-center">
+                <p className="text-[11px] font-black uppercase tracking-widest text-primary">Acceso de por vida hoy:</p>
+                <p className="text-6xl font-black text-slate-900">$149 <span className="text-2xl text-slate-400">MXN</span></p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* BONOS */}
-      <section className="py-16 px-4 bg-slate-50">
-        <div className="container max-w-4xl space-y-8">
-          <div className="text-center space-y-2">
-            <span className="text-sm font-bold tracking-widest text-primary uppercase">Regalos Exclusivos</span>
-            <h2 className="text-3xl font-bold">
-              Llévate GRATIS estos 3 Bonos si compras hoy
+      {/* BONOS - SURPRISE & HIGH VALUE LAYOUT */}
+      <section className="py-32 px-4 bg-white relative overflow-hidden">
+        <div className="container max-w-5xl space-y-16">
+          <div className="text-center space-y-4">
+            <span className="bg-primary/10 text-primary px-5 py-2 rounded-full text-[11px] font-black uppercase tracking-[0.3em]">Regalos para Ganadores</span>
+            <h2 className="text-5xl md:text-8xl font-black text-slate-900 tracking-tighter leading-none">
+              Bonus de <span className="text-primary italic">Asalto</span>
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
             {[
               {
-                title: "Checklist: Adiós Pipí en Casa",
-                desc: "El paso a paso exacto para enseñar a ir al baño en 3 días.",
-                value: "$199",
-                icon: CheckCircle
+                title: "Adiós Pipí en Casa",
+                desc: "Dominarás el lugar exacto para que {name} haga sus necesidades. Sin manchas, sin olores, sin estrés.",
+                icon: "🧼",
+                badge: "ESTRATÉGICO",
+                color: "bg-blue-50"
               },
               {
-                title: "Áudios Relax para Perros",
-                desc: "Banda sonora científica para calmar a tu perro cuando sale.",
-                value: "$149",
-                icon: Gift
+                title: "Sesión de Áudios Relax",
+                desc: "Frecuencias diseñadas para reducir la ansiedad. Paz mental pura para tu perro y para ti.",
+                icon: "🎵",
+                badge: "COMPLEMENTO",
+                color: "bg-indigo-50"
               }
             ].map((bonus, i) => (
-              <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border hover:shadow-md transition-shadow">
-                <div className="bg-primary/10 w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-primary">
-                  <bonus.icon className="w-6 h-6" />
+              <div key={i} className={`p-12 rounded-[4rem] border-2 border-slate-50 ${bonus.color} group hover:shadow-3xl transition-all duration-500 flex flex-col gap-8 text-center relative overflow-hidden`}>
+                <div className="bg-white w-24 h-24 rounded-[2rem] mx-auto flex items-center justify-center text-5xl shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all">
+                  {bonus.icon}
                 </div>
-                <h3 className="font-bold text-lg mb-2">{bonus.title}</h3>
-                <p className="text-sm text-muted-foreground mb-4">{bonus.desc}</p>
-                <p className="text-xs font-bold text-primary">Valor: <span className="line-through text-muted-foreground">{bonus.value}</span> (GRATIS)</p>
+                <div className="space-y-4">
+                  <h3 className="font-black text-3xl text-slate-900 tracking-tight">{bonus.title}</h3>
+                  <p className="text-base text-slate-500 font-bold leading-relaxed opacity-90">{bonus.desc.replace('{name}', quizData.name || 'tu perro')}</p>
+                </div>
+                <div className="bg-slate-900 text-white px-8 py-3 rounded-full text-[11px] font-black w-fit mx-auto tracking-[0.2em] shadow-xl group-hover:bg-primary transition-colors">
+                  REGALO INCLUIDO
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* OFERTA FINAL */}
-      <section className="py-16 px-4 bg-gradient-to-br from-primary via-primary/90 to-accent text-white relative overflow-hidden">
-        <div className="container max-w-md text-center space-y-8 relative z-10">
+      {/* CTA FINAL SURREAL */}
+      <section className="py-32 px-4 bg-slate-900 relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-primary/20 rounded-full blur-[150px] animate-pulse-slow" />
 
+        <div className="container max-w-2xl text-center space-y-12 relative z-10">
           <div className="space-y-6">
-            <h2 className="text-4xl md:text-5xl font-black">
-              Tu perro merece lo mejor, y tú también.
+            <h2 className="text-4xl md:text-7xl font-black text-white leading-[0.9] tracking-tighter">
+              ¿Vas a permitir que un <span className="text-primary">ladrido</span> controle tu vida?
             </h2>
-            <div className="flex justify-center">
-              <div className="bg-white/20 backdrop-blur-xl border border-white/30 rounded-3xl p-6 shadow-2xl inline-flex flex-col items-center gap-2 min-w-[200px]">
-                <p className="text-xs font-black tracking-widest uppercase opacity-80">La oferta expira en:</p>
-                <p className="text-4xl font-black font-mono tabular-nums tracking-tighter">
-                  {formatTime(timeLeft)}
-                </p>
-              </div>
-            </div>
+            <p className="text-white/60 text-lg md:text-xl font-bold max-w-lg mx-auto leading-relaxed">
+              La oferta termina pronto. Descarga tu plan y transforma tu hogar hoy mismo.
+            </p>
           </div>
 
-          <div className="bg-white text-foreground rounded-3xl p-8 shadow-2xl space-y-6">
-            <div className="space-y-2">
-              <p className="text-muted-foreground line-through text-lg">
-                Precio Normal: $947 MXN
-              </p>
+          <div className="bg-white rounded-[3rem] p-10 md:p-14 shadow-[0_50px_100px_-20px_rgba(245,158,11,0.5)] space-y-10">
+            <div className="space-y-4">
+              <p className="text-slate-400 font-black uppercase text-[10px] tracking-widest">Inversión Final</p>
               <div className="flex items-center justify-center gap-2">
-                <p className="text-5xl font-black text-primary">
-                  $149
-                </p>
-                <span className="text-xl font-bold text-gray-400">MXN</span>
+                <p className="text-7xl md:text-9xl font-black text-slate-900">$149</p>
+                <div className="text-left">
+                  <p className="text-xl md:text-2xl font-black text-slate-900">MXN</p>
+                  <p className="text-[9px] font-black text-primary line-through">$947</p>
+                </div>
               </div>
-              <p className="text-green-600 font-bold bg-green-50 inline-block px-3 py-1 rounded-full text-sm">
-                Ahorras 84% Hoy
-              </p>
             </div>
 
-            <Button
-              onClick={handleCheckout}
-              className="w-full text-2xl py-10 shadow-2xl bg-red-600 hover:bg-red-700 text-white border-none rounded-3xl shimmer-button font-black"
-            >
-              👉 QUIERO MI GUÍA + BONUS
-            </Button>
+            <div className="flex flex-col items-center gap-6">
+              <Button
+                onClick={handleCheckout}
+                className="w-full py-12 text-3xl md:text-4xl font-black rounded-[2.5rem] shadow-2xl bg-primary hover:bg-primary/90 text-white border-none shimmer-button hover:scale-105 active:scale-95 transition-all"
+              >
+                👉 ¡DESCARGAR AHORA!
+              </Button>
 
-            <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground">
-              <span className="flex items-center gap-1"><Shield className="w-3 h-3" /> Pago Seguro</span>
-              <span className="flex items-center gap-1"><Gift className="w-3 h-3" /> Entrega Inmediata</span>
+              <div className="flex flex-wrap items-center justify-center gap-6 opacity-60">
+                <div className="flex items-center gap-2 text-[10px] font-black text-slate-900 uppercase tracking-widest">
+                  <Shield className="w-4 h-4 text-green-600" /> Compra 100% Segura
+                </div>
+                <div className="flex items-center gap-2 text-[10px] font-black text-slate-900 uppercase tracking-widest">
+                  <Star className="w-4 h-4 text-primary" /> Garantía de Satisfacción
+                </div>
+              </div>
             </div>
           </div>
-
         </div>
       </section>
 
-      {/* GARANTÍA */}
-      <section className="py-16 px-4 bg-card text-center space-y-4">
-        <Shield className="w-16 h-16 mx-auto text-primary" />
-        <h2 className="text-3xl font-bold">
-          Garantía de satisfacción
-        </h2>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          Si no te gusta el contenido o no se adapta a tu rutina,
-          puedes solicitar soporte. Apostamos por un método honesto,
-          gradual y responsable (sin promesas milagrosas).
+      {/* FOOTER PREMIUM */}
+      <footer className="py-12 px-4 bg-white text-center border-t border-slate-100">
+        <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em]">
+          Copyright © 2026 Guía Perro Online • Todos los derechos reservados
         </p>
-      </section>
-
-      {/* CTA FINAL */}
-      <section className="py-16 px-4 text-center space-y-6">
-        <h2 className="text-3xl font-bold">
-          Empieza hoy con tu perro
-        </h2>
-
-        <p className="text-muted-foreground">
-          Miles de tutores ya están aplicando este método simple y efectivo.
-        </p>
-
-        <Button
-          onClick={handleCheckout}
-          className="max-w-md mx-auto w-full text-2xl py-10 rounded-3xl font-black bg-primary hover:bg-primary/90 text-white border-none shimmer-button shadow-2xl shadow-primary/30"
-        >
-          👉 Descargar mi guía ahora
-        </Button>
-
-        <p className="text-sm text-muted-foreground">
-          Acceso inmediato · Sin mensualidades · Sin complicaciones
-        </p>
-      </section>
+      </footer>
 
     </div>
   );

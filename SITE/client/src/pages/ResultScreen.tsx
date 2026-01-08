@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useQuiz } from '@/contexts/QuizContext';
-import { Award, TrendingUp, Heart, Star, ShieldCheck, CheckCircle2, Footprints, Users } from 'lucide-react';
+import { Award, TrendingUp, Heart, Star, ShieldCheck, CheckCircle2, Footprints, Users, Sparkles } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function ResultScreen() {
@@ -192,45 +192,89 @@ export default function ResultScreen() {
           </div>
         </motion.div>
 
-        {/* LATE GAMIFICATION POPUP (Scroll triggered) */}
+        {/* LATE GAMIFICATION POPUP (Scroll triggered - SURPRISE EDITION) */}
         <AnimatePresence>
           {showLateBonus && (
             <motion.div
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md"
             >
-              <div className="bg-white rounded-[3rem] p-8 md:p-12 max-w-lg w-full text-center shadow-[0_30px_60px_-15px_rgba(245,158,11,0.5)] border-4 border-primary relative overflow-hidden">
-                <div className="absolute -top-10 -left-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl" />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5, y: 100 }}
+                animate={{
+                  opacity: 1,
+                  scale: [0.5, 1.1, 1],
+                  y: 0,
+                  rotate: [0, -2, 2, 0]
+                }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 300,
+                  damping: 15,
+                  duration: 0.8
+                }}
+                className="bg-white rounded-[3rem] p-8 md:p-12 max-w-lg w-full text-center shadow-[0_40px_80px_-15px_rgba(245,158,11,0.6)] border-4 border-primary relative overflow-hidden"
+              >
+                {/* Sprinkles / Confetti-like background elements */}
+                <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                  <Star className="absolute top-10 left-10 w-6 h-6 text-primary animate-pulse" />
+                  <Sparkles className="absolute bottom-20 right-10 w-8 h-8 text-primary animate-bounce" />
+                  <Heart className="absolute top-20 right-20 w-5 h-5 text-primary animate-ping" />
+                </div>
 
-                <div className="w-20 h-20 md:w-24 md:h-24 bg-primary/10 rounded-3xl mx-auto flex items-center justify-center text-5xl mb-6 animate-bounce">
+                <div className="w-24 h-24 md:w-32 md:h-32 bg-primary/10 rounded-full mx-auto flex items-center justify-center text-6xl mb-8 animate-bounce">
                   🎁
                 </div>
-                <h3 className="text-2xl md:text-4xl font-black text-slate-900 leading-tight">
-                  ¡Logros Desbloqueados con éxito!
+
+                <h3 className="text-3xl md:text-5xl font-black text-slate-900 leading-tight tracking-tighter">
+                  ¡Regalo Sorpresa Desbloqueado! 🎊
                 </h3>
-                <p className="text-sm md:text-lg text-slate-500 font-bold mt-4 leading-relaxed">
-                  Basado en tu compromiso, hemos añadido <span className="text-primary font-black">3 Bonos gratuitos</span> a tu plan personalizado.
+
+                <p className="text-base md:text-xl text-slate-500 font-bold mt-6 leading-relaxed">
+                  Por tu compromiso excepcional con <strong>{quizData.name || 'tu perro'}</strong>, hemos liberado <span className="text-primary font-black">acceso exclusivo</span> a estos 3 complementos vitales:
                 </p>
-                <div className="mt-8 space-y-3">
-                  <div className="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-100">
-                    <CheckCircle2 className="w-5 h-5 text-green-500" />
-                    <span className="text-xs font-bold text-slate-700">Guía: Adiós Ansiedad (Valor $249)</span>
-                  </div>
-                  <div className="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-100">
-                    <CheckCircle2 className="w-5 h-5 text-green-500" />
-                    <span className="text-xs font-bold text-slate-700">Checklist: Higiene en Casa (Valor $199)</span>
-                  </div>
+
+                <div className="mt-8 space-y-4">
+                  <motion.div
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                    className="flex items-center gap-4 bg-slate-50 p-4 rounded-3xl border-2 border-slate-100 group hover:border-primary/20 transition-all"
+                  >
+                    <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center text-xl">📘</div>
+                    <span className="text-sm font-black text-slate-700">Guía: Adiós Ansiedad (Incluida)</span>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                    className="flex items-center gap-4 bg-slate-50 p-4 rounded-3xl border-2 border-slate-100 group hover:border-primary/20 transition-all"
+                  >
+                    <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center text-xl">🏠</div>
+                    <span className="text-sm font-black text-slate-700">Checklist: Higiene Total (Incluida)</span>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.6 }}
+                    className="flex items-center gap-4 bg-slate-50 p-4 rounded-3xl border-2 border-slate-100 group hover:border-primary/20 transition-all"
+                  >
+                    <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center text-xl">🎵</div>
+                    <span className="text-sm font-black text-slate-700">Áudio: Calma Instantánea (Incluida)</span>
+                  </motion.div>
                 </div>
 
                 <Button
                   onClick={() => setShowLateBonus(false)}
-                  className="mt-8 w-full py-6 rounded-2xl font-black text-lg bg-slate-900 text-white hover:bg-slate-800"
+                  className="mt-10 w-full py-8 rounded-[2rem] font-black text-xl bg-slate-900 text-white hover:bg-slate-800 shadow-2xl hover:scale-[1.02] active:scale-95 transition-all shimmer-button"
                 >
-                  ¡Excelente! Continuar →
+                  ¡Acepto mi Regalo! →
                 </Button>
-              </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
