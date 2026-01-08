@@ -26,7 +26,7 @@ export default function WelcomeScreen() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-between h-[100dvh] bg-white px-6 py-6 relative overflow-hidden font-sans text-gray-900">
+    <div className="flex flex-col items-center justify-between h-[100dvh] bg-white relative overflow-hidden font-sans text-gray-900 pb-8 pt-0">
 
       {/* Background Ambience */}
       <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-gray-50 to-transparent z-0 pointer-events-none" />
@@ -36,9 +36,9 @@ export default function WelcomeScreen() {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative z-10 flex-1 flex flex-col items-center justify-center w-full min-h-0"
+        className="relative z-10 flex-1 flex flex-col items-center justify-center w-full min-h-0 -mt-10"
       >
-        <div className="relative w-full max-w-[280px] aspect-square flex items-center justify-center">
+        <div className="relative w-full max-w-[320px] aspect-square flex items-center justify-center">
           <div className="absolute inset-0 bg-yellow-100/50 rounded-full blur-3xl opacity-60 scale-90" />
           <img
             src="/assets/dog-hero.png"
@@ -49,7 +49,7 @@ export default function WelcomeScreen() {
       </motion.div>
 
       {/* Content Section */}
-      <div className="relative z-20 w-full max-w-sm text-center space-y-4 mb-8">
+      <div className="relative z-20 w-full max-w-sm text-center space-y-4 mb-4 px-6">
 
         {/* Animated Headline */}
         <motion.h1
@@ -77,10 +77,10 @@ export default function WelcomeScreen() {
       </div>
 
       {/* Call to Action */}
-      <div className="relative z-20 w-full max-w-sm space-y-6 pb-2">
+      <div className="relative z-20 w-full max-w-sm space-y-6 px-6">
         <Button
           onClick={goToNextStep}
-          className="w-full h-14 md:h-16 rounded-full bg-[#FFD700] hover:bg-[#F0C000] text-black text-lg font-black shadow-xl shadow-yellow-400/20 transition-all hover:scale-[1.02] active:scale-[0.98] animate-pulse-glow"
+          className="w-full h-16 rounded-full bg-[#FFD700] hover:bg-[#F0C000] text-black text-base font-black tracking-widest shadow-xl shadow-yellow-400/20 transition-all hover:scale-[1.02] active:scale-[0.98] animate-pulse-glow"
         >
           ¡COMENZAR EVALUACIÓN!
         </Button>
