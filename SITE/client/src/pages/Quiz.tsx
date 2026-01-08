@@ -191,40 +191,7 @@ export default function Quiz() {
 
       <BackButton />
 
-      {/* REWARD TOAST (Non-intrusive Bubble) */}
-      <AnimatePresence>
-        {showRewardAnimation && (
-          <motion.div
-            initial={{ opacity: 0, x: 50, scale: 0.8 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: 20, scale: 0.8 }}
-            className="fixed bottom-6 right-6 z-[100] max-w-[280px]"
-          >
-            <div className="bg-white/95 backdrop-blur-md rounded-3xl p-5 shadow-2xl border border-primary/20 flex items-center gap-4 relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Footprints className="w-12 h-12 text-primary" />
-              </div>
-              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-2xl flex-shrink-0 animate-bounce">
-                {rewardMetadata[currentReward]?.icon || '🎁'}
-              </div>
-              <div className="flex-1 text-left">
-                <p className="text-primary font-black uppercase text-[9px] tracking-[0.15em] mb-0.5">Logro Desbloqueado</p>
-                <h3 className="text-sm font-bold text-slate-900 leading-tight">
-                  {rewardMetadata[currentReward]?.title || 'Recompensa'}
-                </h3>
-                <button
-                  onClick={hideRewardAnimation}
-                  className="mt-2 text-[10px] font-black text-primary hover:underline uppercase tracking-widest"
-                >
-                  Continuar →
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <main className="flex-1 flex items-center justify-center p-4">
+      <main className="flex-1 flex items-center justify-center p-4 relative z-10">
         <div className="w-full max-w-2xl quiz-card animate-slide-up-fade">
           {renderStep()}
         </div>

@@ -43,34 +43,34 @@ export const QUIZ_STEPS: QuizStep[] = [
     type: 'info',
   },
 
-  // 2. Name (Personalization moved up for deep connection)
+  // 2. Name
   {
     id: 'name',
     type: 'text',
-    question: 'Para empezar, ¿cómo se llama tu perrito?',
-    placeholder: 'Nombre del perrito',
-    skipText: 'No quiero decir el nombre',
+    question: 'Para empezar este análisis personalizado, ¿cómo se llama tu perrito?',
+    placeholder: 'Nombre de tu mejor amigo',
+    skipText: 'Prefiero no decir el nombre',
   },
 
-  // 3. Gender/Age (Lightweight context)
+  // 3. Age
   {
     id: 'age',
-    category: 'SOBRE TU PERRO',
+    category: 'PERFIL INDIVIDUAL',
     type: 'single',
-    question: '¿Qué edad tiene {name}?',
+    question: '¿Qué edad tiene {name}? Su etapa de vida define el método de aprendizaje.',
     options: [
-      { value: '0-6', label: 'Cachorro (0–12 meses)' },
-      { value: '1-7', label: 'Adulto (1–7 años)' },
-      { value: '7+', label: 'Senior (Más de 7 años)' },
+      { value: '0-6', label: 'Cachorro (0–12 meses) - Etapa crítica' },
+      { value: '1-7', label: 'Adulto (1–7 años) - Hábitos formados' },
+      { value: '7+', label: 'Senior (Más de 7 años) - Sabio pero terco' },
     ],
   },
 
-  // 4. Size (Replaces Breed Search - ZERO friction)
+  // 4. Size
   {
     id: 'size',
     category: 'COMPORTAMIENTO',
     type: 'single',
-    question: '¿De que tamaño es {name}?',
+    question: '¿De que tamaño es {name}? El gasto de energía varía según su peso.',
     options: [
       { value: 'chico', label: 'Chico (0-10kg)', icon: '🐶' },
       { value: 'mediano', label: 'Mediano (11-25kg)', icon: '🐕' },
@@ -78,44 +78,44 @@ export const QUIZ_STEPS: QuizStep[] = [
     ],
   },
 
-  // 5. Environment (High-density hook)
+  // 5. Environment
   {
     id: 'environment',
-    category: 'EN EL HOGAR',
+    category: 'ANÁLISIS DE ENTORNO',
     type: 'single',
-    question: '¿Dónde vive {name} actualmente?',
+    question: '¿Dónde vive {name}? El espacio influye directamente en su nivel de estrés.',
     options: [
-      { value: 'apt', label: 'Departamento / Flat', icon: '🏢' },
-      { value: 'house', label: 'Casa con patio', icon: '🏡' },
-      { value: 'other', label: 'Otro / Terreno', icon: '🌳' },
+      { value: 'apt', label: 'Departamento (Espacio limitado)', icon: '🏢' },
+      { value: 'house', label: 'Casa con patio (Más estímulos)', icon: '🏡' },
+      { value: 'other', label: 'Otro / Terreno (Libertad total)', icon: '🌳' },
     ],
   },
 
-  // 6. Main Challenges (Consolidated - Mirroring Creative)
+  // 6. Main Challenges
   {
     id: 'daily-habits',
-    category: 'RETOS PRINCIPALES',
+    category: 'PROBLEMAS DE CONDUCTA',
     type: 'multiple',
-    question: '¿Qué comportamientos de {name} te gustaría corregir hoy?',
+    question: '¿Qué comportamientos de {name} te están causando más frustración hoy?',
     options: [
-      { value: 'accidents', label: 'Hace sus necesidades en interior', icon: '🏠' },
-      { value: 'barking', label: 'Ladridos excesivos (vecinos molestos)', icon: '🔊' },
-      { value: 'biting', label: 'Muerde manos, muebles o cosas', icon: '🦷' },
-      { value: 'pulling', label: 'Tira mucho de la correa al pasear', icon: '💪' },
-      { value: 'alone', label: 'Llora o destruye al quedarse solo', icon: '😟' },
+      { value: 'accidents', label: 'Hace sus necesidades en el lugar equivocado', icon: '🏠' },
+      { value: 'barking', label: 'Ladridos excesivos que molestan a todos', icon: '🔊' },
+      { value: 'biting', label: 'Muerde manos, muebles o destruye cosas', icon: '🦷' },
+      { value: 'pulling', label: 'Tira de la correa como si quisiera escapar', icon: '💪' },
+      { value: 'alone', label: 'No soporta quedarse solo (Ansiedad)', icon: '😟' },
     ],
   },
 
-  // 7. Motivation (Deepening the Ad Hook)
+  // 7. Motivation
   {
     id: 'motivation',
-    category: 'ESTILO DE VIDA',
+    category: 'TU OBJETIVO',
     type: 'single',
-    question: 'Para ti, ¿qué es lo más importante en su educación?',
+    question: 'Si pudieras elegir un solo beneficio ahora, ¿cuál sería?',
     options: [
-      { value: 'no-punish', label: 'Educar con amor, sin golpes ni gritos', icon: '❤️' },
-      { value: 'fast', label: 'Tener resultados rápidos (15 min/día)', icon: '⚡' },
-      { value: 'bonding', label: 'Tener una mejor relación con mi perro', icon: '🤝' },
+      { value: 'no-punish', label: 'Educar con amor, sin gritos ni castigos', icon: '❤️' },
+      { value: 'fast', label: 'Resultados reales con solo 15 min al día', icon: '⚡' },
+      { value: 'bonding', label: 'Tener una conexión profunda e inquebrantable', icon: '🤝' },
     ],
   },
 
@@ -125,8 +125,8 @@ export const QUIZ_STEPS: QuizStep[] = [
   {
     id: 'email',
     type: 'text',
-    question: '¿A qué email te enviamos el diagnóstico de {name}?',
-    placeholder: 'tu@email.com'
+    question: '¡Diagnóstico casi listo! ¿A qué email enviamos el plan de {name}?',
+    placeholder: 'Introduce tu email principal'
   },
   { id: 'sales', type: 'info' },
 ];

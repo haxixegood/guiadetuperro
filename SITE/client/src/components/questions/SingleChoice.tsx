@@ -59,7 +59,7 @@ export default function SingleChoice({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="grid grid-cols-1 gap-2 md:gap-4"
+        className="grid grid-cols-1 gap-2 md:gap-3 px-1"
       >
         {options.map((option, index) => (
           <motion.button
@@ -69,18 +69,18 @@ export default function SingleChoice({
             transition={{ delay: 0.2 + index * 0.05 }}
             onClick={() => handleSelect(option.value)}
             className={`
-              w-full p-4 md:p-6 rounded-2xl md:rounded-[2rem] border-2 transition-all duration-300
-              flex items-center gap-3 md:gap-5 text-left relative overflow-hidden group
+              w-full p-4 md:p-5 rounded-2xl md:rounded-[2rem] border-2 transition-all duration-300
+              flex items-center gap-3 md:gap-4 text-left relative overflow-hidden group
               ${selected === option.value
-                ? 'border-primary bg-primary/5 shadow-xl scale-[1.02] z-10'
-                : 'border-slate-100 bg-white hover:border-primary/30 hover:shadow-lg hover:bg-slate-50'
+                ? 'border-primary bg-primary/5 shadow-lg scale-[1.01] z-10'
+                : 'border-slate-100 bg-white hover:border-primary/20 hover:bg-slate-50/50'
               }
             `}
           >
             {/* Icon Container */}
             {option.icon && (
               <div className={`
-                flex-shrink-0 w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center text-xl md:text-3xl transition-colors
+                flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl flex items-center justify-center text-xl md:text-2xl transition-colors
                 ${selected === option.value ? 'bg-primary/20' : 'bg-slate-50'}
               `}>
                 {option.icon}
@@ -89,16 +89,16 @@ export default function SingleChoice({
 
             {/* Label */}
             <div className="flex-1">
-              <span className={`text-sm md:text-lg transition-all ${selected === option.value ? 'font-black text-primary' : 'font-bold text-slate-700'}`}>
+              <span className={`text-[13px] md:text-lg transition-all ${selected === option.value ? 'font-black text-primary' : 'font-bold text-slate-700'}`}>
                 {option.label}
               </span>
               {selected === option.value && (
                 <motion.p
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="text-[8px] md:text-[10px] font-black text-primary/60 uppercase tracking-widest mt-0.5"
+                  className="text-[8px] md:text-[9px] font-black text-primary/60 uppercase tracking-widest mt-0.5"
                 >
-                  Seleccionado ✓
+                  Confirmado ✓
                 </motion.p>
               )}
             </div>

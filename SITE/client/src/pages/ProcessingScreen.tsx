@@ -40,10 +40,10 @@ export default function ProcessingScreen() {
       intervals.push(interval);
     });
 
-    // Avanzar automaticamente ao final de 8 segundos (mais tempo para "processar")
+    // Avanzar automaticamente ao final de 13 segundos (análisis profundo)
     const autoAdvance = setTimeout(() => {
       goToNextStep();
-    }, 8000);
+    }, 13000);
 
     return () => {
       intervals.forEach(clearInterval);
@@ -63,20 +63,20 @@ export default function ProcessingScreen() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-2xl w-full space-y-8"
+        className="max-w-xl w-full space-y-8"
       >
         {/* Title */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-center space-y-2"
+          className="text-center space-y-3"
         >
-          <h2 className="text-3xl md:text-4xl font-bold">
-            Preparando Su Plan de Entrenamiento...
+          <h2 className="text-2xl md:text-4xl font-black text-slate-900 leading-tight">
+            Analizando comportamiento de <span className="text-primary">{quizData.name || 'tu perro'}</span>...
           </h2>
-          <p className="text-muted-foreground">
-            Estamos creando un plan personalizado para {quizData.name || 'su perro'}
+          <p className="text-sm text-slate-500 font-bold max-w-xs mx-auto">
+            Nuestra IA está procesando 248 puntos de datos para generar su plan individual.
           </p>
         </motion.div>
 
