@@ -53,10 +53,10 @@ export default function ProcessingScreen() {
       setShowGift(true);
     }, 6500);
 
-    // T=8.5s: NAVIGATE
+    // T=11s: NAVIGATE (Increased delay to allow reading)
     const tExit = setTimeout(() => {
       goToNextStep();
-    }, 8500);
+    }, 11000);
 
     return () => {
       clearInterval(timer);
@@ -66,7 +66,7 @@ export default function ProcessingScreen() {
   }, [goToNextStep, quizData.name]);
 
   return (
-    <div className="w-full max-w-md mx-auto min-h-screen flex flex-col pt-6 pb-12 px-6 font-sans bg-white relative overflow-hidden text-[#1A1A1A]">
+    <div className="w-full max-w-md mx-auto flex flex-col pt-6 px-6 font-sans relative overflow-hidden text-[#1A1A1A]">
 
       {/* Header - Compact Layout */}
       <div className="text-center space-y-3 mb-8 relative z-10">
@@ -76,7 +76,7 @@ export default function ProcessingScreen() {
             rotate: [0, 5, -5, 0]
           }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="w-14 h-14 mx-auto bg-yellow-50 rounded-full flex items-center justify-center border-2 border-[#FFD700] border-dashed"
+          className="w-14 h-14 mx-auto bg-gray-50 rounded-full flex items-center justify-center"
         >
           <span className="text-xl">🔍</span>
         </motion.div>
@@ -96,13 +96,13 @@ export default function ProcessingScreen() {
         </div>
       </div>
 
-      {/* Progress Bar */}
-      <div className="space-y-2 mb-8 relative z-10">
+      {/* Progress Bar - Clean */}
+      <div className="space-y-2 mb-8 relative z-10 w-full">
         <div className="flex justify-between items-end px-1">
           <span className="text-xs font-bold text-gray-300 uppercase tracking-wider">Progreso</span>
           <span className="text-lg font-black text-[#FFD700]">{Math.round(progress)}%</span>
         </div>
-        <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+        <div className="h-2 w-full bg-gray-50 rounded-full overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
@@ -112,8 +112,8 @@ export default function ProcessingScreen() {
         </div>
       </div>
 
-      {/* Status Checklist */}
-      <div className="space-y-3 relative z-10">
+      {/* Status Checklist - Infinite Style */}
+      <div className="space-y-3 relative z-10 w-full">
         {stages.map((s, i) => (
           <motion.div
             key={i}
@@ -122,18 +122,16 @@ export default function ProcessingScreen() {
               opacity: i <= stage ? 1 : 0.4, // Dim future steps
               x: 0,
               scale: i === stage && stage < 3 ? 1.02 : 1, // Pulse active step
-              borderColor: i === stage && stage < 3 ? '#FFD700' : 'transparent'
             }}
             className={`
-                relative bg-white rounded-xl p-4 flex items-center justify-between border transition-all duration-300
-                ${i < stage ? 'border-green-100 shadow-sm' : ''} 
-                ${i === stage && stage < 3 ? 'border-[#FFD700] shadow-md bg-yellow-50/10' : 'border-gray-50'}
+                relative bg-white rounded-xl p-4 flex items-center justify-between transition-all duration-300
+                ${i === stage && stage < 3 ? 'bg-white shadow-lg z-10' : 'bg-transparent'}
             `}
           >
             <div className="flex items-center gap-3">
               <div className={`
                   w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300
-                  ${i < stage ? 'bg-green-100 text-green-600' : (i === stage ? 'bg-yellow-100 text-[#FFD700]' : 'bg-gray-50 text-gray-300')}
+                  ${i < stage ? 'bg-green-100 text-green-600' : (i === stage ? 'bg-[#FFD700] text-black' : 'bg-gray-50 text-gray-300')}
               `}>
                 {i < stage ? <CheckCircle2 className="w-5 h-5" /> : s.icon}
               </div>
@@ -141,41 +139,28 @@ export default function ProcessingScreen() {
                 {s.label}
               </span>
             </div>
-            {/* Spinning Loader for Active Step */}
-            {i === stage && stage < 3 && (
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
-                className="w-4 h-4 border-2 border-gray-200 border-t-[#FFD700] rounded-full"
-              />
-            )}
-            {/* Checkmark for Done Step */}
-            {i < stage && <CheckCircle2 className="w-5 h-5 text-green-500" />}
           </motion.div>
         ))}
       </div>
 
-      {/* Surprise Gift Card - DELAYED REVEAL */}
+      {/* Surprise Gift Card - Clean & Infinite */}
       {showGift && (
         <motion.div
           initial={{ opacity: 0, y: 40, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="mt-6 relative w-full z-20"
+          className="mt-8 relative w-full z-20 pb-8"
         >
-          <div className="relative bg-white border-2 border-[#FFD700] rounded-[24px] p-5 flex items-center gap-4 shadow-[0_15px_40px_rgba(255,215,0,0.2)] overflow-hidden">
-            {/* "Ribbon" decoration */}
-            <div className="absolute top-0 right-0 w-16 h-16 bg-[#FFD700]/20 rounded-bl-[100px]" />
-
-            <div className="w-14 h-14 bg-yellow-100 rounded-2xl flex items-center justify-center flex-shrink-0 animate-bounce">
-              <Gift className="w-7 h-7 text-[#FFD700]" />
+          <div className="relative bg-white rounded-[24px] p-5 flex items-center gap-4 shadow-xl shadow-yellow-400/10 overflow-hidden">
+            <div className="w-14 h-14 bg-yellow-50 rounded-2xl flex items-center justify-center flex-shrink-0 animate-bounce text-[#FFD700]">
+              <Gift className="w-7 h-7" />
             </div>
             <div>
               <p className="text-[9px] font-black text-[#FFD700] uppercase tracking-widest mb-1">
                 ¡DESBLOQUEADO!
               </p>
               <h3 className="text-lg font-black text-[#1A1A1A] leading-none mb-1">
-                REGALO SURPRESA
+                REGALO SORPRESA
               </h3>
               <p className="text-[10px] text-gray-400 font-bold">
                 Se ha añadido un bono extra a tu plan

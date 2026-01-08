@@ -104,7 +104,7 @@ export default function ResultScreen() {
                         initial={{ opacity: 0, x: 10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="bg-white rounded-[20px] p-4 border border-gray-100 shadow-sm"
+                        className="bg-gray-50 rounded-xl"
                     >
                         <div className="flex items-center gap-2 mb-2">
                             <AlertTriangle className="w-4 h-4 text-orange-400" />
@@ -117,28 +117,60 @@ export default function ResultScreen() {
                     </motion.div>
                 </div>
 
-                {/* 3. WHAT YOU GET */}
-                <div className="bg-gray-50 rounded-[24px] p-6 border border-gray-100">
-                    <h3 className="text-center text-xs font-black text-gray-400 uppercase tracking-widest mb-4">
-                        TU PLAN INCLUYE
-                    </h3>
-                    <div className="grid grid-cols-2 gap-y-4 gap-x-2">
+                {/* 4. ALERT - Minimalist */}
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="bg-yellow-50/50 rounded-[20px] p-6"
+                >
+                    <div className="flex items-center gap-3 mb-2">
+                        <AlertTriangle className="w-5 h-5 text-[#B8860B]" />
+                        <h3 className="text-sm font-black uppercase text-[#B8860B]">ATENCIÓN PRIORITARIA</h3>
+                    </div>
+                    <p className="text-xs text-[#856404] font-medium leading-relaxed">
+                        Detectamos una <span className="font-black">fijación conductual</span>. Actuar en los próximos 7 días es crítico para evitar que se vuelva permanente.
+                    </p>
+                </motion.div>
+
+                {/* 5. AUTHORITY / TEAM */}
+                <div className="pt-4 pb-4">
+                    <div className="text-center mb-6">
+                        <h3 className="text-xs font-black text-gray-300 uppercase tracking-widest mb-4">
+                            RESPALDADO POR EXPERTOS
+                        </h3>
+                        {/* Trainers Avatar Group - Emoji update */}
+                        <div className="flex justify-center -space-x-3 mb-4">
+                            <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center border-2 border-white text-2xl shadow-sm">
+                                👨‍🏫
+                            </div>
+                            <div className="w-12 h-12 rounded-full bg-[#FFD700] flex items-center justify-center border-2 border-white text-[10px] font-black uppercase shadow-sm z-10">
+                                EQUIPO
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
                         {[
-                            { label: 'Garantía 7 Días', sub: 'Riesgo Cero' },
-                            { label: 'Soporte VIP', sub: 'Expertos' },
-                            { label: 'Acceso Vitalicio', sub: 'Para Siempre' },
-                            { label: 'Método Sync', sub: 'Paso a Paso' }
+                            { icon: <ShieldCheck className="w-5 h-5 text-[#FFD700]" />, label: 'Garantía 7 Días', sub: 'Riesgo Cero' },
+                            { icon: <User className="w-5 h-5 text-[#FFD700]" />, label: 'Soporte VIP', sub: 'Expertos' },
+                            { icon: <PlayCircle className="w-5 h-5 text-[#FFD700]" />, label: 'Acceso Vitalicio', sub: 'Para Siempre' },
+                            { icon: <FileText className="w-5 h-5 text-[#FFD700]" />, label: 'Método Sync', sub: 'Paso a Paso' }
                         ].map((item, i) => (
-                            <div key={i} className="flex items-center gap-3">
-                                <div className="w-1 h-8 bg-[#FFD700] rounded-full" />
+                            <div key={i} className="bg-gray-50 p-4 rounded-[20px] flex flex-col items-center text-center gap-2 transition-all hover:bg-gray-100">
+                                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm text-[#FFD700]">
+                                    {item.icon}
+                                </div>
                                 <div>
-                                    <p className="text-[10px] font-black uppercase text-[#1A1A1A]">{item.label}</p>
-                                    <p className="text-[9px] text-gray-400 font-medium">{item.sub}</p>
+                                    <p className="text-[10px] font-black uppercase text-[#1A1A1A] mb-0.5">{item.label}</p>
+                                    <p className="text-[9px] text-gray-400 font-bold">{item.sub}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
+
+
 
             </div>
 
