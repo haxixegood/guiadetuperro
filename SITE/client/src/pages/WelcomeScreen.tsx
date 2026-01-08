@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { useQuiz } from '@/contexts/QuizContext';
 import { motion } from 'framer-motion';
-import { Footprints, Sparkles, ShieldCheck, Heart, Star } from 'lucide-react';
+import { Footprints, Sparkles, ShieldCheck, Heart, Star, CheckCircle } from 'lucide-react';
 
 export default function WelcomeScreen() {
   const { goToNextStep, setInitialPain } = useQuiz();
@@ -16,131 +16,118 @@ export default function WelcomeScreen() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-white overflow-x-hidden relative paw-pattern bg-animate">
 
-      {/* Background Glows & Vector Accents */}
+      {/* Background Subtle Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[15%] right-[-5%] w-[300px] h-[300px] bg-primary/20 rounded-full blur-[80px] opacity-40" />
-        <div className="absolute bottom-[20%] left-[-10%] w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px] opacity-30" />
-
-        {/* Floating Vector-like Shadows */}
-        <div className="absolute top-[40%] right-[15%] w-24 h-24 bg-primary/5 rounded-full blur-2xl animate-pulse" />
-        <div className="absolute bottom-[35%] left-[20%] w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[10%] left-[-5%] w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px]" />
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-xl w-full text-center space-y-6 md:space-y-10 relative z-10 py-4 md:py-12"
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="max-w-3xl w-full text-center space-y-12 md:space-y-16 relative z-10 py-10 md:py-20"
       >
-        {/* Quality Badge */}
+        {/* Quality Badge - More Elegant */}
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="inline-flex items-center gap-2 bg-primary/10 border-2 border-primary/20 rounded-full px-5 py-2 shadow-sm mb-2"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="inline-flex items-center gap-3 bg-white border border-slate-100 rounded-full px-6 py-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.04)]"
         >
-          <Star className="w-3 h-3 text-primary fill-primary animate-spin-slow" />
-          <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
-            Metodología 5 Estrellas
+          <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+          <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em]">
+            Metodología <span className="text-primary italic">5 Estrellas</span>
           </p>
         </motion.div>
 
-        {/* Headline Section */}
-        <div className="space-y-4 px-2">
-          <h1 className="text-3xl md:text-7xl font-black text-slate-900 leading-[1] tracking-tighter">
-            ¿Por qué <span className="text-primary italic">nada</span> parece funcionar con tu perro?
+        {/* Headline Section - Behance Bold Typography */}
+        <div className="space-y-6">
+          <h1 className="text-4xl md:text-8xl font-black text-slate-900 leading-[0.9] tracking-tighter">
+            ¿Por qué <span className="text-primary italic block md:inline">nada</span> parece funcionar?
           </h1>
-          <p className="text-sm md:text-xl text-slate-500 font-bold max-w-sm mx-auto leading-tight">
-            Descubre el error invisible que bloquea el aprendizaje de tu mejor amigo.
+          <p className="text-base md:text-2xl text-slate-400 font-bold max-w-lg mx-auto leading-tight">
+            Descubre el error invisible que bloquea el aprendizaje de <span className="text-slate-900 decoration-primary/30 underline underline-offset-4">tu mejor amigo</span>.
           </p>
         </div>
 
-        {/* SELECTION AREA */}
-        <div className="space-y-3 relative">
-          <p className="text-[9px] font-black text-primary/60 uppercase tracking-[0.3em] mb-4">Elige el mayor desafío hoy:</p>
-          <div className="grid grid-cols-2 gap-3 md:flex md:flex-wrap md:justify-center relative z-20">
+        {/* SELECTION AREA - CLEANER CARDS */}
+        <div className="space-y-8 relative max-w-xl mx-auto">
+          <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em]">Elige el mayor desafío hoy:</p>
+          <div className="grid grid-cols-2 gap-4 relative z-20">
             {[
-              { id: 'latidos', label: 'Ladridos' },
-              { id: 'morder', label: 'Morder' },
-              { id: 'pipi', label: 'Xixi/Popó' },
-              { id: 'obediencia', label: 'No viene' },
+              { id: 'latidos', label: 'Ladridos', icon: '🗣️' },
+              { id: 'morder', label: 'Morder', icon: '🦴' },
+              { id: 'pipi', label: 'Xixi/Popó', icon: '⛲' },
+              { id: 'obediencia', label: 'No viene', icon: '🏃' },
             ].map((item) => (
               <Button
                 key={item.id}
                 variant="ghost"
                 onClick={() => handleStart(item.id)}
-                className="rounded-2xl border-2 border-slate-100 bg-white/80 backdrop-blur-md px-4 py-5 h-auto text-slate-700 font-black text-xs hover:bg-primary hover:border-primary hover:text-white transition-all active:scale-95 shadow-sm"
+                className="group relative flex flex-col items-center justify-center gap-3 rounded-[2.5rem] border border-slate-100 bg-white p-8 h-auto text-slate-900 font-black text-sm hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 active:scale-95"
               >
+                <span className="text-3xl group-hover:scale-125 transition-transform duration-500">{item.icon}</span>
                 {item.label}
               </Button>
             ))}
           </div>
-
-          {/* Decorative Vector Dog (Small Version for spacing) */}
-          <div className="absolute -right-8 -top-12 opacity-10 pointer-events-none">
-            <Footprints className="w-32 h-32 text-primary rotate-12" />
-          </div>
         </div>
 
-        {/* ACTION ZONE */}
-        <div className="pt-4 md:pt-8 px-2 relative min-h-[160px] flex flex-col items-center">
+        {/* ACTION ZONE - BALANCED HERO BUTTON & CUTOUT */}
+        <div className="relative pt-10 md:pt-20 flex flex-col items-center group">
+          {/* THE DOG HERO - PROFESSIONAL CUTOUT STYLE */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 1.2, ease: "circOut" }}
+            className="absolute -bottom-10 md:-bottom-24 left-1/2 -translate-x-1/2 w-[320px] md:w-[500px] pointer-events-none z-0"
+          >
+            <div className="relative">
+              {/* Background Glow behind the dog */}
+              <div className="absolute inset-0 bg-primary/20 rounded-full blur-[100px] scale-75 opacity-50" />
+              <img
+                src="/assets/dog-hero-new.png"
+                alt="Cachorro Hero"
+                className="relative w-full h-auto object-contain drop-shadow-[0_30px_50px_rgba(245,158,11,0.2)] mix-blend-multiply"
+              />
+            </div>
+          </motion.div>
+
           <Button
             onClick={() => handleStart('geral')}
-            size="lg"
-            className="w-full md:w-auto px-10 md:px-16 py-8 text-xl md:text-2xl font-black rounded-[2rem] shadow-2xl shadow-primary/40 bg-primary hover:bg-primary/90 text-white border-none shimmer-button relative z-30 whitespace-nowrap"
+            className="w-full md:w-auto px-16 md:px-24 py-11 text-xl md:text-3xl font-black rounded-[3rem] shadow-[0_40px_80px_-20px_rgba(245,158,11,0.5)] bg-primary hover:bg-primary/90 text-white border-none shimmer-button relative z-10 hover:scale-105 active:scale-95 transition-all"
           >
             Comenzar Diagnóstico →
           </Button>
 
-          {/* THE CUTE DOG (Fixed loading and positioning) */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3, duration: 1 }}
-            className="absolute -bottom-4 md:-bottom-12 right-0 md:-right-16 h-40 md:h-64 pointer-events-none z-10"
-          >
-            <img
-              src="/assets/dog-hero.png"
-              alt="Cachorro fofo"
-              className="h-full w-auto object-contain drop-shadow-[0_20px_20px_rgba(245,158,11,0.3)] floating-element"
-              onError={(e) => {
-                // Fallback icon if image fails
-                (e.target as HTMLImageElement).style.display = 'none';
-              }}
-            />
-          </motion.div>
-
-          {/* Support Vector Elements */}
-          <div className="absolute -left-10 bottom-0 opacity-20 pointer-events-none hidden md:block">
-            <Heart className="w-16 h-16 text-primary animate-pulse" />
-          </div>
+          <p className="mt-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] relative z-10 flex items-center gap-2">
+            <CheckCircle className="w-4 h-4 text-green-500" /> +3,240 Alumnos Satisfechos
+          </p>
         </div>
 
-        {/* SOCIAL PROOF VECTORS */}
-        <div className="flex flex-wrap items-center justify-center gap-8 mt-16 pt-8 border-t border-slate-100">
-          <div className="flex items-center gap-2 text-[9px] font-black text-slate-500 uppercase tracking-widest">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-            >
-              <ShieldCheck className="w-4 h-4 text-green-500" />
-            </motion.div>
-            API SESC Validado
+        {/* TRUST SIGNALS */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 pt-20 border-t border-slate-50">
+          <div className="flex flex-col items-center gap-2">
+            <ShieldCheck className="w-6 h-6 text-slate-300" />
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">100% Seguro</span>
           </div>
-          <div className="flex items-center gap-2 text-[9px] font-black text-slate-500 uppercase tracking-widest">
-            <Footprints className="w-4 h-4 text-primary" />
-            +3M de Huellas
+          <div className="flex flex-col items-center gap-2">
+            <Footprints className="w-6 h-6 text-slate-300" />
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Método Científico</span>
+          </div>
+          <div className="hidden md:flex flex-col items-center gap-2">
+            <Star className="w-6 h-6 text-slate-300" />
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Acceso Instantáneo</span>
           </div>
         </div>
-
-        <p className="text-[9px] text-slate-400 max-w-[280px] mx-auto pt-6 leading-relaxed font-bold border-t border-slate-50 mt-4">
-          Garantía de privacidad 100% segura. <br />
-          Al hacer clic, aceptas nuestros <span className="underline cursor-pointer">Términos</span>.
-        </p>
       </motion.div>
 
-      {/* OVERALL DECORATIVE VECTORS (Filling Empty Spaces) */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.03] overflow-hidden">
-        <Footprints className="absolute top-[10%] left-[5%] w-32 h-32 -rotate-12" />
-        <Footprints className="absolute bottom-[15%] right-[5%] w-48 h-48 rotate-45" />
-        <Footprints className="absolute top-[60%] left-[-5%] w-24 h-24 rotate-180" />
+      {/* FIXED DECORATIVE ELEMENTS */}
+      <div className="fixed top-[20%] left-[5%] opacity-[0.05] pointer-events-none">
+        <Footprints className="w-40 h-40 -rotate-12" />
+      </div>
+      <div className="fixed bottom-[10%] right-[5%] opacity-[0.05] pointer-events-none">
+        <Footprints className="w-56 h-56 rotate-45" />
       </div>
     </div>
   );
