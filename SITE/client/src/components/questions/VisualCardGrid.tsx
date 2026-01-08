@@ -7,6 +7,7 @@ interface BehaviorOption {
     id: string;
     label: string;
     emoji: string;
+    image?: string;
 }
 
 interface VisualCardGridProps {
@@ -79,6 +80,7 @@ export default function VisualCardGrid({
                         id={behavior.id}
                         label={behavior.label}
                         emoji={behavior.emoji}
+                        image={behavior.image}
                         selected={selected.includes(behavior.id)}
                         onClick={() => toggleSelection(behavior.id)}
                         index={index}

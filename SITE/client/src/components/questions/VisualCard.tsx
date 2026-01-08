@@ -5,12 +5,13 @@ interface VisualCardProps {
     id: string;
     label: string;
     emoji: string;
+    image?: string;
     selected: boolean;
     onClick: () => void;
     index: number;
 }
 
-export default function VisualCard({ id, label, emoji, selected, onClick, index }: VisualCardProps) {
+export default function VisualCard({ id, label, emoji, image, selected, onClick, index }: VisualCardProps) {
     return (
         <motion.button
             initial={{ opacity: 0, scale: 0.9 }}
@@ -29,12 +30,32 @@ export default function VisualCard({ id, label, emoji, selected, onClick, index 
                 }
       `}
         >
-            {/* Background Gradient */}
-            <div className={`
-        absolute inset-0 bg-gradient-to-br from-white/5 to-transparent
-        ${selected ? 'opacity-100' : 'opacity-50'}
-        transition-opacity duration-300
-      `} />
+            {/* Background Gradient & Image */}
+            <div className="absolute inset-0">
+                {image ? (
+                    <>
+                        <img
+                            src={image}
+                            alt={label}
+                            className={`
+                                w-full h-full object-cover transition-transform duration-700
+                                ${selected ? 'scale-110' : 'scale-100'}
+                            `}
+                        />
+                        <div className={`
+                            absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent
+                            ${selected ? 'opacity-80' : 'opacity-90'}
+                            transition-opacity duration-300
+                        `} />
+                    </>
+                ) : (
+                    <div className={`
+                        absolute inset-0 bg-gradient-to-br from-white/5 to-transparent
+                        ${selected ? 'opacity-100' : 'opacity-50'}
+                        transition-opacity duration-300
+                    `} />
+                )}
+            </div>
 
             {/* Glitch Effect on Selection */}
             {selected && (
@@ -46,14 +67,14 @@ export default function VisualCard({ id, label, emoji, selected, onClick, index 
                 />
             )}
 
-            {/* Emoji/Icon */}
+            {/* Emoji/Icon (Overlay or Fallback) */}
             <motion.div
                 animate={selected ? {
                     scale: [1, 1.1, 1],
                     rotate: [0, -5, 5, 0]
                 } : {}}
                 transition={{ duration: 0.3 }}
-                className="text-6xl relative z-10"
+                className={`text-6xl relative z-10 ${image ? 'opacity-0' : 'opacity-100'}`}
             >
                 {emoji}
             </motion.div>

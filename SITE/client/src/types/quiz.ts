@@ -9,11 +9,12 @@ export interface QuizOption {
   value: string;
   label: string;
   icon?: string;
+  image?: string;
 }
 
 export type QuizStep = {
   id: string;
-  type: 'info' | 'single' | 'multiple' | 'text' | 'slider' | 'search';
+  type: 'info' | 'single' | 'multiple' | 'text' | 'slider' | 'search' | 'email';
 
   category?: string;
   question?: string;
@@ -99,12 +100,42 @@ export const QUIZ_STEPS: QuizStep[] = [
     question: 'Marca todo lo que {name} hace en casa',
     subtitle: 'Selecciona todos los comportamientos que quieres eliminar',
     options: [
-      { value: 'pulling', label: 'Tira de la correa', icon: '🦮' },
-      { value: 'peeing', label: 'Hace pipí en lugares incorrectos', icon: '💧' },
-      { value: 'biting', label: 'Muerde muebles o manos', icon: '🦷' },
-      { value: 'barking', label: 'Ladra excesivamente', icon: '🔊' },
-      { value: 'jumping', label: 'Salta sobre las personas', icon: '🐕' },
-      { value: 'alone', label: 'Ansiedad al quedarse solo', icon: '😟' },
+      {
+        value: 'pulling',
+        label: 'Tira de la correa',
+        icon: '🦮',
+        image: 'https://images.unsplash.com/photo-1625316709148-634ccae464b7?q=80&w=600&auto=format&fit=crop' // Dog pulling/running
+      },
+      {
+        value: 'peeing',
+        label: 'Hace pipí en lugares incorrectos',
+        icon: '💧',
+        image: 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?q=80&w=600&auto=format&fit=crop' // Guilty dog
+      },
+      {
+        value: 'biting',
+        label: 'Muerde muebles o manos',
+        icon: '🦷',
+        image: 'https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=600&auto=format&fit=crop' // Dog chewing
+      },
+      {
+        value: 'barking',
+        label: 'Ladra excesivamente',
+        icon: '🔊',
+        image: 'https://images.unsplash.com/photo-1558550186-b4528c7c9438?q=80&w=600&auto=format&fit=crop' // Dog barking
+      },
+      {
+        value: 'jumping',
+        label: 'Salta sobre las personas',
+        icon: '🐕',
+        image: 'https://images.unsplash.com/photo-1546447147-3f20b33568c0?q=80&w=600&auto=format&fit=crop' // Dog jumping
+      },
+      {
+        value: 'alone',
+        label: 'Ansiedad al quedarse solo',
+        icon: '😟',
+        image: 'https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?q=80&w=600&auto=format&fit=crop' // Sad pug
+      },
     ],
   },
 

@@ -67,7 +67,8 @@ export default function Quiz() {
             behaviors={(step.options || []).map(opt => ({
               id: opt.value,
               label: opt.label,
-              emoji: opt.icon || '🐾'
+              emoji: opt.icon || '🐾',
+              image: opt.image
             }))}
             onAnswer={handleAnswer}
             minSelection={1}
