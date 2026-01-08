@@ -52,7 +52,7 @@ export default function ProcessingScreen() {
 
         <div className="space-y-2">
           <span className="text-[10px] font-black tracking-[0.4em] text-primary">{progress < 100 ? 'ANALIZANDO_DATOS...' : 'SYNC_COMPLETO'}</span>
-          <h2 className="text-4xl md:text-6xl font-black glow-text-yellow uppercase">Procesando <br /> Diagnóstico</h2>
+          <h2 className="text-3xl md:text-5xl font-black glow-text-yellow uppercase">Procesando <br /> Diagnóstico</h2>
         </div>
       </div>
 

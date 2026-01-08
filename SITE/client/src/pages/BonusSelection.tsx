@@ -105,7 +105,7 @@ export default function BonusSelection({ onBonusSelected }: BonusSelectionProps)
                 </motion.div>
 
                 <div className="space-y-3">
-                    <h1 className="text-4xl md:text-6xl font-black glow-text-yellow uppercase leading-tight">
+                    <h1 className="text-3xl md:text-5xl font-black glow-text-yellow uppercase leading-tight">
                         ¡FELICIDADES!
                     </h1>
                     <p className="text-xl md:text-2xl font-bold text-white/80">

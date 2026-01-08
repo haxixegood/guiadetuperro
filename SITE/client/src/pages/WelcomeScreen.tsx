@@ -35,7 +35,7 @@ export default function WelcomeScreen() {
         </motion.div>
 
         <div className="relative z-10 space-y-4 text-center">
-          <h1 className="text-4xl md:text-7xl font-black leading-[0.9] glow-text-yellow tracking-tighter">
+          <h1 className="text-3xl md:text-6xl font-black leading-[0.9] glow-text-yellow tracking-tighter">
             REPRO<span className="text-primary italic">GRAMA</span> <br />
             SU MENTE
           </h1>

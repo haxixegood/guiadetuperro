@@ -33,11 +33,11 @@ export default function SliderQuestion({
   onAnswer,
 }: SliderQuestionProps) {
   const [value, setValue] = useState([50]);
-  
+
   const handleContinue = () => {
     onAnswer(value[0]);
   };
-  
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4 pt-16 pb-32">
       <motion.div
@@ -58,7 +58,7 @@ export default function SliderQuestion({
             </span>
           </motion.div>
         )}
-        
+
         {/* Illustration */}
         {illustration && illustrations[illustration] && (
           <motion.div
@@ -74,7 +74,7 @@ export default function SliderQuestion({
             />
           </motion.div>
         )}
-        
+
         {/* Question */}
         <div className="space-y-3 text-center">
           {subtitle && (
@@ -87,17 +87,17 @@ export default function SliderQuestion({
               {subtitle}
             </motion.p>
           )}
-          
+
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-2xl md:text-3xl font-bold"
+            className="text-xl md:text-2xl font-bold"
           >
             {question}
           </motion.h2>
         </div>
-        
+
         {/* Slider */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -113,7 +113,7 @@ export default function SliderQuestion({
             step={1}
             className="w-full"
           />
-          
+
           {/* Labels */}
           <div className="flex justify-between items-center text-sm">
             <span className="text-muted-foreground">{minLabel}</span>
@@ -121,7 +121,7 @@ export default function SliderQuestion({
             <span className="text-muted-foreground">{maxLabel}</span>
           </div>
         </motion.div>
-        
+
         {/* Fixed bottom bar */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

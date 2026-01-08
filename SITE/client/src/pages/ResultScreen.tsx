@@ -40,7 +40,7 @@ export default function ResultScreen() {
 
           <div className="space-y-3">
             <span className="text-[10px] font-black tracking-[0.4em] text-primary">ANÁLISIS COMPLETO // SYNC LISTO</span>
-            <h1 className="text-4xl md:text-6xl font-black glow-text-yellow uppercase leading-tight">
+            <h1 className="text-3xl md:text-5xl font-black glow-text-yellow uppercase leading-tight">
               Diagnóstico de <br />
               <span className="text-primary italic">{quizData.name || 'Tu Perrhijo'}</span>
             </h1>

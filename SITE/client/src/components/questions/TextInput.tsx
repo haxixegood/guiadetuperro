@@ -23,19 +23,19 @@ export default function TextInput({
   onAnswer,
 }: TextInputProps) {
   const [value, setValue] = useState('');
-  
+
   const handleContinue = () => {
     if (value.trim()) {
       onAnswer(value.trim());
     }
   };
-  
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && value.trim()) {
       handleContinue();
     }
   };
-  
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4 pt-16 pb-32">
       <motion.div
@@ -56,18 +56,17 @@ export default function TextInput({
             </span>
           </motion.div>
         )}
-        
+
         {/* Question */}
         <div className="space-y-3 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-3xl md:text-4xl font-bold"
+            className="text-2xl md:text-3xl font-bold"
           >
             {question}
           </motion.h2>
-          
+
           {subtitle && (
             <motion.p
               initial={{ opacity: 0 }}
@@ -79,7 +78,7 @@ export default function TextInput({
             </motion.p>
           )}
         </div>
-        
+
         {/* Input */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -97,7 +96,7 @@ export default function TextInput({
             autoFocus
           />
         </motion.div>
-        
+
         {/* Fixed bottom bar */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -115,7 +114,7 @@ export default function TextInput({
                 {skipText}
               </Button>
             )}
-            
+
             <Button
               onClick={handleContinue}
               size="lg"

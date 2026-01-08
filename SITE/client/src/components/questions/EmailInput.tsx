@@ -36,41 +36,41 @@ export default function EmailInput({
 }: EmailInputProps) {
   const [value, setValue] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
-  
+
   // Extrair a parte antes do @ e sugerir domínios
   const { localPart, suggestions } = useMemo(() => {
     const parts = value.split('@');
     const local = parts[0];
-    
+
     if (!local || parts.length > 1) {
       return { localPart: local, suggestions: [] };
     }
-    
+
     // Mostrar sugestões de domínio
     return {
       localPart: local,
       suggestions: EMAIL_DOMAINS.map(domain => `${local}@${domain}`),
     };
   }, [value]);
-  
+
   const handleSelectSuggestion = (email: string) => {
     setValue(email);
     setShowSuggestions(false);
   };
-  
+
   const handleContinue = () => {
     // Validar email básico
     if (value.trim() && value.includes('@') && value.includes('.')) {
       onAnswer(value.trim());
     }
   };
-  
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && value.trim() && value.includes('@')) {
       handleContinue();
     }
   };
-  
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4 pt-16 pb-32">
       <motion.div
@@ -91,18 +91,17 @@ export default function EmailInput({
             </span>
           </motion.div>
         )}
-        
+
         {/* Question */}
         <div className="space-y-3 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-3xl md:text-4xl font-bold"
+            className="text-2xl md:text-3xl font-bold"
           >
             {question}
           </motion.h2>
-          
+
           {subtitle && (
             <motion.p
               initial={{ opacity: 0 }}
@@ -114,7 +113,7 @@ export default function EmailInput({
             </motion.p>
           )}
         </div>
-        
+
         {/* Email Input */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -138,7 +137,7 @@ export default function EmailInput({
               autoFocus
             />
           </div>
-          
+
           {/* Email suggestions */}
           {showSuggestions && suggestions.length > 0 && !value.includes('@') && (
             <motion.div
@@ -159,7 +158,7 @@ export default function EmailInput({
             </motion.div>
           )}
         </motion.div>
-        
+
         {/* Helper text */}
         <motion.p
           initial={{ opacity: 0 }}
@@ -169,7 +168,7 @@ export default function EmailInput({
         >
           Ingresa tu correo para recibir tu plan personalizado
         </motion.p>
-        
+
         {/* Fixed bottom bar */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -187,7 +186,7 @@ export default function EmailInput({
                 {skipText}
               </Button>
             )}
-            
+
             <Button
               onClick={handleContinue}
               size="lg"

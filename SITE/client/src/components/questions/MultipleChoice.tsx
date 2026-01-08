@@ -33,7 +33,7 @@ export default function MultipleChoice({ question, subtitle, options, onAnswer, 
             Análisis de Comportamiento // {category}
           </span>
         )}
-        <h2 className="text-3xl md:text-5xl font-black leading-tight text-white glow-text-yellow">
+        <h2 className="text-2xl md:text-4xl font-black leading-tight text-white glow-text-yellow">
           {question}
         </h2>
         {subtitle && <p className="text-sm font-bold text-white/40 italic">{subtitle}</p>}
@@ -45,8 +45,8 @@ export default function MultipleChoice({ question, subtitle, options, onAnswer, 
             key={idx}
             onClick={() => toggle(option.value)}
             className={`organic-card flex items-center justify-between p-5 text-left transition-all ${selected.includes(option.value)
-                ? 'border-primary/40 bg-white/10'
-                : 'border-white/5'
+              ? 'border-primary/40 bg-white/10'
+              : 'border-white/5'
               }`}
           >
             <div className="flex items-center gap-4">
@@ -57,8 +57,8 @@ export default function MultipleChoice({ question, subtitle, options, onAnswer, 
             </div>
 
             <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${selected.includes(option.value)
-                ? 'bg-primary border-primary'
-                : 'border-white/10'
+              ? 'bg-primary border-primary'
+              : 'border-white/10'
               }`}>
               {selected.includes(option.value) && <Check className="w-4 h-4 text-black" />}
             </div>
