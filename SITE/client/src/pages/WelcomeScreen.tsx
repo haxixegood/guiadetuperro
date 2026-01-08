@@ -1,4 +1,3 @@
-```javascript
 import { Button } from '@/components/ui/button';
 import { useQuiz } from '@/contexts/QuizContext';
 import { motion } from 'framer-motion';
@@ -16,12 +15,12 @@ export default function WelcomeScreen() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-white overflow-x-hidden relative paw-pattern bg-animate">
-      
+
       {/* Background Glows & Vector Accents */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[15%] right-[-5%] w-[300px] h-[300px] bg-primary/20 rounded-full blur-[80px] opacity-40" />
         <div className="absolute bottom-[20%] left-[-10%] w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px] opacity-30" />
-        
+
         {/* Floating Vector-like Shadows */}
         <div className="absolute top-[40%] right-[15%] w-24 h-24 bg-primary/5 rounded-full blur-2xl animate-pulse" />
         <div className="absolute bottom-[35%] left-[20%] w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
@@ -34,8 +33,8 @@ export default function WelcomeScreen() {
       >
         {/* Quality Badge */}
         <motion.div
-           whileHover={{ scale: 1.05 }}
-           className="inline-flex items-center gap-2 bg-primary/10 border-2 border-primary/20 rounded-full px-5 py-2 shadow-sm mb-2"
+          whileHover={{ scale: 1.05 }}
+          className="inline-flex items-center gap-2 bg-primary/10 border-2 border-primary/20 rounded-full px-5 py-2 shadow-sm mb-2"
         >
           <Star className="w-3 h-3 text-primary fill-primary animate-spin-slow" />
           <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
@@ -97,9 +96,9 @@ export default function WelcomeScreen() {
             transition={{ delay: 0.3, duration: 1 }}
             className="absolute -bottom-4 md:-bottom-12 right-0 md:-right-16 h-40 md:h-64 pointer-events-none z-10"
           >
-            <img 
-              src="/assets/dog-hero.png" 
-              alt="Cachorro fofo" 
+            <img
+              src="/assets/dog-hero.png"
+              alt="Cachorro fofo"
               className="h-full w-auto object-contain drop-shadow-[0_20px_20px_rgba(245,158,11,0.3)] floating-element"
               onError={(e) => {
                 // Fallback icon if image fails
@@ -107,7 +106,7 @@ export default function WelcomeScreen() {
               }}
             />
           </motion.div>
-          
+
           {/* Support Vector Elements */}
           <div className="absolute -left-10 bottom-0 opacity-20 pointer-events-none hidden md:block">
             <Heart className="w-16 h-16 text-primary animate-pulse" />
@@ -132,7 +131,7 @@ export default function WelcomeScreen() {
         </div>
 
         <p className="text-[9px] text-slate-400 max-w-[280px] mx-auto pt-6 leading-relaxed font-bold border-t border-slate-50 mt-4">
-          Garantía de privacidad 100% segura. <br/>
+          Garantía de privacidad 100% segura. <br />
           Al hacer clic, aceptas nuestros <span className="underline cursor-pointer">Términos</span>.
         </p>
       </motion.div>
@@ -146,4 +145,3 @@ export default function WelcomeScreen() {
     </div>
   );
 }
-```
