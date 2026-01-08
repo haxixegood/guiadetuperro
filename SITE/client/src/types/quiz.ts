@@ -5,6 +5,12 @@ export interface QuizData {
   [key: string]: any;
 }
 
+export interface QuizOption {
+  value: string;
+  label: string;
+  icon?: string;
+}
+
 export type QuizStep = {
   id: string;
   type: 'info' | 'single' | 'multiple' | 'text' | 'slider' | 'search';
@@ -15,11 +21,7 @@ export type QuizStep = {
   placeholder?: string;
   skipText?: string;
 
-  options?: {
-    value: string;
-    label: string;
-    icon?: string;
-  }[];
+  options?: QuizOption[];
 
   min?: number;
   max?: number;
