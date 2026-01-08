@@ -21,16 +21,17 @@ export default function ProcessingScreen() {
       setProgress(prev => {
         if (prev >= 100) {
           clearInterval(timer);
-          setTimeout(goToNextStep, 800);
+          // INCREASED DELAY - Wait 2 seconds after 100% before proceeding
+          setTimeout(goToNextStep, 2000);
           return 100;
         }
-        return prev + 1.2;
+        return prev + 0.8; // SLOWER progression
       });
-    }, 50);
+    }, 60); // SLOWER interval
 
     const stageTimer = setInterval(() => {
       setStage(prev => (prev < stages.length - 1 ? prev + 1 : prev));
-    }, 1500);
+    }, 2000); // SLOWER stage transitions
 
     return () => {
       clearInterval(timer);

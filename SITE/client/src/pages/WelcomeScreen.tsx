@@ -20,27 +20,20 @@ export default function WelcomeScreen() {
 
       {/* HERO SECTION */}
       <div className="relative w-full py-20 md:py-32">
-        {/* Floating Dog PNG - FIXED with Screen Blend */}
+        {/* Floating Dog PNG - Clean Cutout */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, type: "spring" }}
-          className="absolute -top-10 -right-10 md:-right-24 w-48 md:w-[500px] z-20 pointer-events-none mix-blend-screen"
+          className="absolute -top-10 -right-10 md:-right-24 w-48 md:w-[400px] z-20 pointer-events-none"
         >
           <img
-            src="/assets/dog-hero-new.png"
+            src="https://i.imgur.com/placeholder-dog.png"
             alt="Perrhijo"
-            className="dog-float w-full brightness-110 contrast-125"
+            className="dog-float w-full drop-shadow-2xl"
+            style={{ filter: 'drop-shadow(0 40px 80px rgba(0,0,0,0.6))' }}
           />
         </motion.div>
-
-        {/* HUD Visual Decor elements */}
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
-          <div className="absolute top-1/4 left-0 w-20 h-0.5 bg-primary" />
-          <div className="absolute top-1/4 left-0 w-0.5 h-10 bg-primary" />
-          <div className="absolute bottom-1/4 right-0 w-20 h-0.5 bg-primary" />
-          <div className="absolute bottom-1/4 right-0 w-0.5 h-10 bg-primary" />
-        </div>
 
         <div className="relative z-10 space-y-8 text-left md:text-center">
           <h1 className="text-6xl md:text-[10rem] font-black leading-[0.85] glow-text-yellow tracking-tighter">
@@ -52,7 +45,6 @@ export default function WelcomeScreen() {
             <p className="text-xl md:text-3xl font-bold text-white/50 leading-tight">
               El manual de instrucciones que <span className="text-white italic">tu perro</span> no trajo. 15 minutos al día, sin gritos, desde <span className="text-white underline decoration-primary underline-offset-8">tu celular</span>.
             </p>
-            <div className="absolute -left-10 top-0 text-[10px] font-mono text-primary rotate-90 hidden md:block">OPTIMIZING_SYNC</div>
           </div>
         </div>
       </div>
@@ -69,7 +61,7 @@ export default function WelcomeScreen() {
         <div className="flex justify-center gap-8 md:gap-12 opacity-40">
           <div className="flex flex-col items-center gap-2">
             <Smartphone className="w-6 h-6" />
-            <span className="text-[8px] font-black uppercase tracking-widest text-white/60">App Mobile</span>
+            <span className="text-[8px] font-black uppercase tracking-widest text-white/60">Mobile First</span>
           </div>
           <div className="flex flex-col items-center gap-2">
             <Zap className="w-6 h-6" />

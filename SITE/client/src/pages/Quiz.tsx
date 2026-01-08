@@ -90,19 +90,13 @@ export default function Quiz() {
         </div>
       </main>
 
-      {/* HUD DECOR CORNERS */}
+      {/* HUD DECOR CORNERS - ONLY TOP */}
       <div className="fixed top-20 left-10 w-4 h-4 border-l border-t border-white/10 pointer-events-none" />
       <div className="fixed top-20 right-10 w-4 h-4 border-r border-t border-white/10 pointer-events-none" />
 
-      {/* Floating HUD Elements */}
+      {/* Floating HUD Elements - SUBTLE */}
       <div className="fixed top-1/4 -left-20 w-40 h-40 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="fixed bottom-1/4 -right-20 w-40 h-40 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
-
-      <div className="fixed top-1/2 left-4 -translate-y-1/2 flex flex-col gap-4 opacity-10 pointer-events-none">
-        <Shield className="w-4 h-4 text-primary" />
-        <Zap className="w-4 h-4 text-primary" />
-        <Sparkles className="w-4 h-4 text-primary" />
-      </div>
     </div>
   );
 }
