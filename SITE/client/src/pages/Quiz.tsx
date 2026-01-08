@@ -1,6 +1,9 @@
 import { useQuiz } from '@/contexts/QuizContext';
 import ProgressBar from '@/components/ProgressBar';
 import BackButton from '@/components/BackButton';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
 
 import WelcomeScreen from './WelcomeScreen';
 import ProcessingScreen from './ProcessingScreen';
@@ -18,7 +21,16 @@ import { QUIZ_STEPS } from '@/types/quiz';
 import { useLocation } from 'wouter';
 
 export default function Quiz() {
-  const { currentStep, goToNextStep, updateQuizData, quizData } = useQuiz();
+  const {
+    currentStep,
+    goToNextStep,
+    updateQuizData,
+    quizData,
+    unlockedRewards,
+    showRewardAnimation,
+    unlockReward,
+    hideRewardAnimation
+  } = useQuiz();
   const [, setLocation] = useLocation();
 
   const step = QUIZ_STEPS[currentStep];
@@ -34,6 +46,11 @@ export default function Quiz() {
   const handleAnswer = (value: any) => {
     const key = step.id as keyof typeof quizData;
     updateQuizData({ [key]: value });
+
+    // Gatilhos de Gamificação
+    if (step.id === 'age') unlockReward('Plan Personalizado');
+    if (step.id === 'daily-habits') unlockReward('Checklist: Casa Limpa');
+    if (step.id === 'motivation') unlockReward('Audio Relaxante');
 
     // 🔥 REDIRECT DEFINITIVO PARA SALES PAGE APÓS EMAIL
     if (step.id === 'email') {
@@ -146,10 +163,66 @@ export default function Quiz() {
     }
   };
 
+  const rewardMetadata: Record<string, { title: string, icon: string }> = {
+    'Plan Personalizado': { title: 'Plan de 21 días generado con éxito', icon: '📝' },
+    'Checklist: Casa Limpa': { title: 'Bono: Checklist de Baño Unlocked', icon: '🚽' },
+    'Audio Relaxante': { title: 'Bono: Áudio Calmante Unlocked', icon: '🎵' }
+  };
+
+  const currentReward = unlockedRewards[unlockedRewards.length - 1];
+
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
+
       <ProgressBar />
+
+      {/* GAMIFICATION METER */}
+      <div className="px-6 py-2 bg-slate-50 border-b flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="flex -space-x-2">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className={`w-5 h-5 rounded-full border-2 border-white flex items-center justify-center text-[8px] ${unlockedRewards.length > i ? 'bg-green-500 text-white font-black' : 'bg-slate-200 text-slate-400'}`}>
+                {unlockedRewards.length > i ? '✓' : i + 1}
+              </div>
+            ))}
+          </div>
+          <span className="text-[10px] font-black uppercase text-slate-400 tracking-tighter">Bónus</span>
+        </div>
+        <div className="text-[10px] font-black text-primary">
+          VALOR: <span className="text-slate-900">${(unlockedRewards.length * 249).toLocaleString()} MXN</span>
+        </div>
+      </div>
+
       <BackButton />
+
+      {/* REWARD ANIMATION OVERLAY */}
+      <AnimatePresence>
+        {showRewardAnimation && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5, y: 100 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[60] w-full max-w-xs px-4"
+          >
+            <div className="bg-slate-900 text-white rounded-3xl p-6 shadow-2xl border border-white/20 flex flex-col items-center text-center gap-4">
+              <div className="text-5xl animate-bounce">
+                {rewardMetadata[currentReward]?.icon || '🎁'}
+              </div>
+              <div className="space-y-1">
+                <p className="text-primary font-black uppercase text-[10px] tracking-widest">¡NUEVO LOGRO!</p>
+                <h3 className="text-lg font-black leading-tight">
+                  {rewardMetadata[currentReward]?.title || 'Recompensa Desbloqueada'}
+                </h3>
+              </div>
+              <Button onClick={hideRewardAnimation} className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl font-black">
+                ¡GENIAL!
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <main className="flex-1 flex items-center justify-center p-4">
         <div className="w-full max-w-2xl quiz-card animate-slide-up-fade">

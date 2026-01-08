@@ -9,6 +9,10 @@ interface QuizContextType {
   goToNextStep: () => void;
   goToPreviousStep: () => void;
   progress: number;
+  unlockedRewards: string[];      // Recompensas ganhas (ex: 'bonus-1', 'audio-relax')
+  showRewardAnimation: boolean;   // Controla o pop-up de conquista
+  unlockReward: (id: string) => void;
+  hideRewardAnimation: () => void;
 }
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
@@ -16,22 +20,33 @@ const QuizContext = createContext<QuizContextType | undefined>(undefined);
 export function QuizProvider({ children }: { children: ReactNode }) {
   const [quizData, setQuizData] = useState<QuizData>({});
   const [currentStep, setCurrentStep] = useState(0);
-  
+  const [unlockedRewards, setUnlockedRewards] = useState<string[]>([]);
+  const [showRewardAnimation, setShowRewardAnimation] = useState(false);
+
   const totalSteps = 27; // Total de etapas do quiz (inclui discount-wheel)
   const progress = (currentStep / totalSteps) * 100;
-  
+
+  const unlockReward = (id: string) => {
+    if (!unlockedRewards.includes(id)) {
+      setUnlockedRewards(prev => [...prev, id]);
+      setShowRewardAnimation(true);
+    }
+  };
+
+  const hideRewardAnimation = () => setShowRewardAnimation(false);
+
   const updateQuizData = (data: Partial<QuizData>) => {
     setQuizData(prev => ({ ...prev, ...data }));
   };
-  
+
   const goToNextStep = () => {
     setCurrentStep(prev => Math.min(prev + 1, totalSteps));
   };
-  
+
   const goToPreviousStep = () => {
     setCurrentStep(prev => Math.max(prev - 1, 0));
   };
-  
+
   return (
     <QuizContext.Provider
       value={{
@@ -42,6 +57,10 @@ export function QuizProvider({ children }: { children: ReactNode }) {
         goToNextStep,
         goToPreviousStep,
         progress,
+        unlockedRewards,
+        showRewardAnimation,
+        unlockReward,
+        hideRewardAnimation,
       }}
     >
       {children}
