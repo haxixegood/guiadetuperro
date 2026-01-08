@@ -84,23 +84,42 @@ export default function SalesPage() {
             <span className="underline decoration-[#FFD700]/50 decoration-4 underline-offset-4">{quizData.name || 'tu perro'}</span>
           </h1>
 
-          {/* VIDEO PLACEHOLDER */}
-          <div className="relative w-full aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl border-4 border-white ring-1 ring-gray-100 mx-auto">
-            <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-10">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="w-20 h-20 bg-[#FFD700] rounded-full flex items-center justify-center shadow-lg border-4 border-white/20"
-              >
-                <PlayCircle className="w-10 h-10 text-[#1A1A1A] ml-1 fill-black" />
-              </motion.button>
+          {/* PERSONALIZED DIAGNOSIS CARD - IMPACTFUL REPLACEMENT FOR VIDEO */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            className="relative w-full overflow-hidden bg-gradient-to-br from-gray-50 to-white rounded-3xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col items-center text-center space-y-6"
+          >
+            {/* Holographic line effect */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FFD700] to-transparent" />
+
+            <div className="w-16 h-16 bg-white rounded-2xl shadow-sm border border-gray-50 flex items-center justify-center text-3xl">
+              📄
             </div>
-            {/* Thumbnail simulation */}
-            <div className="absolute inset-0 bg-gray-800" />
-            <p className="absolute bottom-4 left-0 right-0 text-white/80 text-xs font-bold uppercase tracking-widest z-20">
-              Ver Transformación (0:15)
-            </p>
-          </div>
+
+            <div className="space-y-1">
+              <h3 className="text-xs font-black text-[#DAA520] uppercase tracking-widest">Protocolo Autorizado</h3>
+              <p className="text-xl font-black text-[#1A1A1A] uppercase tracking-tight">Análisis: {quizData.name || 'Tu Perro'}</p>
+            </div>
+
+            <div className="w-full bg-white/50 backdrop-blur-sm rounded-2xl p-4 border border-gray-50 flex items-center justify-between text-left">
+              <div className="space-y-1">
+                <span className="text-[10px] font-bold text-gray-400 uppercase">Estado Mental</span>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2 h-2 bg-green-500 rounded-full" />
+                  <span className="text-xs font-black text-green-600 uppercase">Recuperable</span>
+                </div>
+              </div>
+              <div className="space-y-1 text-right">
+                <span className="text-[10px] font-bold text-gray-400 uppercase">Probabilidad Éxito</span>
+                <span className="block text-xs font-black text-[#1A1A1A]">98.2%</span>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <span className="text-[10px] font-black text-gray-400 italic">Válido exclusivamente para el perfil analizado</span>
+            </div>
+          </motion.div>
 
           <p className="text-lg font-medium text-gray-500 leading-relaxed max-w-sm mx-auto">
             Convierte tu hogar en un santuario de paz. <br />
@@ -180,10 +199,10 @@ export default function SalesPage() {
           </div>
         </section>
 
-        {/* TRAINER / AUTHORITY */}
-        <section className="bg-gray-50 -mx-5 px-5 py-12 text-center space-y-6">
-          <div className="w-24 h-24 mx-auto bg-gray-200 rounded-full overflow-hidden border-4 border-white shadow-lg">
-            <User className="w-full h-full text-gray-400 p-2" />
+        {/* TRAINER / AUTHORITY - CONSISTENT EMOJI */}
+        <section className="bg-gray-50/50 -mx-5 px-5 py-12 text-center space-y-6">
+          <div className="w-24 h-24 mx-auto bg-white rounded-full flex items-center justify-center text-5xl shadow-lg shadow-gray-200 border-4 border-white">
+            👨‍🏫
           </div>
           <div className="space-y-2">
             <h3 className="text-xl font-black text-[#1A1A1A] uppercase">Tu Instructor Experto</h3>
@@ -214,10 +233,10 @@ export default function SalesPage() {
                   { name: 'BONO: Audio de Calma', price: '$17' },
                   { name: 'Soporte VIP WhatsApp', price: '$97', highlight: true }
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center justify-between gap-3 border-b border-white/5 pb-3last:border-0 last:pb-0">
+                  <div key={i} className="flex items-center justify-between gap-3 border-b border-white/5 pb-3 last:border-0 last:pb-0">
                     <div className="flex items-center gap-3">
-                      <CheckCircle2 className={`w-5 h-5 flex-shrink-0 ${item.highlight ? 'text-[#FFD700]' : 'text-[#00E055]'}`} />
-                      <span className={`text-sm font-bold ${item.highlight ? 'text-white' : 'text-gray-300'}`}>{item.name}</span>
+                      <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-[#00E055]" />
+                      <span className={`text-sm font-bold ${item.highlight ? 'text-[#FFD700]' : 'text-gray-300'}`}>{item.name}</span>
                     </div>
                     <div className="text-right">
                       <span className="block text-[10px] text-gray-500 line-through">Valor {item.price}</span>
@@ -273,7 +292,7 @@ export default function SalesPage() {
               { q: "¿Sirve para cachorros?", a: "Sí, es ideal para iniciar con el pie derecho desde los 2 meses." },
               { q: "¿Tengo que regañar a mi perro?", a: "No. El método Sync es 100% positivo y libre de violencia." },
               { q: "¿Cuándo veré resultados?", a: "La mayoría nota cambios drásticos en la primera semana de aplicación." },
-              { q: "¿Y si no funciona?", a: "Tienes 7 días de garantía total. El riesgo es todo nuestro." }
+              { q: "¿Y si no funciona?", a: "Tienes 7 días de garantia total. El riesgo es todo nuestro." }
             ].map((faq, i) => (
               <div key={i} className="border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
                 <button
@@ -299,6 +318,49 @@ export default function SalesPage() {
                 </AnimatePresence>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* FINAL CALL SECTION - NEW ADDITION AFTER FAQ */}
+        <section className="text-center space-y-10 pb-10">
+          <div className="space-y-4">
+            <div className="inline-block px-3 py-1 bg-red-50 text-red-600 text-[10px] font-black uppercase tracking-[0.2em] rounded-full">
+              Última Oportunidad
+            </div>
+            <h2 className="text-3xl font-black uppercase tracking-tight">¿Estás listo para el cambio?</h2>
+            <p className="text-sm text-gray-500 font-medium max-w-xs mx-auto">
+              No dejes que los problemas de conducta de <span className="text-black font-bold">{quizData.name || 'tu perro'}</span> sigan arruinando tu tranquilidad.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4">
+            {[
+              { icon: "⚡", label: "Instantáneo" },
+              { icon: "🛡️", label: "Protegido" },
+              { icon: "📱", label: "Móvil" }
+            ].map((item, i) => (
+              <div key={i} className="space-y-2">
+                <div className="text-2xl">{item.icon}</div>
+                <span className="text-[10px] font-black uppercase text-gray-400">{item.label}</span>
+              </div>
+            ))}
+          </div>
+
+          <Button
+            onClick={handleCheckout}
+            className="w-full bg-[#1A1A1A] hover:bg-black text-white h-16 rounded-2xl text-lg font-black uppercase tracking-tight flex flex-col items-center justify-center gap-0.5"
+          >
+            <span>SÍ, QUIERO ACCESO TOTAL</span>
+            <span className="text-[10px] text-[#FFD700] tracking-widest">PAGO ÚNICO • ACCESO VITALICIO</span>
+          </Button>
+
+          <div className="flex flex-col items-center gap-4 opacity-50">
+            <div className="flex gap-4 grayscale">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-4" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-6" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="Paypal" className="h-4" />
+            </div>
+            <p className="text-[9px] font-bold text-gray-400 uppercase">Procesamiento de pago 100% seguro por Hotmart</p>
           </div>
         </section>
 
@@ -338,3 +400,4 @@ export default function SalesPage() {
     </div>
   );
 }
+
