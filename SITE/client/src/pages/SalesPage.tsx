@@ -1,301 +1,223 @@
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useQuiz } from '@/contexts/QuizContext';
-import { motion } from 'framer-motion';
-import {
-  CheckCircle,
-  Star,
-  Activity,
-  Zap,
-  ShieldCheck,
-  MessageCircle,
-  MoreVertical,
-  Phone,
-  Video,
-  Cpu,
-  Scan,
-  Sparkles,
-  Lock
-} from 'lucide-react';
+import { CheckCircle2, Smartphone, Zap, Sparkles, Star, ShieldCheck, PlayCircle, Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function SalesPage() {
   const { quizData } = useQuiz();
-  const [timeLeft, setTimeLeft] = useState(899); // 14:59
+  const [timeLeft, setTimeLeft] = useState(900); // 15:00 minutes
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+      setTimeLeft(prev => (prev > 0 ? prev - 1 : 0));
     }, 1000);
     return () => clearInterval(timer);
   }, []);
 
   const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const handleBuy = () => {
-    window.location.href = 'https://pay.hotmart.com/YOUR_ID?checkoutMode=10';
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
   };
 
   return (
-    <div className="min-h-screen bg-[#050508] text-white overflow-x-hidden selection:bg-neon-cyan/30">
-
-      {/* CYBER SCARCITY BAR */}
-      <div className="bg-cyber-onyx/90 backdrop-blur-xl py-3 px-4 text-center sticky top-0 z-[100] border-b border-primary/20">
-        <div className="container mx-auto flex items-center justify-center gap-4 md:gap-8">
-          <div className="hidden md:flex items-center gap-2 opacity-40">
-            <Cpu className="w-4 h-4 text-primary" />
-            <span className="text-[8px] font-mono uppercase tracking-widest">SERVER_STATUS: ONLINE</span>
+    <div className="min-h-screen bg-background text-white selection:bg-primary/30 pb-32">
+      {/* SCARCITY HEADER */}
+      <div className="fixed top-0 left-0 right-0 z-[100] bg-primary/90 text-black py-2 px-4 shadow-[0_0_50px_rgba(255,234,0,0.5)]">
+        <div className="max-w-4xl mx-auto flex justify-between items-center font-black text-[10px] md:text-sm uppercase tracking-tighter">
+          <div className="flex items-center gap-2">
+            <Zap className="w-4 h-4 animate-bounce" />
+            OFERTA POR TIEMPO LIMITADO PARA MÉXICO
           </div>
-          <p className="text-[10px] md:text-sm font-black uppercase tracking-[0.3em] flex items-center gap-3">
-            <span className="text-primary animate-pulse">CÓDIGO DE DESCUENTO ACTIVO:</span>
-            <span className="text-white bg-primary/20 px-3 py-1 rounded-sm tabular-nums font-mono border border-primary/30">-{formatTime(timeLeft)}s</span>
-          </p>
-          <div className="hidden md:flex items-center gap-2 opacity-40">
-            <Lock className="w-4 h-4 text-neon-purple" />
-            <span className="text-[8px] font-mono uppercase tracking-widest">SECURE_SYNC: ENABLED</span>
+          <div className="flex items-center gap-2">
+            EL PRECIO SUBE EN: <span className="text-sm md:text-lg">{formatTime(timeLeft)}</span>
           </div>
         </div>
       </div>
 
-      {/* NEON HERO - DIRECT RESPONSE 3.0 */}
-      <section className="relative pt-20 md:pt-40 pb-24 px-6 overflow-hidden">
-        {/* Deep Cyber Background */}
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[150px] -z-10 translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-neon-purple/5 rounded-full blur-[120px] -z-10 -translate-x-1/2" />
-
-        <div className="container max-w-6xl mx-auto flex flex-col items-center text-center space-y-12">
+      <main className="pt-20 px-4 max-w-5xl mx-auto space-y-24">
+        {/* HERO SECTION */}
+        <section className="relative py-12">
+          {/* Floating Dog Overlay (PNG on top) */}
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="hud-badge !text-xs !px-8 !py-3 flex items-center gap-3"
+            initial={{ opacity: 0, scale: 0.8, x: 100 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            className="absolute -top-10 -right-10 md:-right-32 w-48 md:w-[600px] z-50 pointer-events-none"
           >
-            <Activity className="w-4 h-4 animate-pulse" />
-            VÍNCULO NEURAL: DETECTADO EN {quizData.name?.toUpperCase() || 'TU PERRIHO'}
+            <img src="/assets/dog-sales-hero.png" alt="Happy Dog" className="dog-float w-full" />
           </motion.div>
 
-          <h1 className="text-6xl md:text-[12rem] font-black leading-[0.8] tracking-tighter glow-text">
-            SINCRO_ <span className="text-primary italic neon-pulse">MENTAL</span>
-          </h1>
-
-          <div className="space-y-6 max-w-3xl border-l-4 border-primary/30 pl-8 text-left md:text-center md:border-l-0 md:pl-0">
-            <p className="text-xl md:text-4xl text-slate-400 font-bold leading-tight">
-              Tu <span className="text-white italic">"Perrhijo"</span> no es rebelde. Su hardware es perfecto, pero su <span className="text-white underline decoration-primary decoration-4 underline-offset-8">sistema operativo</span> está obsoleto.
-            </p>
-            <p className="text-primary font-black uppercase tracking-[0.4em] text-xs md:text-sm">
-              Reconfigura su obediência en solo 21 días_
-            </p>
-          </div>
-
-          {/* ACTION HUB */}
-          <div className="relative w-full max-w-2xl mx-auto pt-16 flex flex-col items-center">
-            {/* Night-Vision Dog Projection */}
-            <motion.div
-              initial={{ opacity: 0, scale: 1.2 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 2 }}
-              className="absolute -top-40 md:-top-80 left-1/2 -translate-x-1/2 w-full max-w-lg pointer-events-none z-0 opacity-20"
-            >
-              <div className="relative">
-                <div className="scanner-line" />
-                <img src="/assets/dog-hero-new.png" alt="" className="w-full mix-blend-screen grayscale brightness-150 contrast-125" />
-              </div>
-            </motion.div>
-
-            <Button
-              onClick={handleBuy}
-              className="action-btn w-full md:w-auto px-16 md:px-24 py-14 text-2xl md:text-5xl font-black rounded-sm relative z-10 shadow-[0_0_60px_rgba(255,77,0,0.5)]"
-            >
-              ¡DESBLOQUEAR CÓDIGO!
-            </Button>
-
-            {/* Micro-Details */}
-            <p className="mt-8 text-[9px] font-mono text-white/40 uppercase tracking-[0.5em] flex items-center gap-3">
-              <Scan className="w-3 h-3 text-primary" /> ENCRYPTED_CHECKOUT_V3
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* THE "BERRINCHUDO" PROBLEM AREA */}
-      <section className="py-32 px-6 border-y border-white/5 bg-white/[0.02] relative">
-        <div className="container max-w-4xl mx-auto space-y-16">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <h2 className="text-4xl md:text-6xl font-black glow-text leading-none uppercase">El Sistema <span className="text-primary italic">Obsoleto</span></h2>
-              <div className="space-y-4 text-slate-400 font-bold text-lg leading-relaxed">
-                <p>¿Cansado del <span className="text-white">caos doméstico</span>? Los berrinches caninos y muebles destruidos no son tu culpa.</p>
-                <p>Estás usando un método de entrenamiento analógico en una era digital. Es hora de hacer un <span className="text-white">Hard Reset</span>.</p>
-              </div>
-              <div className="flex gap-4">
-                <div className="cyber-card p-4 flex-1 border-red-500/20">
-                  <span className="text-[8px] font-black text-red-500 block mb-1 uppercase">Estado Actual</span>
-                  <span className="text-sm font-black whitespace-nowrap">CAOS & BERRINCHES</span>
-                </div>
-                <div className="cyber-card p-4 flex-1 border-primary/20">
-                  <span className="text-[8px] font-black text-primary block mb-1 uppercase">Post-Sync</span>
-                  <span className="text-sm font-black whitespace-nowrap">PAZ & CONTROL</span>
-                </div>
-              </div>
+          <div className="space-y-10 relative z-10">
+            <div className="space-y-4">
+              <span className="bg-white/5 border border-white/10 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-primary italic">
+                Entrenamiento de Bolsillo 15 Min/Día
+              </span>
+              <h1 className="text-5xl md:text-[10rem] font-black leading-[0.85] tracking-tighter glow-text-yellow uppercase">
+                EL APP QUE <br />
+                <span className="text-primary italic">REPROGRAMA</span> <br />
+                A TU PERRO
+              </h1>
             </div>
-            <div className="relative">
-              <div className="cyber-card p-2 rounded-sm border-primary/30 rotate-3 transition-transform hover:rotate-0">
-                <div className="scanner-line" />
-                <img src="/assets/dog-side.png" className="w-full grayscale brightness-75" alt="" />
-                <div className="absolute inset-0 bg-primary/10 mix-blend-overlay" />
-              </div>
+
+            <p className="text-xl md:text-4xl font-bold text-white/50 leading-tight max-w-2xl">
+              Convierte tu celular en el <span className="text-white italic">manual de instrucciones</span> que <span className="text-white underline decoration-primary underline-offset-8">tu perro no trahouff</span>. Resultados permanentes desde la primera sesión.
+            </p>
+
+            <div className="pt-6">
+              <Button onClick={() => window.location.href = '#checkout'} className="yellow-cta px-12 py-10 text-xl font-black md:text-2xl shimmer animate-pulse-glow">
+                ¡QUIERO UN PERRO EQUILIBRADO AHORA!
+              </Button>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* NEURAL ARSENAL - CARD OVERHAUL */}
-      <section className="py-32 px-6 relative overflow-hidden">
-        <div className="container max-w-6xl mx-auto space-y-24">
-          <div className="text-center space-y-6">
-            <h2 className="text-5xl md:text-9xl font-black tracking-tighter glow-text leading-none uppercase">
-              EL ARSENAL <span className="text-primary italic">NEURAL</span>
-            </h2>
-            <p className="text-primary font-black uppercase text-xs tracking-[0.5em]">PROTOCOLOS_CARGANDO_99%</p>
+        {/* HOW IT WORKS SECTION (APP STYLE) */}
+        <section className="space-y-12">
+          <div className="text-center">
+            <h2 className="text-3xl md:text-6xl font-black glow-text-yellow uppercase italic">Praticidad Extrema</h2>
+            <p className="text-white/40 font-bold">Tres pasos simples para el dueño moderno:</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              {
-                title: "PASO A PASO_FIX",
-                desc: "4 Semanas Intensivas de re-programación. El código fuente para una obediencia absoluta.",
-                icon: <Cpu className="w-12 h-12" />,
-                tag: "CORE_SYSTEM"
-              },
-              {
-                title: "15_SEC_DASH",
-                desc: "Micro-lecciones de alto impacto. Sincronización instantánea para tutores sin tiempo.",
-                icon: <Zap className="w-12 h-12" />,
-                tag: "FAST_SYNC"
-              },
-              {
-                title: "MIND_REVERSE",
-                desc: "Entiende el algoritmo de su mente. Sé el líder que tu perro realmente reconoce.",
-                icon: <Activity className="w-12 h-12" />,
-                tag: "PSY_LINK"
-              },
+              { icon: <PlayCircle className="w-12 h-12 text-primary" />, title: '1. Abre el Video', desc: 'Lecciones cortas y directas que puedes ver en cualquier momento.' },
+              { icon: <Zap className="w-12 h-12 text-primary" />, title: '2. Practica 15 Min', desc: 'Sin gritos ni castigos. Solo técnica pura de conexión neural.' },
+              { icon: <ShieldCheck className="w-12 h-12 text-primary" />, title: '3. Resultados', desc: 'Observa como los berrinches desaparecen y la obediencia sube.' }
             ].map((item, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="cyber-card p-10 flex flex-col gap-8 relative group"
-              >
-                <div className="absolute top-0 right-0 hud-badge m-6">{item.tag}</div>
-                <div className="p-6 bg-primary/10 self-start text-primary rounded-sm border border-primary/20 group-hover:bg-primary group-hover:text-black transition-all">
-                  {item.icon}
-                </div>
-                <div className="space-y-4">
-                  <h3 className="text-2xl font-black uppercase tracking-tighter">{item.title}</h3>
-                  <p className="text-sm font-bold text-slate-400 leading-relaxed">{item.desc}</p>
-                </div>
+              <motion.div key={i} whileHover={{ y: -10 }} className="organic-card p-10 text-center space-y-4 border-white/5">
+                <div className="flex justify-center">{item.icon}</div>
+                <h4 className="text-2xl font-black uppercase tracking-tighter italic">{item.title}</h4>
+                <p className="text-sm font-bold text-white/40 leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* HOLOGRAPHIC SOCIAL PROOF */}
-      <section className="py-32 px-6 bg-white/[0.01]">
-        <div className="container max-w-5xl mx-auto space-y-20">
-          <div className="text-center space-y-6">
-            <div className="inline-flex items-center gap-3 border border-neon-purple/30 text-neon-purple px-6 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest">
-              <MessageCircle className="w-4 h-4" /> TESTIMONIOS_SINCRO_V2
-            </div>
-            <h2 className="text-4xl md:text-8xl font-black glow-text leading-none">PRUEBAS <span className="text-primary italic">REALES</span></h2>
+        {/* PROOF SECTION (INSTAGRAM STORIES STYLE) */}
+        <section className="space-y-12">
+          <div className="text-center">
+            <h2 className="text-3xl md:text-6xl font-black glow-text-yellow uppercase italic tracking-tighter">Resultados de Dueños 💎</h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-10">
+          <div className="flex overflow-x-auto gap-8 pb-10 scrollbar-hide px-4">
             {[
-              { name: "MARIA_MTY", text: "SYNC_COMPLETE: Mi Golden ya no tira de la correa. Es como si le hubieran actualizado el software.", status: "ONLINE", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop" },
-              { name: "JUAN_CDMX", text: "PROTOCOL_FIXED: Dejó de ladrar a visitas en 3 días. Increíble técnica de obediência.", status: "ONLINE", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" }
-            ].map((t, i) => (
-              <motion.div
-                key={i}
-                className="cyber-card p-8 border-neon-purple/20 bg-neon-purple/[0.02] flex flex-col gap-6"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <img src={t.img} className="w-14 h-14 rounded-sm grayscale brightness-125 border border-neon-purple/40" />
-                    <div>
-                      <p className="font-black text-sm text-neon-purple uppercase">{t.name}</p>
-                      <p className="text-[8px] font-mono text-white/40">{t.status}_READY</p>
+              { name: '@MariaCanina', text: 'Mi berrinchudo Max ahora es otro. 15 min al día en serio funcionan!', img: '/assets/st-1.jpg' },
+              { name: '@Rafa_Gdl', text: 'El manual que no trajo por fin llegó. Mi celular es mi mejor entrenador.', img: '/assets/st-2.jpg' },
+              { name: '@Holi_Pet', text: 'Sin gritos, todo positivo. Resultados desde el día 3. Recomendado 100%', img: '/assets/st-3.jpg' }
+            ].map((st, i) => (
+              <div key={i} className="min-w-[280px] md:min-w-[320px] aspect-[9/16] organic-card p-4 relative overflow-hidden border-primary/20 bg-black group">
+                {/* Neon Smartphone Frame Simulation */}
+                <div className="absolute inset-0 border-[6px] border-black rounded-[32px] z-10" />
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 w-20 h-5 bg-black rounded-full z-20" />
+
+                <div className="relative h-full w-full bg-slate-800 rounded-[28px] overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/40 via-transparent to-black/80 z-20" />
+                  <img src={st.img} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Result" />
+
+                  <div className="absolute bottom-6 left-6 right-6 z-30 space-y-2">
+                    <p className="text-xs font-black text-primary uppercase">@{st.name}</p>
+                    <p className="text-[10px] font-bold text-white leading-tight">{st.text}</p>
+                    <div className="flex gap-1 text-[8px] text-primary">
+                      {[1, 2, 3, 4, 5].map(s => <Star key={s} className="w-2 h-2 fill-current" />)}
                     </div>
                   </div>
-                  <div className="flex gap-1">
-                    {[1, 2, 3, 4, 5].map(s => <Star key={s} className="w-3 h-3 text-primary fill-primary" />)}
-                  </div>
                 </div>
-                <p className="text-lg font-bold text-slate-300 italic">"{t.text}"</p>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* FINAL CYBER CTA */}
-      <section className="py-40 px-6 text-center relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-primary/10 rounded-full blur-[180px] -z-10" />
+        {/* ARSENAL PREMIUM (PRODUCT) */}
+        <section id="checkout" className="organic-card p-12 md:p-20 relative overflow-hidden border-primary/30 bg-primary/[0.02]">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
 
-        <div className="container max-w-5xl mx-auto space-y-16">
-          <motion.div
-            animate={{ scale: [1, 1.05, 1], rotate: [0, 2, -2, 0] }}
-            transition={{ duration: 6, repeat: Infinity }}
-          >
-            <img src="/assets/dog-bond.png" className="w-64 md:w-[500px] mx-auto mix-blend-screen opacity-40 brightness-150 mb-8" alt="" />
-          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10">
+            <div className="space-y-8">
+              <h3 className="text-4xl md:text-7xl font-black leading-none uppercase glow-text-yellow italic">EL ARSENAL <br /> PREMIUM</h3>
 
-          <h2 className="text-6xl md:text-[10rem] font-black leading-none tracking-tighter uppercase glow-text">
-            SINCRO_ <span className="text-primary italic">TOTAL</span>
-          </h2>
+              <div className="space-y-4">
+                {[
+                  'Manual de Reprogramación (App Acceso)',
+                  'Guía: Adiós Ansiedad (BONO)',
+                  'Checklist: Higiene Total (BONO)',
+                  'Audio de Calma Instantánea (BONO)',
+                  'Soporte Élite vía WhatsApp'
+                ].map(item => (
+                  <div key={item} className="flex items-center gap-3">
+                    <div className="w-5 h-5 bg-primary/20 rounded-full flex items-center justify-center">
+                      <CheckCircle2 className="w-3 h-3 text-primary" />
+                    </div>
+                    <span className="text-sm md:text-base font-bold text-white/80">{item}</span>
+                  </div>
+                ))}
+              </div>
 
-          <p className="text-xl md:text-4xl text-slate-400 font-bold max-w-3xl mx-auto leading-tight">
-            No esperes a que el sistema colapse. Reconfigura a {quizData.name || 'tu perriho'} hoy mismo.
-          </p>
+              <div className="pt-4 space-y-2">
+                <p className="text-sm font-bold text-white/40 line-through">VALOR TOTAL: $1,497 MXN</p>
+                <div className="flex items-baseline gap-4">
+                  <span className="text-6xl md:text-8xl font-black text-primary">$39MXN</span>
+                  <span className="text-xs font-black text-white/40 uppercase tracking-widest">Pago Único</span>
+                </div>
+              </div>
 
-          <div className="pt-8">
-            <Button
-              onClick={handleBuy}
-              className="action-btn w-full md:w-auto px-20 py-16 text-2xl md:text-5xl font-black rounded-sm shadow-[0_0_80px_rgba(255,77,0,0.6)]"
-            >
-              ¡ACCEDER AL PROTOCOLO!
-            </Button>
-          </div>
+              <Button className="yellow-cta w-full py-12 text-2xl font-black shimmer animate-pulse-glow">
+                ¡OBTENER MI ACCESO AHORA!
+              </Button>
 
-          <div className="pt-16 flex flex-col items-center gap-8">
-            <div className="flex items-center gap-10 opacity-30 grayscale hover:grayscale-0 transition-opacity">
-              <ShieldCheck className="w-10 h-10" />
-              <Lock className="w-10 h-10" />
-              <Zap className="w-10 h-10" />
+              <div className="flex justify-between items-center opacity-30 px-2 mt-4">
+                <div className="flex items-center gap-2 text-[10px] font-black uppercase">
+                  <ShieldCheck className="w-4 h-4" /> Pago Seguro
+                </div>
+                <div className="flex items-center gap-2 text-[10px] font-black uppercase text-right">
+                  <Smartphone className="w-4 h-4" /> Acceso de por Vida
+                </div>
+              </div>
             </div>
-            <p className="text-[10px] font-mono uppercase tracking-[0.5em] text-white/40">ACCESO_ENVIADO_IP_READY_2025</p>
+
+            <div className="relative flex items-center justify-center">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+                className="absolute w-[400px] h-[400px] border border-primary/10 rounded-full"
+              />
+              <motion.div
+                animate={{
+                  scale: [1, 1.05, 1],
+                  rotate: [0, 2, -2, 0]
+                }}
+                transition={{ duration: 6, repeat: Infinity }}
+                className="relative z-20 w-80 md:w-full"
+              >
+                <img src="/assets/product-mockup.png" alt="Product Mockup" className="dog-float w-full" />
+              </motion.div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* FLOATING HUD BUTTON */}
-      <a
-        href="https://wa.me/YOUR_NUMBER"
-        target="_blank"
-        rel="noreferrer"
-        className="fixed bottom-8 right-8 cyber-card !p-4 border-primary/40 bg-primary/10 z-[100] hover:scale-110 transition-all flex items-center gap-4 group rounded-sm"
-      >
-        <div className="relative">
-          <MessageCircle className="w-8 h-8 text-primary fill-primary/20" />
-          <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping" />
-        </div>
-        <div className="flex flex-col items-start leading-none pr-4">
-          <span className="text-[10px] font-black text-white/60 mb-1 tracking-widest uppercase">Support_Link</span>
-          <span className="text-xs font-black text-primary uppercase">SYNC_CHAT</span>
-        </div>
-      </a>
+        {/* FINAL TRUST FOOTER */}
+        <section className="text-center py-20 border-t border-white/5 space-y-10">
+          <div className="flex justify-center gap-6 opacity-30">
+            <PlayCircle className="w-12 h-12" />
+            <Heart className="w-12 h-12" />
+            <Activity className="w-12 h-12" />
+          </div>
+          <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.6em]">
+            Diseñado por Expertos en Etología Canina // México 2025
+          </p>
+        </section>
+      </main>
 
+      {/* FLOATING CONTACT HUB */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          className="bg-[#25D366] p-4 rounded-full shadow-2xl relative group"
+        >
+          <div className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 rounded-full text-white text-[10px] flex items-center justify-center font-black animate-pulse">1</div>
+          <Zap className="w-6 h-6 text-white" />
+        </motion.button>
+      </div>
     </div>
   );
 }
