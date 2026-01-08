@@ -34,29 +34,9 @@ export default function SalesPage() {
     <div className="min-h-screen bg-background">
 
       {/* HERO */}
-      <section className="py-16 md:py-28 px-4 bg-gradient-to-br from-primary/10 via-background to-accent/10 relative overflow-hidden">
-        {/* Floating Elements */}
-        <motion.div
-          animate={{
-            y: [0, -20, 0],
-            rotate: [0, 5, 0],
-          }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-20 left-[5%] text-primary/10 select-none pointer-events-none"
-        >
-          <TrendingUp className="w-32 h-32" />
-        </motion.div>
-
-        <motion.div
-          animate={{
-            y: [0, 20, 0],
-            rotate: [0, -5, 0],
-          }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-20 right-[5%] text-accent/10 select-none pointer-events-none"
-        >
-          <Gift className="w-40 h-40" />
-        </motion.div>
+      <section className="py-20 md:py-32 px-4 bg-white relative overflow-hidden paw-pattern">
+        {/* Soft Accent Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -z-10" />
 
         <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-red-600 via-yellow-500 to-red-600 bg-[length:200%_100%] animate-gradient-x" />
 
@@ -64,23 +44,20 @@ export default function SalesPage() {
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center gap-2 bg-red-600 text-white px-6 py-2 rounded-full text-sm font-black uppercase tracking-wider shadow-lg shadow-red-500/20"
+            className="inline-flex items-center gap-2 bg-red-600 text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-wider shadow-xl shadow-red-500/20"
           >
             <Clock className="w-4 h-4 animate-spin-slow" />
             Oferta por tiempo limitado
           </motion.div>
 
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-none text-slate-900">
+          <h1 className="text-5xl md:text-8xl font-black tracking-tight leading-[0.95] text-slate-900 mx-auto max-w-4xl">
             Transforma al perro más rebelde en un{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
-              compañero ideal
-            </span>{' '}
-            en 21 días
+            <span className="text-primary italic">compañero ideal</span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-3xl text-slate-500 font-medium max-w-3xl mx-auto leading-relaxed">
             Sin gastar miles en adiestradores, sin castigos y con solo{' '}
-            <span className="text-primary font-bold underline decoration-primary/30 underline-offset-4">
+            <span className="text-primary font-black underline decoration-primary/20 underline-offset-8">
               15 minutos al día
             </span>.
           </p>
@@ -96,9 +73,9 @@ export default function SalesPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + i * 0.1 }}
-                className="flex items-center gap-2.5 text-sm font-bold bg-white/60 backdrop-blur-md px-5 py-3 rounded-2xl border border-white shadow-xl shadow-slate-200/50"
+                className="flex items-center gap-2.5 text-[10px] font-black uppercase tracking-widest bg-white rounded-2xl border border-slate-100 px-6 py-4 shadow-xl shadow-slate-200/40"
               >
-                <item.icon className={`w-5 h-5 ${item.color}`} />
+                <item.icon className={`w-4 h-4 ${item.color}`} />
                 <span>{item.text}</span>
               </motion.div>
             ))}
@@ -272,7 +249,7 @@ export default function SalesPage() {
 
             <Button
               onClick={handleCheckout}
-              className="w-full text-xl py-8 shadow-xl animate-pulse hover:animate-none bg-red-600 hover:bg-red-700 text-white border-none"
+              className="w-full text-2xl py-10 shadow-2xl bg-red-600 hover:bg-red-700 text-white border-none rounded-3xl shimmer-button font-black"
             >
               👉 QUIERO MI GUÍA + BONUS
             </Button>
@@ -311,7 +288,7 @@ export default function SalesPage() {
 
         <Button
           onClick={handleCheckout}
-          className="max-w-md mx-auto w-full text-xl py-6"
+          className="max-w-md mx-auto w-full text-2xl py-10 rounded-3xl font-black bg-primary hover:bg-primary/90 text-white border-none shimmer-button shadow-2xl shadow-primary/30"
         >
           👉 Descargar mi guía ahora
         </Button>

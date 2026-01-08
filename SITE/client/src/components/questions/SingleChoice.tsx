@@ -20,108 +20,117 @@ export default function SingleChoice({
   skipText,
 }: SingleChoiceProps) {
   const [selected, setSelected] = useState<string | null>(null);
-  
+
   const handleSelect = (value: string) => {
     setSelected(value);
     // Pequeno delay para mostrar a seleção antes de avançar
     setTimeout(() => {
       onAnswer(value);
-    }, 300);
+    }, 400);
   };
-  
+
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 pt-16">
+    <div className="min-h-screen flex items-center justify-center p-6 pt-16 relative">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-2xl w-full space-y-8"
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="max-w-2xl w-full space-y-10"
       >
-        {/* Category badge */}
-        {category && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+        {/* Header Section */}
+        <div className="text-center space-y-4">
+          {category && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <span className="text-[10px] font-black tracking-[0.2em] text-primary uppercase bg-primary/5 px-4 py-1.5 rounded-full border border-primary/10">
+                {category}
+              </span>
+            </motion.div>
+          )}
+
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-center"
+            className="text-3xl md:text-5xl font-black text-slate-900 leading-tight tracking-tight"
           >
-            <span className="text-xs font-semibold tracking-wider text-primary uppercase">
-              {category}
-            </span>
-          </motion.div>
-        )}
-        
-        {/* Question */}
-        <motion.h2
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-3xl md:text-4xl font-bold text-center"
-        >
-          {question}
-        </motion.h2>
-        
-        {/* Options */}
+            {question}
+          </motion.h2>
+        </div>
+
+        {/* Options Grid */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="space-y-3"
+          transition={{ delay: 0.2 }}
+          className="grid grid-cols-1 gap-4"
         >
           {options.map((option, index) => (
             <motion.button
               key={option.value}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 + index * 0.1 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + index * 0.05 }}
               onClick={() => handleSelect(option.value)}
               className={`
-                w-full p-5 rounded-2xl border-2 transition-all duration-200
-                flex items-center gap-4 text-left
-                ${
-                  selected === option.value
-                    ? 'border-primary bg-primary/5 shadow-lg scale-[1.02]'
-                    : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
+                w-full p-6 rounded-[2rem] border-2 transition-all duration-300
+                flex items-center gap-5 text-left relative overflow-hidden group
+                ${selected === option.value
+                  ? 'border-primary bg-primary/5 shadow-2xl scale-[1.03] z-10'
+                  : 'border-slate-100 bg-white hover:border-primary/30 hover:shadow-xl hover:bg-slate-50'
                 }
               `}
             >
-              {/* Icon */}
+              {/* Icon Container */}
               {option.icon && (
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-2xl">
+                <div className={`
+                  flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-3xl transition-colors
+                  ${selected === option.value ? 'bg-primary/20' : 'bg-slate-50'}
+                `}>
                   {option.icon}
                 </div>
               )}
-              
+
               {/* Label */}
-              <span className="flex-1 font-medium text-lg">
-                {option.label}
-              </span>
-              
-              {/* Check mark */}
+              <div className="flex-1">
+                <span className={`text-lg transition-all ${selected === option.value ? 'font-black text-primary' : 'font-bold text-slate-700'}`}>
+                  {option.label}
+                </span>
+                {selected === option.value && (
+                  <motion.p
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="text-[10px] font-black text-primary/60 uppercase tracking-widest mt-1"
+                  >
+                    Seleccionado ✓
+                  </motion.p>
+                )}
+              </div>
+
+              {/* Organic highlight */}
               {selected === option.value && (
                 <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="flex-shrink-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center"
-                >
-                  <Check className="w-4 h-4 text-primary-foreground" />
-                </motion.div>
+                  layoutId="active-bg"
+                  className="absolute inset-0 bg-primary/5 -z-10"
+                />
               )}
             </motion.button>
           ))}
         </motion.div>
-        
-        {/* Skip button */}
+
+        {/* Skip action */}
         {skipText && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="text-center"
+            className="text-center pt-4"
           >
             <Button
               variant="ghost"
               onClick={() => onAnswer('skip')}
-              className="text-accent hover:text-accent/80"
+              className="text-slate-400 font-bold hover:text-primary transition-colors hover:bg-transparent"
             >
               {skipText}
             </Button>

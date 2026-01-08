@@ -1,120 +1,106 @@
 import { Button } from '@/components/ui/button';
 import { useQuiz } from '@/contexts/QuizContext';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { Footprints, Sparkles, ShieldCheck } from 'lucide-react';
 
 export default function WelcomeScreen() {
-  const { goToNextStep } = useQuiz();
-  const [interactions, setInteractions] = useState(0);
+  const { goToNextStep, setInitialPain } = useQuiz();
 
-  const handleInteraction = () => {
-    setInteractions(prev => prev + 1);
+  const handleStart = (pain: string) => {
+    setInitialPain(pain);
+    goToNextStep();
+    // Tracking Pixel Custom Event
+    if (window.fbq) window.fbq('trackCustom', 'InitialClick', { pain });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-slate-50 to-white overflow-x-hidden relative">
-      {/* Elementos decorativos de fundo */}
+    <div className="min-h-screen flex items-center justify-center p-6 bg-white overflow-x-hidden relative paw-pattern">
+      {/* Soft Glow Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
-          transition={{ duration: 8, repeat: Infinity }}
-          className="absolute -top-24 -left-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{ scale: [1.2, 1, 1.2], opacity: [0.1, 0.15, 0.1] }}
-          transition={{ duration: 10, repeat: Infinity }}
-          className="absolute -bottom-24 -right-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl"
-        />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-xl w-full text-center space-y-10 relative z-10 py-12"
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="max-w-2xl w-full text-center space-y-12 relative z-10 py-12"
       >
-        {/* Social Proof Badge */}
+        {/* Minimalist Badge */}
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="inline-block bg-white border border-slate-100 rounded-full px-6 py-2 shadow-xl shadow-slate-200/50"
+          whileHover={{ y: -2 }}
+          className="inline-flex items-center gap-2 bg-slate-50 border border-slate-100 rounded-full px-5 py-2 shadow-sm"
         >
-          <p className="text-[11px] md:text-sm font-black text-slate-500 uppercase tracking-widest">
-            Ya hemos ayudado a <span className="text-primary">+3 millones</span> de tutores
+          <Sparkles className="w-3 h-3 text-primary animate-pulse" />
+          <p className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest">
+            Metodología Validada por Expertos
           </p>
         </motion.div>
 
-        {/* Dynamic Headline */}
-        <div className="space-y-4 px-2">
-          <h1 className="text-4xl md:text-6xl font-black text-slate-900 leading-[1.1] tracking-tight">
-            ¿Por qué tantos perros <span className="text-primary italic">ignoran</span> a sus tutores?
+        {/* Lighter Headline */}
+        <div className="space-y-6">
+          <h1 className="text-4xl md:text-7xl font-black text-slate-900 leading-[1.05] tracking-tight">
+            ¿Por qué <span className="text-primary italic">nada</span> parece funcionar con tu perro?
           </h1>
-          <p className="text-lg md:text-xl text-slate-500 font-medium">
-            Descubre si pequeños errores están afectando la relación con tu perro
+          <p className="text-lg md:text-2xl text-slate-500 font-medium max-w-lg mx-auto leading-relaxed">
+            Descubre en 2 minutos el error invisible que bloquea el aprendizaje de tu mejor amigo.
           </p>
         </div>
 
-        {/* INTERACTIVE COMPulsion grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-          {[
-            { q: "¿Tu perro te IGNORA al llamarlo?", color: "purple" },
-            { q: "¿Ladra mucho o destruye cosas?", color: "orange" },
-            { q: "¿Tira de la correa obsesivamente?", color: "green" },
-            { q: "¿Hace sus necesidades en interiores?", color: "blue" },
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 + i * 0.1 }}
-              className="bg-white rounded-3xl p-6 shadow-xl shadow-slate-200/40 border border-slate-50 space-y-4"
-            >
-              <p className="font-bold text-slate-800 leading-tight h-10 flex items-center">{item.q}</p>
-              <div className="grid grid-cols-2 gap-2">
-                <Button
-                  variant="outline"
-                  onClick={handleInteraction}
-                  className="rounded-2xl font-black border-2 border-primary/20 text-primary hover:bg-primary/10 transition-all hover:scale-105"
-                >
-                  ¡SÍ!
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={handleInteraction}
-                  className="rounded-2xl font-black border-2 border-slate-200 text-slate-400 hover:bg-slate-50 transition-all hover:scale-105"
-                >
-                  NO...
-                </Button>
-              </div>
-            </motion.div>
-          ))}
+        {/* ORGANIC CHOICE AREA */}
+        <div className="space-y-4">
+          <p className="text-[10px] font-black text-primary/40 uppercase tracking-[0.2em]">Elige el mayor desafío hoy:</p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {[
+              { id: 'latidos', label: 'Ladridos' },
+              { id: 'morder', label: 'Morder cosas' },
+              { id: 'pipi', label: 'Xixi/Popó' },
+              { id: 'obediencia', label: 'No viene' },
+            ].map((item) => (
+              <Button
+                key={item.id}
+                variant="ghost"
+                onClick={() => handleStart(item.id)}
+                className="rounded-2xl border border-slate-200 px-6 py-6 h-auto text-slate-600 font-bold hover:bg-primary/5 hover:border-primary/30 hover:text-primary transition-all active:scale-95"
+              >
+                {item.label}
+              </Button>
+            ))}
+          </div>
         </div>
 
-        {/* MAIN CALL TO ACTION */}
-        <motion.div
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="pt-6 px-4"
-        >
+        {/* PREMIUM MAIN CTA */}
+        <div className="pt-8 px-4">
           <Button
-            onClick={goToNextStep}
+            onClick={() => handleStart('geral')}
             size="lg"
-            className="w-full md:w-auto px-16 py-8 text-2xl font-black rounded-3xl shadow-2xl shadow-primary/30 hover:shadow-primary/50 transition-all bg-primary hover:bg-primary/90 border-none text-white overflow-hidden relative group"
+            className="w-full md:w-auto px-20 py-10 text-2xl font-black rounded-[2.5rem] shadow-2xl shadow-primary/20 bg-primary hover:bg-primary/90 text-white border-none shimmer-button scale-105"
           >
-            <span className="relative z-10">Descubrir ahora</span>
-            <motion.div
-              animate={{ x: ['110%', '-110%'] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 bg-white/20 skew-x-12"
-            />
+            Comenzar Diagnóstico
           </Button>
-          <p className="text-[10px] text-slate-400 mt-6 uppercase font-bold tracking-widest">
-            ⚡ RESULTADO EN MENOS DE 2 MINUTOS
-          </p>
-        </motion.div>
 
-        {/* Texto legal */}
-        <p className="text-[10px] text-slate-300 max-w-md mx-auto">
-          Al hacer clic en “Descubrir ahora”, confirmo que he leído y acepto la Política de Privacidad y los Términos y Condiciones.
+          <div className="flex flex-wrap items-center justify-center gap-6 mt-12">
+            <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400">
+              <ShieldCheck className="w-4 h-4 text-green-500" /> API SESC Validado
+            </div>
+            <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400">
+              <Footprints className="w-4 h-4 text-primary" /> +3M de Huellas
+            </div>
+          </div>
+        </div>
+
+        {/* Legal Text */}
+        <p className="text-[10px] text-slate-300 max-w-md mx-auto pt-4">
+          Al hacer clic en “Comenzar Diagnóstico”, confirmo que he leído e acepto la Política de Privacidad y los Términos y Condiciones.
         </p>
+      </motion.div>
+
+      {/* Floating Decorative Elements */}
+      <motion.div
+        animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
+        transition={{ duration: 5, repeat: Infinity }}
+        className="absolute top-20 right-[10%] opacity-20 hidden md:block"
+      >
+        <Footprints className="w-12 h-12 text-primary" />
       </motion.div>
     </div>
   );

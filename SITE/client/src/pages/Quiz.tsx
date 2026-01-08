@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import WelcomeScreen from './WelcomeScreen';
 import ProcessingScreen from './ProcessingScreen';
 import ResultScreen from './ResultScreen';
+import { Footprints } from 'lucide-react';
 import SalesPage from './SalesPage';
 import ThankYou from './thank-you';
 
@@ -44,6 +45,11 @@ export default function Quiz() {
     step.question?.replace('{name}', quizData.name || 'tu perrito') || '';
 
   const handleAnswer = (value: any) => {
+    // Sanitize Name (Evita que o nome do cachorro vire "skip")
+    if (step.id === 'name' && (value === 'skip' || !value)) {
+      value = 'tu perrito';
+    }
+
     const key = step.id as keyof typeof quizData;
     updateQuizData({ [key]: value });
 
@@ -51,6 +57,11 @@ export default function Quiz() {
     if (step.id === 'age') unlockReward('Plan Personalizado');
     if (step.id === 'daily-habits') unlockReward('Checklist: Casa Limpa');
     if (step.id === 'motivation') unlockReward('Audio Relaxante');
+
+    // Tracking de Milestones (Conversão)
+    if (window.fbq && [2, 5, 8].includes(currentStep)) {
+      window.fbq('trackCustom', 'QuizMilestone', { step: currentStep });
+    }
 
     // 🔥 REDIRECT DEFINITIVO PARA SALES PAGE APÓS EMAIL
     if (step.id === 'email') {
@@ -197,28 +208,34 @@ export default function Quiz() {
 
       <BackButton />
 
-      {/* REWARD ANIMATION OVERLAY */}
+      {/* REWARD TOAST (Non-intrusive Bubble) */}
       <AnimatePresence>
         {showRewardAnimation && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.5, y: 100 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[60] w-full max-w-xs px-4"
+            initial={{ opacity: 0, x: 50, scale: 0.8 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 20, scale: 0.8 }}
+            className="fixed bottom-6 right-6 z-[100] max-w-[280px]"
           >
-            <div className="bg-slate-900 text-white rounded-3xl p-6 shadow-2xl border border-white/20 flex flex-col items-center text-center gap-4">
-              <div className="text-5xl animate-bounce">
+            <div className="bg-white/95 backdrop-blur-md rounded-3xl p-5 shadow-2xl border border-primary/20 flex items-center gap-4 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Footprints className="w-12 h-12 text-primary" />
+              </div>
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-2xl flex-shrink-0 animate-bounce">
                 {rewardMetadata[currentReward]?.icon || '🎁'}
               </div>
-              <div className="space-y-1">
-                <p className="text-primary font-black uppercase text-[10px] tracking-widest">¡NUEVO LOGRO!</p>
-                <h3 className="text-lg font-black leading-tight">
-                  {rewardMetadata[currentReward]?.title || 'Recompensa Desbloqueada'}
+              <div className="flex-1 text-left">
+                <p className="text-primary font-black uppercase text-[9px] tracking-[0.15em] mb-0.5">Logro Desbloqueado</p>
+                <h3 className="text-sm font-bold text-slate-900 leading-tight">
+                  {rewardMetadata[currentReward]?.title || 'Recompensa'}
                 </h3>
+                <button
+                  onClick={hideRewardAnimation}
+                  className="mt-2 text-[10px] font-black text-primary hover:underline uppercase tracking-widest"
+                >
+                  Continuar →
+                </button>
               </div>
-              <Button onClick={hideRewardAnimation} className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl font-black">
-                ¡GENIAL!
-              </Button>
             </div>
           </motion.div>
         )}

@@ -9,10 +9,12 @@ interface QuizContextType {
   goToNextStep: () => void;
   goToPreviousStep: () => void;
   progress: number;
+  initialPain: string | null;     // Dor principal selecionada na Landing (Budge Page)
   unlockedRewards: string[];      // Recompensas ganhas (ex: 'bonus-1', 'audio-relax')
   showRewardAnimation: boolean;   // Controla o pop-up de conquista
   unlockReward: (id: string) => void;
   hideRewardAnimation: () => void;
+  setInitialPain: (pain: string) => void;
 }
 
 const QuizContext = createContext<QuizContextType | undefined>(undefined);
@@ -20,6 +22,7 @@ const QuizContext = createContext<QuizContextType | undefined>(undefined);
 export function QuizProvider({ children }: { children: ReactNode }) {
   const [quizData, setQuizData] = useState<QuizData>({});
   const [currentStep, setCurrentStep] = useState(0);
+  const [initialPain, setInitialPain] = useState<string | null>(null);
   const [unlockedRewards, setUnlockedRewards] = useState<string[]>([]);
   const [showRewardAnimation, setShowRewardAnimation] = useState(false);
 
@@ -57,10 +60,12 @@ export function QuizProvider({ children }: { children: ReactNode }) {
         goToNextStep,
         goToPreviousStep,
         progress,
+        initialPain,
         unlockedRewards,
         showRewardAnimation,
         unlockReward,
         hideRewardAnimation,
+        setInitialPain,
       }}
     >
       {children}
