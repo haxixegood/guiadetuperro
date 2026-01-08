@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { useQuiz } from '@/contexts/QuizContext';
 import { motion } from 'framer-motion';
-import { Footprints, Sparkles, ShieldCheck, Heart, Star, CheckCircle } from 'lucide-react';
+import { Footprints, Sparkles, ShieldCheck, Heart, Star, CheckCircle, TrendingUp } from 'lucide-react';
 
 export default function WelcomeScreen() {
   const { goToNextStep, setInitialPain } = useQuiz();
@@ -16,119 +16,127 @@ export default function WelcomeScreen() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-white overflow-x-hidden relative paw-pattern bg-animate">
 
-      {/* Background Subtle Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[10%] left-[-5%] w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px]" />
+      {/* Cyber Grid & Particles Overlay */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+        <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-primary/10 rounded-full blur-[150px] animate-pulse" />
+        <div className="absolute bottom-[10%] left-[-5%] w-[500px] h-[500px] bg-neon-purple/10 rounded-full blur-[120px]" />
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="max-w-3xl w-full text-center space-y-12 md:space-y-16 relative z-10 py-10 md:py-20"
+        className="max-w-4xl w-full text-center space-y-12 md:space-y-20 relative z-10 py-10"
       >
-        {/* Quality Badge - More Elegant */}
+        {/* HUD STATUS BADGE */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="inline-flex items-center gap-3 bg-white border border-slate-100 rounded-full px-6 py-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.04)]"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="inline-flex items-center gap-4 bg-cyber-onyx/50 backdrop-blur-xl border border-primary/30 px-6 py-2 rounded-sm"
         >
-          <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em]">
-            Metodología <span className="text-primary italic">5 Estrellas</span>
+          <div className="w-2 h-2 rounded-full bg-primary animate-ping" />
+          <p className="text-[10px] font-black text-primary uppercase tracking-[0.4em]">
+            ESTADO: <span className="text-white">CONEXIÓN DESVINCULADA</span>
           </p>
         </motion.div>
 
-        {/* Headline Section - Behance Bold Typography */}
+        {/* HEADLINE - IMPACTO DOPAMINA */}
         <div className="space-y-6">
-          <h1 className="text-4xl md:text-8xl font-black text-slate-900 leading-[0.9] tracking-tighter">
-            ¿Por qué <span className="text-primary italic block md:inline">nada</span> parece funcionar?
+          <h1 className="text-5xl md:text-9xl font-black text-white leading-[0.85] tracking-tighter glow-text">
+            EL ALGORITMO DE SU <span className="text-primary italic block md:inline neon-pulse">MENTE</span>
           </h1>
-          <p className="text-base md:text-2xl text-slate-400 font-bold max-w-lg mx-auto leading-tight">
-            Descubre el error invisible que bloquea el aprendizaje de <span className="text-slate-900 decoration-primary/30 underline underline-offset-4">tu mejor amigo</span>.
+          <p className="text-lg md:text-3xl text-slate-400 font-bold max-w-2xl mx-auto leading-tight">
+            Tu <span className="text-white italic">"Perrhijo"</span> no es rebelde, solo está desconectado. Reconfigura su comportamiento hoy.
           </p>
         </div>
 
-        {/* SELECTION AREA - CLEANER CARDS */}
-        <div className="space-y-8 relative max-w-xl mx-auto">
-          <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em]">Elige el mayor desafío hoy:</p>
-          <div className="grid grid-cols-2 gap-4 relative z-20">
+        {/* SELECTION HUD - GLASS CARDS */}
+        <div className="space-y-10 relative max-w-2xl mx-auto">
+          <p className="text-[10px] font-black text-primary/60 uppercase tracking-[0.5em]">Identifica el error crítico:</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-20">
             {[
-              { id: 'latidos', label: 'Ladridos', icon: '🗣️' },
-              { id: 'morder', label: 'Morder', icon: '🦴' },
-              { id: 'pipi', label: 'Xixi/Popó', icon: '⛲' },
-              { id: 'obediencia', label: 'No viene', icon: '🏃' },
+              { id: 'berrinches', label: 'Berrinches', icon: '🚨' },
+              { id: 'destruccion', label: 'Destrucción', icon: '⚡' },
+              { id: 'descontrol', label: 'Descontrol', icon: '🔋' },
+              { id: 'caos', label: 'Caos Total', icon: '⚠️' },
             ].map((item) => (
               <Button
                 key={item.id}
                 variant="ghost"
                 onClick={() => handleStart(item.id)}
-                className="group relative flex flex-col items-center justify-center gap-3 rounded-[2.5rem] border border-slate-100 bg-white p-8 h-auto text-slate-900 font-black text-sm hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 active:scale-95"
+                className="cyber-card group relative flex flex-col items-center justify-center gap-4 p-8 h-auto border-primary/20 hover:border-primary transition-all duration-500 overflow-hidden"
               >
-                <span className="text-3xl group-hover:scale-125 transition-transform duration-500">{item.icon}</span>
-                {item.label}
+                <div className="scanner-line hidden group-hover:block opacity-30" />
+                <span className="text-4xl group-hover:scale-125 transition-transform duration-500">{item.icon}</span>
+                <span className="text-[10px] font-black text-white uppercase tracking-widest">{item.label}</span>
               </Button>
             ))}
           </div>
         </div>
 
-        {/* ACTION ZONE - BALANCED HERO BUTTON & CUTOUT */}
-        <div className="relative pt-10 md:pt-20 flex flex-col items-center group">
-          {/* THE DOG HERO - PROFESSIONAL CUTOUT STYLE */}
+        {/* ACTION ZONE - LAVA BUTTON */}
+        <div className="relative pt-12 flex flex-col items-center">
+          {/* THE DOG HUD VIEW */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 50 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 1.2, ease: "circOut" }}
-            className="absolute -bottom-10 md:-bottom-24 left-1/2 -translate-x-1/2 w-[320px] md:w-[500px] pointer-events-none z-0"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 1.5 }}
+            className="absolute -top-40 md:-top-72 left-1/2 -translate-x-1/2 w-[350px] md:w-[600px] pointer-events-none z-0 opacity-20"
           >
             <div className="relative">
-              {/* Background Glow behind the dog */}
-              <div className="absolute inset-0 bg-primary/20 rounded-full blur-[100px] scale-75 opacity-50" />
+              <div className="scanner-line" />
               <img
                 src="/assets/dog-hero-new.png"
-                alt="Cachorro Hero"
-                className="relative w-full h-auto object-contain drop-shadow-[0_30px_50px_rgba(245,158,11,0.2)] mix-blend-multiply"
+                alt="Neural Scanner"
+                className="w-full mix-blend-screen grayscale brightness-150"
               />
             </div>
           </motion.div>
 
           <Button
             onClick={() => handleStart('geral')}
-            className="w-full md:w-auto px-16 md:px-24 py-11 text-xl md:text-3xl font-black rounded-[3rem] shadow-[0_40px_80px_-20px_rgba(245,158,11,0.5)] bg-primary hover:bg-primary/90 text-white border-none shimmer-button relative z-10 hover:scale-105 active:scale-95 transition-all"
+            className="action-btn w-full md:w-auto px-16 md:px-24 py-12 text-2xl md:text-4xl font-black rounded-sm relative z-10"
           >
-            Comenzar Diagnóstico →
+            ¡DESBLOQUEAR CÓDIGO!
           </Button>
 
-          <p className="mt-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] relative z-10 flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-green-500" /> +3,240 Alumnos Satisfechos
-          </p>
+          <div className="mt-10 flex flex-col items-center gap-4 relative z-10">
+            <div className="neural-progress w-64 md:w-80">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: "35%" }}
+                className="neural-fill"
+              />
+            </div>
+            <p className="text-[9px] font-black text-primary uppercase tracking-[0.3em] flex items-center gap-2">
+              <Sparkles className="w-3 h-3" /> Nivel de Sincronización Inicial: 35%
+            </p>
+          </div>
         </div>
 
-        {/* TRUST SIGNALS */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 pt-20 border-t border-slate-50">
-          <div className="flex flex-col items-center gap-2">
-            <ShieldCheck className="w-6 h-6 text-slate-300" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">100% Seguro</span>
+        {/* FOOTER HUD SIGNALS */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-10 pt-20 border-t border-white/5 opacity-40">
+          <div className="flex flex-col items-center gap-3">
+            <ShieldCheck className="w-6 h-6 text-primary" />
+            <span className="text-[9px] font-black uppercase tracking-[0.4em]">Protocolo Asegurado</span>
           </div>
-          <div className="flex flex-col items-center gap-2">
-            <Footprints className="w-6 h-6 text-slate-300" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Método Científico</span>
+          <div className="flex flex-col items-center gap-3">
+            <TrendingUp className="w-6 h-6 text-neon-purple" />
+            <span className="text-[9px] font-black uppercase tracking-[0.4em]">Optimización IA</span>
           </div>
-          <div className="hidden md:flex flex-col items-center gap-2">
-            <Star className="w-6 h-6 text-slate-300" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Acceso Instantáneo</span>
+          <div className="hidden md:flex flex-col items-center gap-3">
+            <Footprints className="w-6 h-6 text-primary" />
+            <span className="text-[9px] font-black uppercase tracking-[0.4em]">Acceso Neural</span>
           </div>
         </div>
       </motion.div>
 
-      {/* FIXED DECORATIVE ELEMENTS */}
-      <div className="fixed top-[20%] left-[5%] opacity-[0.05] pointer-events-none">
-        <Footprints className="w-40 h-40 -rotate-12" />
-      </div>
-      <div className="fixed bottom-[10%] right-[5%] opacity-[0.05] pointer-events-none">
-        <Footprints className="w-56 h-56 rotate-45" />
-      </div>
+      {/* FIXED HUD CORNERS */}
+      <div className="fixed top-10 left-10 border-l-2 border-t-2 border-primary/30 w-12 h-12 pointer-events-none opacity-50" />
+      <div className="fixed top-10 right-10 border-r-2 border-t-2 border-primary/30 w-12 h-12 pointer-events-none opacity-50" />
+      <div className="fixed bottom-10 left-10 border-l-2 border-b-2 border-primary/30 w-12 h-12 pointer-events-none opacity-50" />
+      <div className="fixed bottom-10 right-10 border-r-2 border-b-2 border-primary/30 w-12 h-12 pointer-events-none opacity-50" />
     </div>
   );
 }

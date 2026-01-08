@@ -183,7 +183,7 @@ export default function Quiz() {
   const currentReward = unlockedRewards[unlockedRewards.length - 1];
 
   return (
-    <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-[#050508] flex flex-col relative overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
 
@@ -192,7 +192,7 @@ export default function Quiz() {
       <BackButton />
 
       <main className="flex-1 flex items-center justify-center p-4 relative z-10">
-        <div className="w-full max-w-2xl quiz-card animate-slide-up-fade">
+        <div className="w-full max-w-2xl cyber-card p-8 md:p-12 animate-slide-up-fade">
           {renderStep()}
         </div>
       </main>

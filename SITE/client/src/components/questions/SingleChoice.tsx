@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { QuizOption } from '@/types/quiz';
-import { Check } from 'lucide-react';
+import { Power, Activity } from 'lucide-react';
 import { useState } from 'react';
 
 interface SingleChoiceProps {
@@ -23,32 +23,33 @@ export default function SingleChoice({
 
   const handleSelect = (value: string) => {
     setSelected(value);
-    // Pequeno delay para mostrar a seleção antes de avançar
     setTimeout(() => {
       onAnswer(value);
     }, 400);
   };
 
   return (
-    <div className="w-full space-y-6 md:space-y-10">
+    <div className="w-full space-y-8 md:space-y-12">
       {/* Header Section */}
-      <div className="text-center space-y-3 md:space-y-4">
+      <div className="text-center space-y-4">
         {category && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
+            className="flex justify-center"
           >
-            <span className="text-[9px] md:text-[10px] font-black tracking-[0.2em] text-primary uppercase bg-primary/10 px-4 py-1 rounded-full border border-primary/20">
-              {category}
-            </span>
+            <div className="hud-badge flex items-center gap-2">
+              <Activity className="w-3 h-3" />
+              {category.toUpperCase()}
+            </div>
           </motion.div>
         )}
 
         <motion.h2
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="text-2xl md:text-5xl font-black text-slate-900 leading-[1.1] tracking-tight px-2"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-2xl md:text-5xl font-black text-white leading-[1] tracking-tighter glow-text uppercase"
         >
           {question}
         </motion.h2>
@@ -58,30 +59,33 @@ export default function SingleChoice({
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="grid grid-cols-1 gap-2 md:gap-3 px-1"
+        className="grid grid-cols-1 gap-3 md:gap-4"
       >
         {options.map((option, index) => (
           <motion.button
             key={option.value}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 + index * 0.05 }}
+            initial={{ opacity: 0, scale: 0.9, x: index % 2 === 0 ? -20 : 20 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ delay: 0.1 + index * 0.05, ease: "easeOut" }}
             onClick={() => handleSelect(option.value)}
             className={`
-              w-full p-4 md:p-5 rounded-2xl md:rounded-[2rem] border-2 transition-all duration-300
-              flex items-center gap-3 md:gap-4 text-left relative overflow-hidden group
+              w-full p-6 md:p-8 rounded-sm transition-all duration-300
+              flex items-center gap-4 md:gap-6 text-left relative overflow-hidden group
               ${selected === option.value
-                ? 'border-primary bg-primary/5 shadow-lg scale-[1.01] z-10'
-                : 'border-slate-100 bg-white hover:border-primary/20 hover:bg-slate-50/50'
+                ? 'border-neon-cyan bg-neon-cyan/10 shadow-[0_0_30px_rgba(0,242,255,0.2)]'
+                : 'border-white/5 bg-white/5 hover:border-neon-cyan/40 hover:bg-white/[0.08]'
               }
+              border
             `}
           >
+            {/* Scanner Line on Hover */}
+            <div className="scanner-line hidden group-hover:block opacity-20" />
+
             {/* Icon Container */}
             {option.icon && (
               <div className={`
-                flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl flex items-center justify-center text-xl md:text-2xl transition-colors
-                ${selected === option.value ? 'bg-primary/20' : 'bg-slate-50'}
+                flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-sm flex items-center justify-center text-3xl md:text-4xl transition-all
+                ${selected === option.value ? 'bg-neon-cyan/20 scale-110' : 'bg-white/5'}
               `}>
                 {option.icon}
               </div>
@@ -89,27 +93,23 @@ export default function SingleChoice({
 
             {/* Label */}
             <div className="flex-1">
-              <span className={`text-[13px] md:text-lg transition-all ${selected === option.value ? 'font-black text-primary' : 'font-bold text-slate-700'}`}>
+              <span className={`text-base md:text-2xl uppercase tracking-tighter transition-all ${selected === option.value ? 'font-black text-neon-cyan' : 'font-bold text-slate-300'}`}>
                 {option.label}
               </span>
               {selected === option.value && (
-                <motion.p
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="text-[8px] md:text-[9px] font-black text-primary/60 uppercase tracking-widest mt-0.5"
-                >
-                  Confirmado ✓
-                </motion.p>
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  className="h-0.5 bg-neon-cyan mt-1 shadow-[0_0_10px_var(--neon-cyan)]"
+                />
               )}
             </div>
 
-            {/* Organic highlight */}
-            {selected === option.value && (
-              <motion.div
-                layoutId="active-bg"
-                className="absolute inset-0 bg-primary/5 -z-10"
-              />
-            )}
+            {/* Terminal Status */}
+            <div className="hidden md:flex flex-col items-end opacity-20 group-hover:opacity-100 transition-opacity">
+              <span className="text-[8px] font-mono text-primary">SELECT_ID_{index}</span>
+              <span className="text-[8px] font-mono text-primary">READY_FOR_SYNC</span>
+            </div>
           </motion.button>
         ))}
       </motion.div>
@@ -120,12 +120,12 @@ export default function SingleChoice({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="text-center pt-2 md:pt-4"
+          className="text-center pt-4"
         >
           <Button
             variant="ghost"
             onClick={() => onAnswer('skip')}
-            className="text-slate-400 font-bold hover:text-primary transition-colors hover:bg-transparent text-xs"
+            className="text-white/20 font-black hover:text-primary transition-colors hover:bg-transparent text-[10px] uppercase tracking-widest"
           >
             {skipText}
           </Button>

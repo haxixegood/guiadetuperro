@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { useQuiz } from '@/contexts/QuizContext';
 import { useEffect, useState } from 'react';
-import { Progress } from '@/components/ui/progress';
+import { Activity, ShieldCheck, Zap, Cpu, Scan } from 'lucide-react';
 
 interface ProcessingTask {
   label: string;
@@ -12,38 +11,31 @@ interface ProcessingTask {
 export default function ProcessingScreen() {
   const { goToNextStep, quizData } = useQuiz();
   const [tasks, setTasks] = useState<ProcessingTask[]>([
-    { label: 'Identificando problemas de comportamiento para corregir', progress: 0 },
-    { label: 'Evaluando la comprensión actual de comandos', progress: 0 },
-    { label: `Adaptando lecciones para un perro ${quizData.breed || 'especial'}`, progress: 0 },
-    { label: 'Construyendo su plan de entrenamiento personalizado', progress: 0 },
+    { label: 'CALIBRANDO ALGORITMO CONDUCTUAL', progress: 0 },
+    { label: 'ESCANEANDO PATRONES DE "BERRINCHE"', progress: 0 },
+    { label: `ADAPTANDO RED NEURAL PARA ${quizData.breed?.toUpperCase() || 'TU PERRIHO'}`, progress: 0 },
+    { label: 'COMPILANDO CÓDIGO DE OBEDIENCIA', progress: 0 },
   ]);
 
-  const [showModal, setShowModal] = useState(false);
-
   useEffect(() => {
-    // Animar progresso das tarefas
     const intervals: NodeJS.Timeout[] = [];
-
     tasks.forEach((_, index) => {
       const interval = setInterval(() => {
         setTasks(prev => {
           const newTasks = [...prev];
           if (newTasks[index].progress < 100) {
-            // Incremetos menores e mais lentos para realismo (2% a 5% por tick)
-            const increment = Math.floor(Math.random() * 3) + 2;
+            const increment = Math.floor(Math.random() * 5) + 3;
             newTasks[index].progress = Math.min(newTasks[index].progress + increment, 100);
           }
           return newTasks;
         });
-      }, 150 + index * 120);
-
+      }, 200 + index * 150);
       intervals.push(interval);
     });
 
-    // Avanzar automaticamente ao final de 13 segundos (análisis profundo)
     const autoAdvance = setTimeout(() => {
       goToNextStep();
-    }, 13000);
+    }, 11000);
 
     return () => {
       intervals.forEach(clearInterval);
@@ -51,124 +43,95 @@ export default function ProcessingScreen() {
     };
   }, []);
 
-  const handleModalAnswer = (answer: string) => {
-    updateQuizData({ enjoyTime: answer });
-    goToNextStep();
-  };
-
-  const { updateQuizData } = useQuiz();
-
   const testimonials = [
-    {
-      name: "@maria_silva",
-      text: "¡Fantástico! Acabo de terminar el programa de obediencia con mi perro, ¡me encanta! 👏",
-      img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop"
-    },
-    {
-      name: "@juan_perez92",
-      text: "Increíble cómo cambió Gunther en solo 2 semanas. Muy recomendable.",
-      img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop"
-    },
-    {
-      name: "@ana_dogs_mx",
-      text: "Probé muitos cursos pero este es el único que funcionó para mi departamento.",
-      img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop"
-    },
-    {
-      name: "@roberto_guia",
-      text: "Lo mejor fue aprender sin gritos. Mi perro ahora confía más en mí.",
-      img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"
-    }
+    { name: "SANTIAGO_DF", text: "SYNC_COMPLETE: Mi perro ya no es un berrinchudo total.", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" },
+    { name: "VALERIA_MTY", text: "CORE_UPDATE: Adiós destrucción de muebles. 10/10.", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" },
+    { name: "CARLOS_GUA", text: "PROTOCOL_ALPHA: Increíble el cambio en solo 2 semanas.", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop" },
+    { name: "MA_FERNANDA", text: "NEURAL_LINK: El mejor software de conexión que he probado.", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" }
   ];
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 pt-16 bg-gradient-to-br from-background via-primary/5 to-accent/5">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-xl w-full space-y-8"
-      >
-        {/* Title */}
+    <div className="w-full max-w-2xl mx-auto space-y-12">
+      {/* HUD HEADER */}
+      <div className="text-center space-y-4">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-center space-y-3"
+          animate={{ rotate: [0, 10, -10, 0] }}
+          transition={{ duration: 4, repeat: Infinity }}
+          className="inline-block relative"
         >
-          <h2 className="text-2xl md:text-4xl font-black text-slate-900 leading-tight">
-            Analizando comportamiento de <span className="text-primary">{quizData.name || 'tu perro'}</span>...
-          </h2>
-          <p className="text-sm text-slate-500 font-bold max-w-xs mx-auto">
-            Nuestra IA está procesando 248 puntos de datos para generar su plan individual.
-          </p>
-        </motion.div>
-
-        {/* Progress tasks */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="bg-card rounded-3xl p-8 shadow-lg space-y-6"
-        >
-          {tasks.map((task, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 + index * 0.1 }}
-              className="space-y-2"
-            >
-              <div className="flex justify-between items-center text-sm">
-                <span className="font-medium">{task.label}</span>
-                <span className="text-primary font-bold">{task.progress}%</span>
-              </div>
-              <Progress value={task.progress} className="h-2" />
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Reviews carousel */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="space-y-4"
-        >
-          <p className="text-center text-sm text-muted-foreground font-medium">
-            Mientras tanto, mira lo que dicen nuestros clientes:
-          </p>
-
-          <div className="relative h-40 overflow-hidden">
-            <motion.div
-              animate={{
-                y: [0, -480],
-              }}
-              transition={{
-                duration: 25,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className="space-y-4"
-            >
-              {[...testimonials, ...testimonials].map((testimonial, i) => (
-                <div key={i} className="bg-card rounded-2xl p-4 shadow-sm border border-primary/10 flex items-start gap-3">
-                  <img
-                    src={testimonial.img}
-                    alt="Cliente"
-                    className="w-10 h-10 rounded-full object-cover border border-primary/20"
-                  />
-                  <div className="flex-1">
-                    <p className="font-bold text-xs">{testimonial.name}</p>
-                    <p className="text-[11px] text-muted-foreground mt-0.5 leading-tight">
-                      {testimonial.text}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
+          <div className="w-20 h-20 rounded-sm border-2 border-primary/30 flex items-center justify-center p-2 relative">
+            <div className="scanner-line" />
+            <Scan className="w-10 h-10 text-primary animate-pulse" />
           </div>
         </motion.div>
-      </motion.div>
+
+        <div className="space-y-2">
+          <h2 className="text-2xl md:text-5xl font-black text-white glow-text uppercase tracking-tighter">
+            Diagnósticos <span className="text-primary italic">IA_CORE</span>
+          </h2>
+          <div className="flex justify-center gap-4">
+            <span className="text-[9px] font-mono text-white/40 flex items-center gap-1">
+              <Activity className="w-3 h-3 text-neon-purple" /> SCANNING_248_POINTS
+            </span>
+            <span className="text-[9px] font-mono text-white/40 flex items-center gap-1">
+              <Cpu className="w-3 h-3 text-primary" /> PROCESSING_DATA
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* NEURAL TASKS HUD */}
+      <div className="space-y-6">
+        {tasks.map((task, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 + index * 0.1 }}
+            className="space-y-2"
+          >
+            <div className="flex justify-between items-end">
+              <span className="text-[10px] md:text-xs font-black text-white/80 uppercase tracking-widest flex items-center gap-2">
+                {task.progress === 100 ? <ShieldCheck className="w-3 h-3 text-primary" /> : <Zap className="w-3 h-3 text-neon-purple animate-pulse" />}
+                {task.label}
+              </span>
+              <span className="text-[10px] md:text-xs font-mono text-primary tabular-nums">
+                [{task.progress}%]
+              </span>
+            </div>
+            <div className="neural-progress">
+              <motion.div
+                animate={{ width: `${task.progress}%` }}
+                className="neural-fill"
+              />
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* HOLOGRAPHIC FEEDBACK GRID */}
+      <div className="space-y-4 pt-10 border-t border-white/5 relative">
+        <p className="text-center text-[9px] font-black text-white/30 uppercase tracking-[0.4em]">
+          Hologramas de Resultados_2025
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {testimonials.map((t, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1 + i * 0.2 }}
+              className="cyber-card p-4 flex items-center gap-4 border-neon-purple/20 bg-neon-purple/[0.03]"
+            >
+              <img src={t.img} alt="" className="w-10 h-10 rounded-sm border border-neon-purple/30 brightness-110 contrast-125" />
+              <div className="flex-1">
+                <p className="text-[9px] font-black text-neon-purple uppercase">{t.name}</p>
+                <p className="text-[10px] text-white/60 font-bold leading-tight">{t.text}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

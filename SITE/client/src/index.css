@@ -3,238 +3,198 @@
 @tailwind utilities;
 
 /* =========================
-   Layout base (root full height)
-========================= */
-html,
-body,
-#root {
-  height: 100%;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-/* =========================
-   CSS Tokens (derivados)
+   Cyber-Core Architecture
 ========================= */
 :root {
-  --radius: 1.5rem;
+  --radius: 1.2rem;
 
-  --radius-sm: calc(var(--radius) - 8px);
-  --radius-md: calc(var(--radius) - 4px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 8px);
+  /* Cyber Colors */
+  --cyber-black: #050508;
+  --cyber-onyx: #0A0A12;
+  --neon-cyan: #00F2FF;
+  --neon-purple: #9D00FF;
+  --lava-orange: #FF4D00;
+
+  --primary: var(--neon-cyan);
+  --primary-foreground: #000;
+  --background: var(--cyber-black);
+  --foreground: #FFFFFF;
+
+  --card: rgba(10, 10, 18, 0.6);
+  --card-foreground: #FFFFFF;
+
+  --border: rgba(0, 242, 255, 0.2);
+  --ring: var(--neon-cyan);
 }
 
-/* =========================
-   Color Palette (Golden Dopamine)
-   AMARELO / ÂMBAR - Calmo e Leve
-========================= */
-:root {
-  --primary: oklch(0.75 0.18 85);
-  /* Warm Amber */
-  --primary-foreground: oklch(0.25 0.05 85);
-
-  --accent: oklch(0.85 0.12 95);
-  /* Bright Butter */
-  --accent-foreground: oklch(0.25 0.05 95);
-
-  --background: oklch(0.99 0.01 95);
-  /* Soft Creamy White */
-  --foreground: oklch(0.20 0.02 85);
-  /* Warm Dark Earth */
-
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.20 0.02 85);
-
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.20 0.02 85);
-
-  --secondary: oklch(0.94 0.03 95);
-  --secondary-foreground: oklch(0.30 0.05 85);
-
-  --muted: oklch(0.96 0.02 95);
-  --muted-foreground: oklch(0.50 0.03 85);
-
-  --destructive: oklch(0.60 0.20 25);
-  --destructive-foreground: oklch(0.98 0 0);
-
-  --border: oklch(0.92 0.02 90);
-  --input: oklch(0.96 0.02 90);
-  --ring: oklch(0.75 0.18 85);
-}
-
-/* =========================
-   Base styles
-========================= */
 @layer base {
   body {
-    background-color: var(--background);
+    background: radial-gradient(circle at top, #0A0A12 0%, #000000 100%);
     color: var(--foreground);
-    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
-      "Segoe UI", sans-serif;
-
+    font-family: 'Space Grotesk', Inter, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+  }
+
+  /* Digital Grid Overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+    pointer-events: none;
+    z-index: 1;
   }
 
   h1,
   h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: "Space Grotesk", Inter, system-ui, sans-serif;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
-  }
-
-  h1 {
-    @apply text-4xl md:text-6xl;
-  }
-
-  h2 {
-    @apply text-3xl md:text-5xl;
-  }
-
   h3 {
-    @apply text-2xl md:text-4xl;
+    text-transform: uppercase;
+    letter-spacing: -0.05em;
+    font-weight: 900;
+    filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.3));
   }
 }
 
-/* =========================
-   Components
-========================= */
 @layer components {
-  .container {
-    width: 100%;
-    margin-inline: auto;
-    padding-inline: 1.5rem;
-  }
 
-  .quiz-card {
-    background-color: var(--card);
-    border-radius: var(--radius-xl);
-    padding: 2.5rem;
-    box-shadow: 0 20px 50px -12px rgba(245, 158, 11, 0.1);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* Glassmorphism Cyber-Cards */
+  .cyber-card {
+    background: rgba(10, 10, 18, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--border);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 242, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
   }
 
-  .quiz-button {
-    background-color: var(--primary);
-    color: var(--primary-foreground);
-    padding: 1.25rem 3rem;
-    border-radius: 2rem;
-    font-size: 1.25rem;
-    font-weight: 800;
-    transition: all 0.3s ease;
+  .cyber-card:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 60px rgba(0, 242, 255, 0.1), inset 0 0 30px rgba(0, 242, 255, 0.1);
+    transform: translateY(-5px);
+  }
+
+  /* Action Buttons (Lava Orange) */
+  .action-btn {
+    background: var(--lava-orange);
+    color: white;
+    font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.4);
-  }
-
-  .quiz-button:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 20px 35px -10px rgba(245, 158, 11, 0.6);
-  }
-
-  .quiz-option {
-    background-color: var(--card);
-    border: 2px solid var(--border);
-    border-radius: 1.5rem;
-    padding: 1.25rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .quiz-option:hover {
-    border-color: var(--primary);
-    background-color: oklch(0.98 0.02 85);
-    transform: translateX(8px);
-  }
-
-  .quiz-option.selected {
-    border-color: var(--primary);
-    background: color-mix(in oklab, var(--primary) 12%, transparent);
-    box-shadow: 0 10px 25px -10px rgba(245, 158, 11, 0.3);
-  }
-
-  /* Premium Utilities */
-  .glass-card {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(245, 158, 11, 0.15);
-  }
-
-  .shimmer-button {
+    letter-spacing: 0.1em;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 20px rgba(255, 77, 0, 0.4);
+    transition: all 0.3s ease;
+    border: none;
     position: relative;
     overflow: hidden;
   }
 
-  .shimmer-button::after {
+  .action-btn:hover {
+    box-shadow: 0 0 40px rgba(255, 77, 0, 0.6);
+    transform: scale(1.05);
+  }
+
+  .action-btn::after {
     content: "";
     position: absolute;
     top: -50%;
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(45deg,
-        transparent,
-        rgba(255, 255, 255, 0.4),
-        transparent);
-    transition: 0.5s;
-    animation: shimmer 4s infinite linear;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: sweep 3s infinite linear;
   }
 
-  .paw-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 20c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4zm12-4c2.2 0 4 1.8 4 4s-1.8 4-4 4-4-1.8-4-4 1.8-4 4-4zm-6-8c2.2 0 4 1.8 4 4s-1.8 4-4 4-4-1.8-4-4 1.8-4 4-4zM8 32c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3zm24 0c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3z' fill='%23F59E0B' fill-opacity='0.04' fill-rule='evenodd'/%3E%3C/svg%3E");
+  /* Scanner Effect */
+  .scanner-line {
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    box-shadow: 0 0 15px var(--neon-cyan);
+    z-index: 10;
+    animation: scan 3s infinite ease-in-out;
   }
 
-  .floating-element {
-    animation: floating 6s ease-in-out infinite;
+  /* HUD Elements */
+  .hud-badge {
+    background: rgba(157, 0, 255, 0.1);
+    border: 1px solid rgba(157, 0, 255, 0.3);
+    color: var(--neon-purple);
+    font-size: 10px;
+    font-weight: 900;
+    padding: 2px 10px;
+    clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+  }
+
+  .neural-progress {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(0, 242, 255, 0.2);
+  }
+
+  .neural-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-purple), var(--neon-cyan));
+    box-shadow: 0 0 10px var(--neon-cyan);
+    transition: width 0.8s cubic-bezier(0.65, 0, 0.35, 1);
   }
 }
 
-@keyframes shimmer {
+@keyframes scan {
   0% {
-    transform: translateX(-150%) rotate(45deg);
+    top: 0%;
+    opacity: 0;
   }
 
-  50%,
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
   100% {
-    transform: translateX(150%) rotate(45deg);
+    top: 100%;
+    opacity: 0;
   }
 }
 
-@keyframes floating {
+@keyframes sweep {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.glow-text {
+  text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+}
+
+.neon-pulse {
+  animation: pulse-neon 2s infinite;
+}
+
+@keyframes pulse-neon {
 
   0%,
   100% {
-    transform: translateY(0) rotate(0);
+    opacity: 1;
+    filter: drop-shadow(0 0 5px var(--neon-cyan));
   }
 
   50% {
-    transform: translateY(-20px) rotate(5deg);
+    opacity: 0.7;
+    filter: drop-shadow(0 0 15px var(--neon-cyan));
   }
-}
-
-@keyframes drift {
-  0% {
-    background-position: 0 0;
-  }
-
-  100% {
-    background-position: 100% 100%;
-  }
-}
-
-.bg-animate {
-  animation: drift 60s linear infinite;
-  background-size: 200% 200%;
 }
