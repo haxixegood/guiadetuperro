@@ -189,23 +189,6 @@ export default function Quiz() {
 
       <ProgressBar />
 
-      {/* GAMIFICATION METER */}
-      <div className="px-6 py-2 bg-slate-50 border-b flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="flex -space-x-2">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className={`w-5 h-5 rounded-full border-2 border-white flex items-center justify-center text-[8px] ${unlockedRewards.length > i ? 'bg-green-500 text-white font-black' : 'bg-slate-200 text-slate-400'}`}>
-                {unlockedRewards.length > i ? '✓' : i + 1}
-              </div>
-            ))}
-          </div>
-          <span className="text-[10px] font-black uppercase text-slate-400 tracking-tighter">Bónus</span>
-        </div>
-        <div className="text-[10px] font-black text-primary">
-          VALOR: <span className="text-slate-900">${(unlockedRewards.length * 249).toLocaleString()} MXN</span>
-        </div>
-      </div>
-
       <BackButton />
 
       {/* REWARD TOAST (Non-intrusive Bubble) */}
