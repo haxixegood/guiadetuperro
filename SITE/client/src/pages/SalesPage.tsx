@@ -29,28 +29,29 @@ export default function SalesPage() {
   return (
     <div className="min-h-screen bg-background text-white selection:bg-primary/30 pb-32">
       {/* SCARCITY HEADER */}
-      <div className="fixed top-0 left-0 right-0 z-[100] bg-primary/90 text-black py-3 px-4 shadow-[0_0_50px_rgba(255,234,0,0.5)]">
-        <div className="max-w-4xl mx-auto flex justify-between items-center font-black text-[9px] md:text-sm uppercase tracking-tight">
+      {/* SCARCITY HEADER - RED ALERT */}
+      <div className="fixed top-0 left-0 right-0 z-[100] bg-red-600 text-white py-2 px-4 shadow-lg flex justify-center">
+        <div className="w-full max-w-4xl flex justify-between items-center font-black text-[10px] md:text-sm uppercase tracking-wide">
           <div className="flex items-center gap-2">
-            <Zap className="w-3 h-3 md:w-4 md:h-4 animate-bounce" />
+            <Activity className="w-3 h-3 md:w-4 md:h-4 animate-pulse" />
             <span className="hidden md:inline">OFERTA POR TIEMPO LIMITADO PARA MÉXICO</span>
             <span className="md:hidden">OFERTA LIMITADA MX</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 bg-black/20 px-2 py-0.5 rounded">
             <span className="hidden md:inline">EL PRECIO SUBE EN:</span>
-            <span className="text-base md:text-lg">{formatTime(timeLeft)}</span>
+            <span className="text-sm md:text-lg font-mono">{formatTime(timeLeft)}</span>
           </div>
         </div>
       </div>
 
-      <main className="pt-24 px-4 max-w-5xl mx-auto space-y-24">
+      <main className="pt-24 px-4 max-w-5xl mx-auto space-y-20">
         {/* HERO SECTION */}
-        <section className="relative py-12">
-          {/* Floating Dog - REAL TRANSPARENT */}
+        <section className="relative py-8 md:py-12">
+          {/* Floating Dog - Adjusted Position */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="absolute -top-10 right-0 md:-right-20 w-40 md:w-80 z-50 pointer-events-none"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="w-32 md:w-80 mx-auto md:absolute md:-top-10 md:-right-20 md:z-50 mb-6 md:mb-0 relative z-10"
           >
             <img
               src="/assets/dog-hero.png"
@@ -59,24 +60,24 @@ export default function SalesPage() {
             />
           </motion.div>
 
-          <div className="space-y-10 relative z-10">
-            <div className="space-y-4">
-              <span className="bg-white/5 border border-white/10 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-primary italic flex items-center gap-2 w-fit">
+          <div className="space-y-6 md:space-y-10 relative z-20">
+            <div className="space-y-2 md:space-y-4">
+              <span className="bg-white/5 border border-white/10 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest text-primary italic flex items-center gap-2 w-fit">
                 <Zap className="w-3 h-3" /> Entrenamiento de Bolsillo 15 Min/Día
               </span>
-              <h1 className="text-4xl md:text-8xl font-black leading-[0.85] tracking-tighter glow-text-yellow uppercase">
+              <h1 className="text-4xl md:text-8xl font-black leading-[0.9] tracking-tighter glow-text-yellow uppercase">
                 EL MÉTODO QUE <br />
                 <span className="text-primary italic">REPROGRAMA</span> <br />
                 A TU PERRO
               </h1>
             </div>
 
-            <p className="text-lg md:text-3xl font-bold text-white/60 leading-tight max-w-2xl">
+            <p className="text-base md:text-3xl font-bold text-white/60 leading-snug max-w-2xl">
               Convierte tu celular en el <span className="text-white italic">manual de instrucciones</span> que <span className="text-white underline decoration-primary underline-offset-4">tu perro no trajo</span>. Resultados permanentes desde la primera sesión.
             </p>
 
-            <div className="pt-6">
-              <Button onClick={() => document.getElementById('checkout')?.scrollIntoView({ behavior: 'smooth' })} className="yellow-cta px-10 py-8 text-lg md:text-xl font-black shimmer animate-pulse-glow">
+            <div className="pt-4 md:pt-6">
+              <Button onClick={() => document.getElementById('checkout')?.scrollIntoView({ behavior: 'smooth' })} className="yellow-cta w-full md:w-auto px-8 md:px-10 py-6 md:py-8 text-base md:text-xl font-black shimmer animate-pulse-glow h-auto whitespace-normal leading-tight">
                 ¡QUIERO UN PERRO EQUILIBRADO AHORA!
               </Button>
             </div>
@@ -192,9 +193,9 @@ export default function SalesPage() {
 
                   <Button
                     onClick={handleCheckout}
-                    className="yellow-cta w-full py-8 text-lg md:text-xl font-black shimmer animate-pulse-glow flex items-center justify-center"
+                    className="yellow-cta w-full py-6 md:py-8 text-base md:text-xl font-black shimmer animate-pulse-glow flex items-center justify-center gap-2 h-auto whitespace-normal leading-tight"
                   >
-                    ¡OBTENER MI ACCESO AHORA!
+                    <span>¡OBTENER MI ACCESO AHORA!</span>
                   </Button>
 
                   <div className="flex justify-between items-center opacity-40 text-[10px] font-black uppercase">
