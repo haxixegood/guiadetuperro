@@ -58,97 +58,102 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
   };
 
   return (
-    <div className="w-full flex flex-col items-center font-sans relative">
+    <div className="w-full h-full flex flex-col items-center font-sans relative">
 
-      {/* Header Section - Clean & Harmonious */}
-      <div className="text-center space-y-3 mb-10 w-full max-w-md mx-auto px-4">
-        {category && (
-          <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-            {category}
-          </div>
-        )}
-        <h2 className="text-3xl font-black text-[#1A1A1A] leading-none tracking-tight">
-          {question.replace('{name}', quizData.name || 'tu perro')}
-        </h2>
-        {subtitle && (
-          <p className="text-sm text-gray-500 font-medium leading-relaxed max-w-xs mx-auto">
-            {subtitle}
-          </p>
-        )}
-      </div>
+      {/* Main Content Area - Pushed down from top HUD */}
+      <div className="flex-1 flex flex-col items-center justify-center w-full max-w-md mx-auto">
 
-      {/* Options Stack - Minimalist */}
-      <div className="w-full max-w-md flex flex-col gap-4 mb-8">
-        {options.map((option, idx) => {
-          const [title, sub] = option.label.includes(' - ')
-            ? option.label.split(' - ')
-            : [option.label, null];
+        {/* Header Section - Clean & Harmonious */}
+        <div className="text-center space-y-3 mb-10 w-full px-4">
+          {category && (
+            <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+              {category}
+            </div>
+          )}
+          <h2 className="text-3xl font-black text-[#1A1A1A] leading-none tracking-tight">
+            {question.replace('{name}', quizData.name || 'tu perro')}
+          </h2>
+          {subtitle && (
+            <p className="text-sm text-gray-500 font-medium leading-relaxed max-w-xs mx-auto">
+              {subtitle}
+            </p>
+          )}
+        </div>
 
-          const isSelected = selected === option.value;
+        {/* Options Stack - Minimalist */}
+        <div className="w-full flex flex-col gap-3 px-4">
+          {options.map((option, idx) => {
+            const [title, sub] = option.label.includes(' - ')
+              ? option.label.split(' - ')
+              : [option.label, null];
 
-          return (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              onClick={() => handleSelect(option.value)}
-              className={`
-                relative w-full rounded-[20px] p-5 cursor-pointer transition-all duration-300
-                flex items-center gap-5 text-left group overflow-hidden
-                ${isSelected
-                  ? 'bg-[#FFD700] shadow-lg scale-[1.01] z-10'
-                  : 'bg-gray-50 hover:bg-gray-100 active:scale-[0.99]'
-                }
-              `}
-            >
-              {/* Icon Container - Simplified */}
-              <div className={`
-                w-12 h-12 flex-shrink-0 rounded-2xl flex items-center justify-center transition-all duration-300
-                ${isSelected ? 'bg-white/90' : 'bg-white shadow-sm'}
-              `}>
-                {getIcon(option.icon, isSelected)}
-              </div>
+            const isSelected = selected === option.value;
 
-              {/* Text Content - Easier on eyes */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-0.5">
-                  <h3 className={`text-base font-bold truncate pr-2 ${isSelected ? 'text-black' : 'text-gray-900'}`}>
-                    {title}
-                  </h3>
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                onClick={() => handleSelect(option.value)}
+                className={`
+                  relative w-full rounded-[20px] p-5 cursor-pointer transition-all duration-300
+                  flex items-center gap-5 text-left group overflow-hidden
+                  ${isSelected
+                    ? 'bg-[#FFD700] shadow-lg scale-[1.01] z-10'
+                    : 'bg-gray-50 hover:bg-gray-100 active:scale-[0.99]'
+                  }
+                `}
+              >
+                {/* Icon Container - Simplified */}
+                <div className={`
+                  w-12 h-12 flex-shrink-0 rounded-2xl flex items-center justify-center transition-all duration-300
+                  ${isSelected ? 'bg-white/90' : 'bg-white shadow-sm'}
+                `}>
+                  {getIcon(option.icon, isSelected)}
                 </div>
-                {sub && (
-                  <p className={`text-xs font-medium truncate ${isSelected ? 'text-black/70' : 'text-gray-500'}`}>
-                    {sub}
-                  </p>
-                )}
-              </div>
 
-              {/* Selection Check Circle - Less aggressive */}
-              <div className={`
-                w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-300 flex-shrink-0
-                ${isSelected
-                  ? 'border-black bg-black'
-                  : 'border-gray-300 bg-transparent'
-                }
-              `}>
-                {isSelected && <Check className="w-3.5 h-3.5 text-[#FFD700] stroke-[3]" />}
-              </div>
-            </motion.div>
-          );
-        })}
+                {/* Text Content - Easier on eyes */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h3 className={`text-base font-bold leading-tight ${isSelected ? 'text-black' : 'text-gray-900'}`}>
+                      {title}
+                    </h3>
+                  </div>
+                  {sub && (
+                    <p className={`text-xs font-medium mt-0.5 ${isSelected ? 'text-black/70' : 'text-gray-500'}`}>
+                      {sub}
+                    </p>
+                  )}
+                </div>
+
+                {/* Selection Check Circle - Less aggressive */}
+                <div className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-300 flex-shrink-0
+                  ${isSelected
+                    ? 'border-black bg-black'
+                    : 'border-gray-300 bg-transparent'
+                  }
+                `}>
+                  {isSelected && <Check className="w-3.5 h-3.5 text-[#FFD700] stroke-[3]" />}
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Skip Option */}
-      {skipText && (
-        <button
-          onClick={() => onAnswer('skip')}
-          className="block mx-auto text-[10px] font-bold text-gray-300 hover:text-gray-500 uppercase tracking-widest border-b border-transparent hover:border-gray-300 transition-all pb-0.5"
-        >
-          {skipText}
-        </button>
-      )}
-
+      {/* Bottom Area - Skip Option */}
+      <div className="w-full mt-auto pt-6">
+        {skipText && (
+          <button
+            onClick={() => onAnswer('skip')}
+            className="block mx-auto text-[10px] font-bold text-gray-300 hover:text-gray-500 uppercase tracking-widest py-4"
+          >
+            {skipText}
+          </button>
+        )}
+      </div>
     </div>
   );
 }

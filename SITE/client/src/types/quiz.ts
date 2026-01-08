@@ -61,9 +61,9 @@ export const QUIZ_STEPS: QuizStep[] = [
     question: '¿Qué edad tiene {name}?',
     subtitle: 'Su etapa de vida define el método de aprendizaje.',
     options: [
-      { value: '0-6', label: 'Cachorro (0–12 meses) - Etapa crítica', icon: 'age-puppy' },
-      { value: '1-7', label: 'Adulto (1–7 años) - Hábitos formados', icon: 'age-adult' },
-      { value: '7+', label: 'Senior (Más de 7 años) - Sabio pero terco', icon: 'age-senior' },
+      { value: '0-6', label: 'Cachorro (0–12 meses)', icon: 'age-puppy' },
+      { value: '1-7', label: 'Adulto (1–7 años)', icon: 'age-adult' },
+      { value: '7+', label: 'Senior (+7 años)', icon: 'age-senior' },
     ],
   },
 
@@ -89,9 +89,9 @@ export const QUIZ_STEPS: QuizStep[] = [
     question: '¿Dónde vive {name}?',
     subtitle: 'El entorno influye en su nivel de estrés.',
     options: [
-      { value: 'apt', label: 'Departamento - Espacio limitado', icon: 'env-apt' },
-      { value: 'house', label: 'Casa con patio - Más estímulos', icon: 'env-house' },
-      { value: 'other', label: 'Otro / Terreno - Libertad total', icon: 'env-land' },
+      { value: 'apt', label: 'Departamento / Flat', icon: 'env-apt' },
+      { value: 'house', label: 'Casa con patio', icon: 'env-house' },
+      { value: 'other', label: 'Terreno / Espacio abierto', icon: 'env-land' },
     ],
   },
 
@@ -110,7 +110,7 @@ export const QUIZ_STEPS: QuizStep[] = [
       },
       {
         value: 'peeing',
-        label: 'Hace pipí en lugares incorrectos',
+        label: 'Pipí en lugar incorrecto',
         icon: 'behavior-pee',
       },
       {
@@ -130,7 +130,7 @@ export const QUIZ_STEPS: QuizStep[] = [
       },
       {
         value: 'alone',
-        label: 'Ansiedad al quedarse solo',
+        label: 'Ansiedad por soledad',
         icon: 'behavior-alone',
       },
     ],
@@ -143,9 +143,9 @@ export const QUIZ_STEPS: QuizStep[] = [
     type: 'single',
     question: '¿Qué tan urgente es resolver esto para {name}?',
     options: [
-      { value: 'critical', label: 'Crítico - No puedo más con esto', icon: 'urgency-critical' },
-      { value: 'high', label: 'Alto - Necesito solución pronto', icon: 'urgency-high' },
-      { value: 'moderate', label: 'Moderado - Quiero evitar que el problema empeore', icon: 'urgency-moderate' },
+      { value: 'critical', label: 'Crítico: No aguanto más', icon: 'urgency-critical' },
+      { value: 'high', label: 'Alto: Necesito solución', icon: 'urgency-high' },
+      { value: 'moderate', label: 'Moderado: Evitar que empeore', icon: 'urgency-moderate' },
     ],
   },
 
@@ -156,9 +156,9 @@ export const QUIZ_STEPS: QuizStep[] = [
     type: 'single',
     question: '¿Cuál de estos resultados es el más prioritario para ti y para {name} hoy?',
     options: [
-      { value: 'no-punish', label: 'Educar con amor, sin gritos ni castigos', icon: 'goal-love' },
-      { value: 'fast', label: 'Resultados reales con solo 15 min al día', icon: 'goal-speed' },
-      { value: 'bonding', label: 'Tener una conexión profunda e inquebrantable', icon: 'goal-bond' },
+      { value: 'no-punish', label: 'Educar con amor, sin castigos', icon: 'goal-love' },
+      { value: 'fast', label: 'Resultados en 15 min al día', icon: 'goal-speed' },
+      { value: 'bonding', label: 'Vínculo profundo y real', icon: 'goal-bond' },
     ],
   },
 
