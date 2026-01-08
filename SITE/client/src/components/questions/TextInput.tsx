@@ -42,17 +42,18 @@ export default function TextInput({
   };
 
   return (
-    <div className="w-full relative font-sans flex flex-col items-center">
+    <div className="w-full h-full flex flex-col items-center px-6 pt-12 pb-12 font-sans relative z-10">
 
-      <div className="flex-1 flex flex-col items-center w-full max-w-sm z-10 relative justify-center">
+      {/* Top/Middle Section: Header + Input */}
+      <div className="flex-1 flex flex-col items-center justify-center w-full max-w-sm">
 
         {/* Header - Optimized Typography */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full text-center space-y-4 mb-8"
+          className="w-full text-center space-y-4 mb-10"
         >
-          <div className="inline-block bg-gray-50 text-gray-400 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-2">
+          <div className="inline-block bg-gray-50 text-gray-400 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
             Paso 1: Personalización
           </div>
           <h2 className="text-3xl md:text-4xl font-black text-gray-900 leading-[0.95] tracking-tight uppercase">
@@ -65,7 +66,7 @@ export default function TextInput({
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1 }}
-          className="w-full relative group mb-2"
+          className="w-full relative group"
         >
           <Input
             type={type}
@@ -87,13 +88,15 @@ export default function TextInput({
             autoFocus
           />
         </motion.div>
+      </div>
 
-        {/* Action Button - High Contrast */}
+      {/* Bottom Section: Action Button + Skip Link */}
+      <div className="w-full max-w-sm space-y-6 mt-auto">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="w-full mt-6"
+          className="w-full"
         >
           <Button
             onClick={handleContinue}
@@ -103,7 +106,7 @@ export default function TextInput({
                 transition-all duration-300 flex items-center justify-center gap-2
                 ${value.trim()
                 ? 'bg-[#FFD700] text-black hover:bg-[#F0C000] hover:scale-[1.02] shadow-xl shadow-yellow-400/20 cursor-pointer'
-                : 'bg-gray-100 text-gray-300 cursor-not-allowed'
+                : 'bg-gray-100 text-gray-300 cursor-not-allowed shadow-none'
               }
               `}
           >
@@ -118,12 +121,11 @@ export default function TextInput({
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
             onClick={handleSkip}
-            className="mt-8 text-xs font-bold text-gray-400 hover:text-gray-600 transition-colors uppercase tracking-wider py-2"
+            className="w-full text-center text-[10px] font-bold text-gray-300 hover:text-gray-500 transition-colors uppercase tracking-widest py-2"
           >
             Prefiero no decirlo por ahora
           </motion.button>
         )}
-
       </div>
     </div>
   );

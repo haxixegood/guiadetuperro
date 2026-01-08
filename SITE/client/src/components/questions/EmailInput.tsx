@@ -72,14 +72,15 @@ export default function EmailInput({
   };
 
   return (
-    <div className="w-full max-w-md mx-auto space-y-8 p-4">
+    <div className="w-full h-full flex flex-col items-center px-6 pt-12 pb-12 font-sans relative z-10">
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full space-y-6"
+        className="flex-1 flex flex-col items-center justify-center w-full max-w-sm space-y-6"
       >
         {/* Header */}
-        <div className="space-y-3 text-center">
+        <div className="space-y-3 text-center w-full">
           {category && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -94,7 +95,7 @@ export default function EmailInput({
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl font-black leading-none text-[#1A1A1A] tracking-tight"
+            className="text-3xl font-black leading-none text-[#1A1A1A] tracking-tight uppercase"
           >
             {question}
           </motion.h2>
@@ -116,7 +117,7 @@ export default function EmailInput({
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3 }}
-          className="relative"
+          className="relative w-full"
         >
           <div className="relative group">
             <Mail className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[#FFD700] transition-colors" />
@@ -161,12 +162,14 @@ export default function EmailInput({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest"
+          className="text-center text-[10px] font-bold text-gray-300 uppercase tracking-widest"
         >
           🔒 Tus datos están 100% seguros
         </motion.p>
+      </motion.div>
 
-        {/* Action Button */}
+      {/* Bottom Section: Action Button */}
+      <div className="w-full max-w-sm mt-auto space-y-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -176,7 +179,7 @@ export default function EmailInput({
             onClick={handleContinue}
             className={`
                 w-full h-16 rounded-full text-xl font-black tracking-widest uppercase shadow-lg transition-all duration-300
-                ${value.trim() && value.includes('@') && value.includes('.') ? 'bg-[#FFD700] text-black hover:bg-[#F0C000] hover:scale-[1.02] shadow-yellow-400/20' : 'bg-gray-100 text-gray-300 cursor-not-allowed'}
+                ${value.trim() && value.includes('@') && value.includes('.') ? 'bg-[#FFD700] text-black hover:bg-[#F0C000] hover:scale-[1.02] shadow-yellow-400/20 shadow-xl' : 'bg-gray-100 text-gray-300 cursor-not-allowed shadow-none'}
               `}
             disabled={!value.trim() || !value.includes('@')}
           >
@@ -186,13 +189,13 @@ export default function EmailInput({
           {skipText && (
             <button
               onClick={() => onAnswer('skip')}
-              className="w-full text-center mt-4 text-[10px] font-bold text-gray-300 uppercase tracking-widest hover:text-gray-500"
+              className="w-full text-center mt-6 text-[10px] font-bold text-gray-300 uppercase tracking-widest hover:text-gray-500 py-2"
             >
               {skipText}
             </button>
           )}
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 }

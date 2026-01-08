@@ -39,14 +39,14 @@ export default function SliderQuestion({
   };
 
   return (
-    <div className="w-full max-w-md mx-auto space-y-8 p-4">
+    <div className="w-full h-full flex flex-col items-center px-6 pt-12 pb-12 font-sans relative z-10">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full space-y-6"
+        className="flex-1 flex flex-col items-center justify-center w-full max-w-sm space-y-6"
       >
         {/* Header */}
-        <div className="space-y-3 text-center">
+        <div className="space-y-3 text-center w-full">
           {category && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -61,7 +61,7 @@ export default function SliderQuestion({
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl font-black leading-none text-[#1A1A1A] tracking-tight"
+            className="text-3xl font-black leading-none text-[#1A1A1A] tracking-tight uppercase"
           >
             {question}
           </motion.h2>
@@ -98,7 +98,7 @@ export default function SliderQuestion({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="space-y-8 pt-4"
+          className="space-y-8 pt-4 w-full"
         >
           <div className="px-2">
             <Slider
@@ -117,8 +117,10 @@ export default function SliderQuestion({
             <span>{maxLabel}</span>
           </div>
         </motion.div>
+      </motion.div>
 
-        {/* Continue Button - Inline */}
+      {/* Bottom Section: Continue Button */}
+      <div className="w-full max-w-sm mt-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -132,7 +134,7 @@ export default function SliderQuestion({
             CONTINUAR
           </Button>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 }
