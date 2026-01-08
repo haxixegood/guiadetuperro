@@ -24,7 +24,7 @@ export default function SingleChoice({ question, options, onAnswer, category, sk
             {category} // Sync Protocol
           </span>
         )}
-        <h2 className="text-3xl md:text-5xl font-black leading-tight text-white glow-text-yellow">
+        <h2 className="text-2xl md:text-4xl font-black leading-tight text-white glow-text-yellow">
           {question}
         </h2>
       </div>
@@ -37,10 +37,10 @@ export default function SingleChoice({ question, options, onAnswer, category, sk
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: idx * 0.1 }}
             onClick={() => onAnswer(option.value)}
-            className="organic-card group flex items-center justify-between p-6 text-left hover:border-primary/40 transition-all active:scale-[0.98]"
+            className="organic-card group flex items-center justify-between p-5 text-left hover:border-primary/40 transition-all active:scale-[0.98]"
           >
-            <div className="flex items-center gap-6">
-              <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.8)] filter brightness-125">
                 {option.icon || '🐾'}
               </div>
               <span className="text-lg font-bold text-white/80 group-hover:text-white transition-colors">

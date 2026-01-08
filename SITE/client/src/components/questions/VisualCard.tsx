@@ -30,32 +30,12 @@ export default function VisualCard({ id, label, emoji, image, selected, onClick,
                 }
       `}
         >
-            {/* Background Gradient & Image */}
-            <div className="absolute inset-0">
-                {image ? (
-                    <>
-                        <img
-                            src={image}
-                            alt={label}
-                            className={`
-                                w-full h-full object-cover transition-transform duration-700
-                                ${selected ? 'scale-110' : 'scale-100'}
-                            `}
-                        />
-                        <div className={`
-                            absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent
-                            ${selected ? 'opacity-80' : 'opacity-90'}
-                            transition-opacity duration-300
-                        `} />
-                    </>
-                ) : (
-                    <div className={`
-                        absolute inset-0 bg-gradient-to-br from-white/5 to-transparent
-                        ${selected ? 'opacity-100' : 'opacity-50'}
-                        transition-opacity duration-300
-                    `} />
-                )}
-            </div>
+            {/* Clean Background Gradient */}
+            <div className={`
+                absolute inset-0 bg-gradient-to-br from-white/5 to-transparent
+                ${selected ? 'opacity-100' : 'opacity-50'}
+                transition-opacity duration-300
+            `} />
 
             {/* Glitch Effect on Selection */}
             {selected && (
@@ -63,18 +43,18 @@ export default function VisualCard({ id, label, emoji, image, selected, onClick,
                     initial={{ opacity: 0 }}
                     animate={{ opacity: [0, 1, 0] }}
                     transition={{ duration: 0.3 }}
-                    className="absolute inset-0 bg-primary/20"
+                    className="absolute inset-0 bg-primary/10 z-0"
                 />
             )}
 
-            {/* Emoji/Icon (Overlay or Fallback) */}
+            {/* Emoji/Icon (Centralized & Clean) */}
             <motion.div
                 animate={selected ? {
                     scale: [1, 1.1, 1],
                     rotate: [0, -5, 5, 0]
                 } : {}}
                 transition={{ duration: 0.3 }}
-                className={`text-6xl relative z-10 ${image ? 'opacity-0' : 'opacity-100'}`}
+                className="text-6xl relative z-10 drop-shadow-[0_0_15px_rgba(255,234,0,0.3)]"
             >
                 {emoji}
             </motion.div>

@@ -22,7 +22,7 @@ export default function DiscountReveal({ onContinue }: DiscountRevealProps) {
             current++;
             setDiscount(current);
 
-            if (current >= 53) {
+            if (current >= 80) {
                 clearInterval(interval);
                 setTimeout(() => setShowFinalMessage(true), 500);
             }
@@ -53,19 +53,19 @@ export default function DiscountReveal({ onContinue }: DiscountRevealProps) {
                     <Sparkles className="w-10 h-10 text-primary" />
                 </motion.div>
 
-                <h1 className="text-3xl md:text-5xl font-black glow-text-yellow uppercase">
+                <h1 className="text-3xl md:text-4xl font-black glow-text-yellow uppercase leading-tight">
                     ¡RECOMPENSA DESBLOQUEADA!
                 </h1>
-                <p className="text-lg text-white/70">
+                <p className="text-base text-white/70">
                     Por completar el análisis completo de tu perrhijo...
                 </p>
             </motion.div>
 
             {/* Discount Display */}
-            <div className="organic-card p-12 text-center space-y-8 bg-primary/5 border-primary/30">
-                <div className="space-y-4">
-                    <TrendingDown className="w-12 h-12 mx-auto text-primary" />
-                    <p className="text-sm font-black text-white/60 uppercase tracking-widest">
+            <div className="organic-card p-8 md:p-10 text-center space-y-6 bg-primary/5 border-primary/30">
+                <div className="space-y-2">
+                    <TrendingDown className="w-10 h-10 mx-auto text-primary" />
+                    <p className="text-xs font-black text-white/60 uppercase tracking-widest">
                         Descuento Exclusivo Activado
                     </p>
                 </div>
@@ -73,22 +73,22 @@ export default function DiscountReveal({ onContinue }: DiscountRevealProps) {
                 {/* Animated Discount Number */}
                 <motion.div
                     animate={{
-                        scale: discount >= 53 ? [1, 1.2, 1] : 1
+                        scale: discount >= 80 ? [1, 1.1, 1] : 1
                     }}
                     transition={{ duration: 0.5 }}
-                    className="space-y-2"
+                    className="space-y-1"
                 >
-                    <div className="flex items-center justify-center gap-4">
+                    <div className="flex items-center justify-center gap-2">
                         <motion.span
                             key={discount}
                             initial={{ scale: 1.5, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            className="text-8xl md:text-9xl font-black text-primary"
+                            className="text-7xl md:text-8xl font-black text-primary"
                         >
                             {discount}%
                         </motion.span>
                     </div>
-                    <p className="text-2xl font-black text-white uppercase">
+                    <p className="text-xl font-black text-white uppercase">
                         DE DESCUENTO
                     </p>
                 </motion.div>
@@ -98,14 +98,14 @@ export default function DiscountReveal({ onContinue }: DiscountRevealProps) {
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="space-y-4 pt-6 border-t border-white/10"
+                        className="space-y-3 pt-4 border-t border-white/10"
                     >
-                        <p className="text-lg font-bold text-white/80">
+                        <p className="text-base font-bold text-white/80">
                             Este descuento es <span className="text-primary">válido solo hoy</span>
                         </p>
-                        <div className="flex items-center justify-center gap-2 text-sm text-white/60">
-                            <span className="line-through">$1,497 MXN</span>
-                            <span className="text-2xl font-black text-primary">→ $39 MXN</span>
+                        <div className="flex items-center justify-center gap-3 text-white/60">
+                            <span className="line-through text-lg">$197 MXN</span>
+                            <span className="text-3xl font-black text-primary animate-pulse">$39 MXN</span>
                         </div>
                     </motion.div>
                 )}
@@ -116,10 +116,11 @@ export default function DiscountReveal({ onContinue }: DiscountRevealProps) {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
+                    className="pb-20"
                 >
                     <Button
                         onClick={onContinue}
-                        className="yellow-cta w-full py-10 text-2xl font-black shimmer animate-pulse-glow"
+                        className="yellow-cta w-full py-8 text-xl font-black shimmer animate-pulse-glow"
                     >
                         ¡VER MI OFERTA ESPECIAL!
                     </Button>

@@ -61,7 +61,7 @@ export default function VisualCardGrid({
                     </motion.span>
                 )}
 
-                <h2 className="text-3xl md:text-5xl font-black leading-tight text-white glow-text-yellow">
+                <h2 className="text-2xl md:text-4xl font-black leading-tight text-white glow-text-yellow">
                     {question}
                 </h2>
 
@@ -73,7 +73,7 @@ export default function VisualCardGrid({
             </div>
 
             {/* Visual Cards Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {behaviors.map((behavior, index) => (
                     <VisualCard
                         key={behavior.id}

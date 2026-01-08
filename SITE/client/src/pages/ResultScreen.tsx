@@ -124,7 +124,7 @@ export default function ResultScreen() {
         </div>
 
         {/* FINAL YELLOW CTA - FIXED PROPORTIONS */}
-        <div className="fixed bottom-0 left-0 right-0 p-4 md:p-6 z-50 bg-background/95 backdrop-blur-xl border-t border-white/5">
+        <div className="fixed bottom-0 left-0 right-0 p-4 pb-8 md:p-6 z-50 bg-background/95 backdrop-blur-xl border-t border-white/5">
           <div className="max-w-xl mx-auto">
             <Button
               onClick={() => setLocation('/sales')}
