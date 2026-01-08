@@ -121,48 +121,26 @@ export default function Quiz() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
-      <ProgressBar />
+    <div className="min-h-screen bg-white flex flex-col relative overflow-hidden font-sans">
       {currentStep > 0 && <BackButton />}
 
-      <main className={`flex-1 flex items-center justify-center ${step.id === 'welcome' ? 'p-0' : 'p-4'} relative z-10`}>
+      <main className="flex-1 flex items-center justify-center p-0 relative z-10">
         <motion.div
           key={currentStep}
-          initial={{ opacity: 0, x: 100 }}
+          initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -100 }}
-          transition={{ duration: 0.5 }}
-          className={`
-            w-full transition-all duration-300
-            ${step.id === 'welcome'
-              ? 'max-w-md h-full shadow-none bg-transparent p-0'
-              : 'max-w-2xl organic-card p-8 md:p-12'
-            }
-          `}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          className="w-full h-full max-w-md mx-auto flex flex-col justify-center"
         >
           {renderStep()}
         </motion.div>
       </main>
 
-      {/* HUD DECOR CORNERS - ONLY TOP */}
-      <div className="fixed top-20 left-10 w-4 h-4 border-l border-t border-white/10 pointer-events-none" />
-      <div className="fixed top-20 right-10 w-4 h-4 border-r border-t border-white/10 pointer-events-none" />
+      {/* FIXED HUD ELEMENTS - Minimalist */}
+      <div className="fixed top-0 left-0 w-full h-32 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none z-20" />
+      <div className="fixed bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none z-20" />
 
-      {/* Floating HUD Elements - SUBTLE */}
-      <div className="fixed top-1/4 -left-20 w-40 h-40 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="fixed bottom-1/4 -right-20 w-40 h-40 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
-
-      {/* Sticky Reinforcement Banner - LIGHT MODE (Hidden on specific steps) */}
-      {step.id !== 'welcome' && step.id !== 'size' && step.id !== 'environment' && step.id !== 'urgency' && step.id !== 'goal' && step.id !== 'bonus-selection' && step.id !== 'result' && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t-4 border-primary py-3 z-30 shadow-[0_-5px_20px_rgba(0,0,0,0.05)]">
-          <div className="flex items-center justify-center gap-2 text-center">
-            <span className="text-primary animate-pulse">⚡</span>
-            <p className="text-xs font-black text-black uppercase tracking-widest">
-              Método Práctico: 15 min al día en tu celular
-            </p>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

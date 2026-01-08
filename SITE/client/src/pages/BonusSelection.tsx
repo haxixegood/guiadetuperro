@@ -42,69 +42,54 @@ export default function BonusSelection({ onBonusSelected }: BonusSelectionProps)
     };
 
     return (
-        <div className="w-full max-w-md mx-auto min-h-screen flex flex-col items-center pt-2 px-5 font-sans bg-white relative overflow-hidden">
+        <div className="w-full max-w-md mx-auto flex flex-col items-center pt-8 px-4 font-sans relative overflow-hidden">
 
-            {/* Top Status Bar - Success Dopamine */}
-            <motion.div
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                className="w-full bg-green-50 border border-green-100 rounded-full py-2 px-4 flex items-center justify-center gap-2 mb-6"
-            >
-                <div className="bg-green-500 rounded-full p-0.5">
-                    <CheckCircle className="w-3 h-3 text-white" />
-                </div>
-                <span className="text-xs font-bold text-green-700 uppercase tracking-wide">
-                    Análisis de {quizData.name || 'tu perrito'} Finalizado
-                </span>
-            </motion.div>
-
-            {/* Header - Moved Up */}
+            {/* Header - Optimized */}
             <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="text-center space-y-2 mb-8 relative z-10"
+                className="text-center space-y-3 mb-8 relative z-10"
             >
                 {/* Icon Wrapper */}
-                <div className="w-16 h-16 mx-auto bg-yellow-50 rounded-full flex items-center justify-center mb-4 border-[3px] border-[#FFD700] shadow-sm">
-                    <Gift className="w-8 h-8 text-[#FFD700] fill-[#FFD700]" />
+                <div className="w-16 h-16 mx-auto bg-yellow-50 rounded-2xl flex items-center justify-center mb-2 shadow-sm">
+                    <Gift className="w-8 h-8 text-[#FFD700]" />
                 </div>
 
                 <h1 className="text-3xl font-black text-[#1A1A1A] tracking-tight leading-none">
                     ¡FELICIDADES!
                 </h1>
-                <p className="text-base font-bold text-gray-500 max-w-[250px] mx-auto leading-tight">
-                    Has desbloqueado <span className="text-[#DAA520] underline decoration-2 underline-offset-2">3 regalos exclusivos</span>
+                <p className="text-sm font-medium text-gray-500 max-w-[250px] mx-auto leading-relaxed">
+                    Has desbloqueado <span className="text-[#DAA520] font-bold">3 regalos exclusivos</span>
                 </p>
             </motion.div>
 
             {/* Vertical Card List */}
-            <div className="w-full space-y-4 mb-6 relative z-10 flex-1">
+            <div className="w-full space-y-3 mb-8 relative z-10 flex-1">
                 {BONUS_LIST.map((bonus, index) => (
                     <motion.div
                         key={bonus.id}
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.15 }}
-                        whileHover={{ scale: 1.02 }}
-                        className="relative bg-white rounded-2xl p-4 flex items-center gap-4 shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-gray-100 border-l-[6px] border-l-[#FFD700]"
+                        className="relative bg-white rounded-[20px] p-4 flex items-center gap-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
                     >
-                        {/* Icon Box - Tangible Look */}
-                        <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-yellow-50 to-white flex items-center justify-center flex-shrink-0 border border-yellow-100 shadow-inner">
+                        {/* Icon Box */}
+                        <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center flex-shrink-0">
                             {bonus.icon}
                         </div>
 
                         {/* Content */}
-                        <div className="flex-1">
-                            <div className="flex justify-between items-start mb-1">
-                                <h3 className="text-sm font-extrabold text-[#1A1A1A] leading-tight pr-1">
+                        <div className="flex-1 min-w-0">
+                            <div className="flex justify-between items-center mb-1">
+                                <h3 className="text-sm font-bold text-[#1A1A1A] truncate pr-2">
                                     {bonus.title}
                                 </h3>
-                                {/* FREE Badge - High Contrast */}
-                                <span className="bg-black text-[#FFD700] text-[9px] font-black px-2 py-0.5 rounded-sm shadow-sm tracking-wide">
+                                {/* FREE Badge - Better Alignment */}
+                                <span className="bg-black text-[#FFD700] text-[8px] font-black px-2 py-0.5 rounded-full tracking-wide flex-shrink-0">
                                     GRATIS
                                 </span>
                             </div>
-                            <p className="text-xs text-gray-400 font-medium leading-snug">
+                            <p className="text-xs text-gray-400 font-medium truncate">
                                 {bonus.description}
                             </p>
                         </div>
@@ -113,19 +98,21 @@ export default function BonusSelection({ onBonusSelected }: BonusSelectionProps)
             </div>
 
             {/* CTA Button */}
-            <div className="w-full relative z-20 pb-8">
+            <div className="w-full relative z-20 pb-4">
                 <motion.div
                     animate={{ scale: [1, 1.02, 1] }}
-                    transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
                 >
                     <Button
                         onClick={handleContinue}
-                        className="w-full h-auto py-4 rounded-xl bg-[#FFD700] hover:bg-[#F0C000] text-[#1A1A1A] shadow-[0_10px_40px_rgba(255,215,0,0.4)] transition-all flex flex-col items-center justify-center gap-1 border-b-4 border-[#E5C100] active:border-b-0 active:translate-y-1"
+                        className="w-full h-16 rounded-full bg-[#FFD700] hover:bg-[#F0C000] text-black text-lg font-black tracking-widest uppercase shadow-lg shadow-yellow-400/20 transition-all flex items-center justify-center gap-2"
                     >
-                        <span className="text-xl font-black tracking-tight">VER MI PLAN PERSONALIZADO</span>
-                        <span className="text-xs font-bold text-black/60 tracking-[0.1em] uppercase">Oferta Limitada • Expira em 10:00</span>
+                        VER MI PLAN <span className="hidden sm:inline">PERSONALIZADO</span>
                     </Button>
                 </motion.div>
+                <p className="text-center text-[10px] text-gray-400 font-bold mt-3 uppercase tracking-widest">
+                    Oferta por tiempo limitado
+                </p>
             </div>
 
         </div>

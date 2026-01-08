@@ -39,25 +39,43 @@ export default function SliderQuestion({
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 pt-16 pb-32">
+    <div className="w-full max-w-md mx-auto space-y-8 p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-2xl w-full space-y-8"
+        className="w-full space-y-6"
       >
-        {/* Category badge */}
-        {category && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="text-center"
-          >
-            <span className="text-xs font-semibold tracking-wider text-primary uppercase">
+        {/* Header */}
+        <div className="space-y-3 text-center">
+          {category && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.1 }}
+              className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1"
+            >
               {category}
-            </span>
-          </motion.div>
-        )}
+            </motion.div>
+          )}
+
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-3xl font-black leading-none text-[#1A1A1A] tracking-tight"
+          >
+            {question}
+          </motion.h2>
+
+          {subtitle && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-sm font-medium text-gray-500 leading-relaxed"
+            >
+              {subtitle}
+            </motion.p>
+          )}
+        </div>
 
         {/* Illustration */}
         {illustration && illustrations[illustration] && (
@@ -65,7 +83,7 @@ export default function SliderQuestion({
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="mx-auto w-64 h-48 rounded-2xl overflow-hidden shadow-lg"
+            className="mx-auto w-full aspect-video rounded-[24px] overflow-hidden shadow-sm"
           >
             <img
               src={illustrations[illustration]}
@@ -75,69 +93,44 @@ export default function SliderQuestion({
           </motion.div>
         )}
 
-        {/* Question */}
-        <div className="space-y-3 text-center">
-          {subtitle && (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="text-sm text-muted-foreground uppercase tracking-wide"
-            >
-              {subtitle}
-            </motion.p>
-          )}
-
-          <motion.h2
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-xl md:text-2xl font-bold"
-          >
-            {question}
-          </motion.h2>
-        </div>
-
-        {/* Slider */}
+        {/* Slider Container */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="bg-card rounded-3xl p-8 shadow-lg space-y-8"
+          transition={{ delay: 0.3 }}
+          className="space-y-8 pt-4"
         >
-          <Slider
-            value={value}
-            onValueChange={setValue}
-            min={min}
-            max={max}
-            step={1}
-            className="w-full"
-          />
+          <div className="px-2">
+            <Slider
+              value={value}
+              onValueChange={setValue}
+              min={min}
+              max={max}
+              step={1}
+              className="w-full cursor-pointer py-4"
+            />
+          </div>
 
-          {/* Labels */}
-          <div className="flex justify-between items-center text-sm">
-            <span className="text-muted-foreground">{minLabel}</span>
-            <span className="text-2xl font-bold text-primary">{value[0]}%</span>
-            <span className="text-muted-foreground">{maxLabel}</span>
+          <div className="flex justify-between items-center text-xs font-bold text-gray-400 uppercase tracking-wide px-2">
+            <span>{minLabel}</span>
+            <span className="text-3xl font-black text-[#FFD700]">{value[0]}%</span>
+            <span>{maxLabel}</span>
           </div>
         </motion.div>
 
-        {/* Fixed bottom bar */}
+        {/* Continue Button - Inline */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border p-4"
+          transition={{ delay: 0.4 }}
+          className="pt-4"
         >
-          <div className="max-w-2xl mx-auto">
-            <Button
-              onClick={handleContinue}
-              size="lg"
-              className="quiz-button w-full"
-            >
-              Continuar
-            </Button>
-          </div>
+          <Button
+            onClick={handleContinue}
+            className="w-full h-16 rounded-full text-xl font-black tracking-widest uppercase bg-[#FFD700] text-black hover:bg-[#F0C000] shadow-xl shadow-yellow-400/20 transition-all hover:scale-[1.02]"
+          >
+            CONTINUAR
+          </Button>
         </motion.div>
       </motion.div>
     </div>

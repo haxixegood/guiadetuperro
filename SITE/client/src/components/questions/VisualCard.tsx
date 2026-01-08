@@ -39,10 +39,10 @@ export default function VisualCard({ id, label, emoji, image, selected, onClick,
             className={`
                 relative overflow-hidden rounded-[24px] p-6 min-h-[160px] w-full
                 flex flex-col items-center justify-center gap-4
-                transition-all duration-300
+                transition-all duration-300 group
                 ${selected
-                    ? 'bg-[#FFD700]/10 border-2 border-[#FFD700] shadow-md'
-                    : 'bg-white border-2 border-gray-100 shadow-sm hover:border-gray-200'
+                    ? 'bg-[#FFD700] shadow-lg scale-[1.02] z-10'
+                    : 'bg-gray-50 hover:bg-gray-100 hover:shadow-md hover:-translate-y-1'
                 }
             `}
         >

@@ -25,18 +25,18 @@ export default function MultipleChoice({ question, subtitle, options, onAnswer, 
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="space-y-8"
+      className="space-y-6 w-full max-w-md mx-auto"
     >
-      <div className="space-y-4 text-center md:text-left">
+      <div className="space-y-3 text-center px-4">
         {category && (
-          <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em]">
-            Análisis de Comportamiento // {category}
+          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">
+            {category}
           </span>
         )}
-        <h2 className="text-2xl md:text-4xl font-black leading-tight text-black glow-text-yellow">
+        <h2 className="text-3xl font-black leading-none text-[#1A1A1A] tracking-tight">
           {question}
         </h2>
-        {subtitle && <p className="text-sm font-bold text-gray-500 italic">{subtitle}</p>}
+        {subtitle && <p className="text-sm font-medium text-gray-500 leading-relaxed max-w-xs mx-auto">{subtitle}</p>}
       </div>
 
       <div className="grid grid-cols-1 gap-3">
@@ -44,41 +44,59 @@ export default function MultipleChoice({ question, subtitle, options, onAnswer, 
           <button
             key={idx}
             onClick={() => toggle(option.value)}
-            className={`organic-card flex items-center justify-between p-5 text-left transition-all ${selected.includes(option.value)
-              ? 'border-primary shadow-md bg-yellow-50'
-              : 'border-black/5 bg-white'
-              }`}
+            className={`
+              flex items-center justify-between p-5 text-left transition-all duration-300 rounded-[20px] w-full group
+              ${selected.includes(option.value)
+                ? 'bg-[#FFD700] shadow-lg scale-[1.01] z-10'
+                : 'bg-gray-50 hover:bg-gray-100 active:scale-[0.99]'
+              }
+            `}
           >
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-xl bg-black/5 flex items-center justify-center text-xl">
+              <div className={`
+                  w-12 h-12 rounded-2xl flex items-center justify-center text-xl transition-all
+                  ${selected.includes(option.value) ? 'bg-white/90' : 'bg-white shadow-sm'}
+                `}>
                 {option.icon || '📍'}
               </div>
-              <span className="text-base font-bold text-black">{option.label}</span>
+              <span className={`text-base font-bold ${selected.includes(option.value) ? 'text-black' : 'text-gray-900'}`}>
+                {option.label}
+              </span>
             </div>
 
-            <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${selected.includes(option.value)
-              ? 'bg-primary border-primary'
-              : 'border-black/10'
-              }`}>
-              {selected.includes(option.value) && <Check className="w-4 h-4 text-black" />}
+            <div className={`
+                w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all
+                ${selected.includes(option.value)
+                ? 'bg-black border-black'
+                : 'border-gray-300 bg-transparent'
+              }
+              `}>
+              {selected.includes(option.value) && <Check className="w-3.5 h-3.5 text-[#FFD700] stroke-[3]" />}
             </div>
           </button>
         ))}
       </div>
 
-      <div className="pt-6 space-y-6">
+      <div className="pt-4 space-y-6">
         <Button
           onClick={() => onAnswer(selected)}
           disabled={selected.length === 0}
-          className="yellow-cta w-full py-10 text-xl font-black disabled:opacity-30"
+          className={`
+            w-full h-16 rounded-full text-xl font-black tracking-widest uppercase shadow-lg
+            transition-all duration-300
+            ${selected.length > 0
+              ? 'bg-[#FFD700] text-black hover:bg-[#F0C000] hover:scale-[1.02] shadow-yellow-400/20'
+              : 'bg-gray-100 text-gray-300 cursor-not-allowed shadow-none'
+            }
+          `}
         >
-          ¡CONTINUAR PROTOCOLO!
+          CONTINUAR
         </Button>
 
         {skipText && (
           <button
             onClick={() => onAnswer(['skip'])}
-            className="w-full text-center text-[10px] font-black text-gray-400 uppercase tracking-widest hover:text-black"
+            className="w-full text-center text-[10px] font-bold text-gray-300 uppercase tracking-widest hover:text-gray-500"
           >
             {skipText}
           </button>

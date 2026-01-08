@@ -47,41 +47,22 @@ export default function VisualCardGrid({
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-8 w-full max-w-lg mx-auto"
+            className="space-y-6 w-full max-w-lg mx-auto"
         >
-            {/* Top Progress Bar - Hardcoded 50% for this view logic, ideally dynamic */}
-            <div className="w-full mb-2 space-y-1">
-                <div className="flex justify-between text-[10px] font-bold text-gray-400 uppercase tracking-wider">
-                    <span>Progreso</span>
-                    <span>60%</span>
-                </div>
-                <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                    <motion.div
-                        initial={{ width: "50%" }}
-                        animate={{ width: "60%" }}
-                        className="h-full bg-[#FFD700] rounded-full"
-                    />
-                </div>
-            </div>
-
             {/* Header */}
-            <div className="space-y-3 text-center">
+            <div className="space-y-2 text-center px-4">
                 {category && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="inline-block bg-black/5 text-[#1A1A1A] text-[10px] font-black uppercase tracking-[0.2em] px-4 py-1.5 rounded-full mb-1"
-                    >
+                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">
                         {category}
-                    </motion.div>
+                    </div>
                 )}
 
-                <h2 className="text-2xl md:text-3xl font-black leading-tight text-[#1A1A1A] px-4">
+                <h2 className="text-3xl font-black leading-none text-[#1A1A1A] tracking-tight">
                     {question}
                 </h2>
 
                 {subtitle && (
-                    <p className="text-sm font-bold text-gray-400 px-6 leading-snug">
+                    <p className="text-sm font-medium text-gray-500 leading-relaxed max-w-xs mx-auto">
                         {subtitle}
                     </p>
                 )}
