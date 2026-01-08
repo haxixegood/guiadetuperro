@@ -36,7 +36,7 @@ export function QuizProvider({ children }: { children: ReactNode }) {
   const hideRewardAnimation = () => setShowRewardAnimation(false);
 
   const updateQuizData = (data: Partial<QuizData>) => {
-    setQuizData(prev => ({ ...prev, ...data }));
+    setQuizData((prev: QuizData) => ({ ...prev, ...data }));
   };
 
   const goToNextStep = () => {

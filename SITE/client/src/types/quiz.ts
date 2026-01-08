@@ -1,6 +1,10 @@
 // ======================
 // TIPO BASE DO QUIZ
 // ======================
+export interface QuizData {
+  [key: string]: any;
+}
+
 export type QuizStep = {
   id: string;
   type: 'info' | 'single' | 'multiple' | 'text' | 'slider' | 'search';
