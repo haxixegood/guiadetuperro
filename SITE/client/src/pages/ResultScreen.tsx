@@ -39,7 +39,7 @@ export default function ResultScreen() {
 
             <div className="space-y-4 relative z-10 w-full">
 
-                {/* 1. HERO CARD - LINEAR COMPATIBILITY */}
+                {/* 1. HERO CARD - ANALYSIS GRAPH */}
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -47,7 +47,7 @@ export default function ResultScreen() {
                 >
                     <div className="space-y-1">
                         <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                            Compatibilidad Detectada
+                            Análisis de Perfil Completado
                         </h3>
                         <div className="flex items-center justify-center gap-2 text-yellow-500">
                             <Zap className="w-3 h-3 fill-current" />
@@ -55,32 +55,33 @@ export default function ResultScreen() {
                         </div>
                     </div>
 
-                    {/* Linear Compatibility Gauge */}
-                    <div className="w-full space-y-4">
-                        <div className="flex items-baseline justify-center gap-2">
-                            <span className="text-5xl font-black text-[#1A1A1A] tracking-tighter">{progress}%</span>
-                            <span className="text-sm font-black text-yellow-500 uppercase tracking-widest">MATCH</span>
-                        </div>
-
-                        <div className="relative w-full h-4 bg-gray-50 rounded-full overflow-hidden border border-gray-100">
-                            <motion.div
-                                initial={{ width: 0 }}
-                                animate={{ width: `${progress}%` }}
-                                transition={{ duration: 1.5, ease: "easeOut" }}
-                                className="h-full bg-[#FFD700] relative"
-                            >
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/20" />
-                            </motion.div>
-                        </div>
-
-                        <div className="flex justify-between text-[9px] font-black text-gray-300 uppercase tracking-widest px-1">
-                            <span>Bajo</span>
-                            <span className="text-yellow-500">Excelente</span>
-                        </div>
+                    {/* Organized Analysis Graph */}
+                    <div className="w-full space-y-5 bg-gray-50/50 p-4 rounded-[20px] border border-gray-50">
+                        {[
+                            { label: 'Compatibilidad', val: progress, color: '#FFCC00' },
+                            { label: 'Capacidad Aprendizaje', val: 95, color: '#4CAF50' },
+                            { label: 'Estabilidad Emocional', val: 72, color: '#2196F3' }
+                        ].map((stat, i) => (
+                            <div key={i} className="space-y-1.5 w-full">
+                                <div className="flex justify-between items-center px-1">
+                                    <span className="text-[9px] font-black text-[#1A1A1A] uppercase tracking-wider">{stat.label}</span>
+                                    <span className="text-[10px] font-black text-[#1A1A1A]">{stat.val}%</span>
+                                </div>
+                                <div className="h-2 w-full bg-white rounded-full overflow-hidden border border-gray-100/50">
+                                    <motion.div
+                                        initial={{ width: 0 }}
+                                        animate={{ width: `${stat.val}%` }}
+                                        transition={{ duration: 1.2, delay: i * 0.2 }}
+                                        className="h-full rounded-full"
+                                        style={{ backgroundColor: stat.color }}
+                                    />
+                                </div>
+                            </div>
+                        ))}
                     </div>
 
-                    <p className="text-xs font-medium text-gray-500 leading-relaxed max-w-xs">
-                        Según las respuestas, <span className="font-bold text-black uppercase">{quizData.name || 'tu perro'}</span> tiene una <span className="text-black font-black">alta sintonía</span> con el método sin castigos.
+                    <p className="text-xs font-medium text-gray-500 leading-relaxed max-w-sm">
+                        Resumen: <span className="font-bold text-black uppercase">{quizData.name || 'tu perro'}</span> presenta un <span className="text-black font-black">88% de éxito potencial</span> con nuestra metodología acelerada.
                     </p>
                 </motion.div>
 

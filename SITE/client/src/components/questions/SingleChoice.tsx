@@ -42,25 +42,26 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
     const silhouetteUrl = '/assets/icon-silhouette-puppy.png'; // Reusing the best silhouette asset
 
     if (iconStr.startsWith('age-') || iconStr.startsWith('dog-')) {
-      let scale = 1.2; // Default zoom
+      let scale = 1.1; // Base internal scale for 72x72 container
 
-      // Fine-grained scaling for SIZES
-      if (iconStr === 'dog-sm') scale = 0.8;
-      if (iconStr === 'dog-md') scale = 1.1;
-      if (iconStr === 'dog-lg') scale = 1.4;
+      // Adjusting scales to feel more natural and centered
+      if (iconStr === 'dog-sm') scale = 0.7;
+      if (iconStr === 'dog-md') scale = 1.0;
+      if (iconStr === 'dog-lg') scale = 1.3;
 
-      // Fine-grained scaling for AGES
-      if (iconStr === 'age-puppy') scale = 0.9;
-      if (iconStr === 'age-adult') scale = 1.2;
-      if (iconStr === 'age-senior') scale = 1.2;
+      if (iconStr === 'age-puppy') scale = 0.8;
+      if (iconStr === 'age-adult') scale = 1.1;
+      if (iconStr === 'age-senior') scale = 1.1;
 
       return (
-        <img
-          src={silhouetteUrl}
-          className="w-full h-full object-contain p-0 absolute inset-0 transform transition-transform duration-300"
-          style={{ transform: `scale(${scale})` }}
-          alt="perro"
-        />
+        <div className="w-full h-full flex items-center justify-center p-1">
+          <img
+            src={silhouetteUrl}
+            className="max-w-full max-h-full object-contain transform transition-transform duration-300"
+            style={{ transform: `scale(${scale})` }}
+            alt="perro"
+          />
+        </div>
       );
     }
 
