@@ -26,17 +26,15 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
   const getIconUrl = (iconStr?: string) => {
     if (!iconStr) return null;
 
-    // Mapping icon keys to generated assets
-    if (iconStr === 'age-puppy') return '/assets/icon-bowl.png';
-    if (iconStr === 'age-adult') return '/assets/icon-collar.png';
-    if (iconStr === 'age-senior') return '/assets/icon-bed.png';
+    // Using silhouettes where available, falling back to previously generated high-quality line art
+    if (iconStr === 'age-puppy') return '/assets/icon-silhouette-puppy.png';
+    if (iconStr === 'age-adult') return '/assets/icon-collar.png'; // Fallback
+    if (iconStr === 'age-senior') return '/assets/icon-bed.png';   // Fallback
 
-    // Size Icons (use same silhouettes for all size steps for now as they represent the scale)
     if (iconStr === 'dog-sm' || iconStr === 'dog-md' || iconStr === 'dog-lg') {
       return '/assets/icon-sizes.png';
     }
 
-    // Default or other assets can be added here
     return null;
   };
 
@@ -68,7 +66,7 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
           )}
         </div>
 
-        {/* Options Stack: Gap 12px fixo, Horizontal Padding 20px (handled by container) */}
+        {/* Options Stack: Gap 12px fixo, Horizontal Padding 20px via container */}
         <div className="mt-[32px] w-full flex flex-col gap-[12px]">
           {options.map((option, idx) => {
             const [title, sub] = option.label.includes(' - ')
@@ -86,30 +84,30 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
                 transition={{ delay: idx * 0.05 }}
                 onClick={() => handleSelect(option.value)}
                 className={`
-                  relative w-full min-h-[80px] rounded-[16px] p-[20px] cursor-pointer transition-all duration-300
+                  relative w-full rounded-[16px] px-[16px] py-[12px] cursor-pointer transition-all duration-300
                   flex items-center gap-[16px] text-left overflow-hidden border
                   ${isSelected
-                    ? 'bg-[#FFF9E6] border-[#FFCC00] ring-1 ring-[#FFCC00]'
+                    ? 'bg-[#FFF9E6] border-[#FFCC00] border-[2px]'
                     : 'bg-white border-[#E0E0E0] hover:border-gray-300'
                   }
                 `}
               >
-                {/* Icon Container with soft gray circle background */}
-                <div className="w-[48px] h-[48px] rounded-full bg-[#F5F5F5] flex-shrink-0 flex items-center justify-center overflow-hidden">
+                {/* Icon Container: 64x64 Circle, #F5F5F5 */}
+                <div className="w-[64px] h-[64px] rounded-full bg-[#F5F5F5] flex-shrink-0 flex items-center justify-center overflow-hidden">
                   {iconUrl ? (
                     <img
                       src={iconUrl}
                       alt={title}
-                      className="w-full h-full object-contain p-2"
+                      className="w-full h-full object-contain p-[8px]"
                     />
                   ) : (
-                    <div className="w-6 h-6 bg-gray-200 rounded-full" />
+                    <div className="w-8 h-8 bg-gray-200 rounded-full" />
                   )}
                 </div>
 
                 {/* Text Content */}
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-['Montserrat'] font-bold text-[16px] text-[#1A1A1A] leading-tight flex items-center gap-1.5 uppercase">
+                  <h3 className="font-['Montserrat'] font-bold text-[18px] text-[#1A1A1A] leading-tight uppercase">
                     {title}
                   </h3>
                   {sub && (
