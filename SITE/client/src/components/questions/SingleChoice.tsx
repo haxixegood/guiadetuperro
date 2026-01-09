@@ -1,6 +1,18 @@
 import { motion } from 'framer-motion';
 import { useQuiz } from '@/contexts/QuizContext';
 import { useState } from 'react';
+import {
+  Building2,
+  Home,
+  Mountain,
+  Siren,
+  AlertTriangle,
+  Calendar,
+  Heart,
+  Timer,
+  HeartHandshake,
+  Dog
+} from 'lucide-react';
 
 interface SingleChoiceProps {
   question: string;
@@ -23,20 +35,57 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
     }, 300);
   };
 
-  const getIconUrl = (iconStr?: string) => {
-    if (!iconStr) return null;
+  const getIcon = (iconStr?: string, isSelected: boolean = false) => {
+    if (!iconStr) return <Dog className="w-8 h-8 text-[#333333]" strokeWidth={2} />;
 
-    // Mapping icon keys to the best available high-quality assets
-    if (iconStr === 'age-puppy') return '/assets/icon-silhouette-puppy.png'; // Silhouette generated earlier
-    if (iconStr === 'age-adult') return '/assets/icon-collar.png';
-    if (iconStr === 'age-senior') return '/assets/icon-bed.png';
+    // Dog Silhouette Scaling Logic (Premium 4px Style - using same asset)
+    const silhouetteUrl = '/assets/icon-silhouette-puppy.png'; // Reusing the best silhouette asset
 
-    // Size Icons (using the set of silhouettes generated earlier)
-    if (iconStr === 'dog-sm' || iconStr === 'dog-md' || iconStr === 'dog-lg') {
-      return '/assets/icon-sizes.png';
+    if (iconStr.startsWith('age-') || iconStr.startsWith('dog-')) {
+      let scale = 1.2; // Default zoom
+
+      // Fine-grained scaling for SIZES
+      if (iconStr === 'dog-sm') scale = 0.8;
+      if (iconStr === 'dog-md') scale = 1.1;
+      if (iconStr === 'dog-lg') scale = 1.4;
+
+      // Fine-grained scaling for AGES
+      if (iconStr === 'age-puppy') scale = 0.9;
+      if (iconStr === 'age-adult') scale = 1.2;
+      if (iconStr === 'age-senior') scale = 1.2;
+
+      return (
+        <img
+          src={silhouetteUrl}
+          className="w-full h-full object-contain p-0 absolute inset-0 transform transition-transform duration-300"
+          style={{ transform: `scale(${scale})` }}
+          alt="perro"
+        />
+      );
     }
 
-    return null;
+    // Restore Lucide Icons for other categories
+    const iconProps = {
+      className: `w-8 h-8 transition-all duration-300 ${isSelected ? 'text-black' : 'text-[#333333]'}`,
+      strokeWidth: 2
+    };
+
+    // Environment
+    if (iconStr === 'env-apt' || iconStr === 'building') return <Building2 {...iconProps} />;
+    if (iconStr === 'env-house' || iconStr === 'home') return <Home {...iconProps} />;
+    if (iconStr === 'env-land' || iconStr === 'tree') return <Mountain {...iconProps} />;
+
+    // Urgency
+    if (iconStr === 'urgency-critical') return <Siren {...iconProps} />;
+    if (iconStr === 'urgency-high') return <AlertTriangle {...iconProps} />;
+    if (iconStr === 'urgency-moderate') return <Calendar {...iconProps} />;
+
+    // Goals
+    if (iconStr === 'goal-love') return <Heart {...iconProps} />;
+    if (iconStr === 'goal-speed') return <Timer {...iconProps} />;
+    if (iconStr === 'goal-bond') return <HeartHandshake {...iconProps} />;
+
+    return <Dog {...iconProps} />;
   };
 
   return (
@@ -75,7 +124,6 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
               : [option.label, null];
 
             const isSelected = selected === option.value;
-            const iconUrl = getIconUrl(option.icon);
 
             return (
               <motion.div
@@ -93,17 +141,9 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
                   }
                 `}
               >
-                {/* Icon Container: 72x72 Circle, #F5F5F5, Edge-to-Edge with Scale Zoom */}
+                {/* Icon Container: 72x72 Circle, #F5F5F5 */}
                 <div className="w-[72px] h-[72px] rounded-full bg-[#F5F5F5] flex-shrink-0 flex items-center justify-center overflow-hidden relative">
-                  {iconUrl ? (
-                    <img
-                      src={iconUrl}
-                      alt={title}
-                      className="w-full h-full object-contain p-0 absolute inset-0 transform scale-[1.2]"
-                    />
-                  ) : (
-                    <div className="w-10 h-10 bg-gray-200 rounded-full" />
-                  )}
+                  {getIcon(option.icon, isSelected)}
                 </div>
 
                 {/* Text Content */}
