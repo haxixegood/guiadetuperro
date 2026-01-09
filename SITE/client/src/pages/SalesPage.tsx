@@ -260,7 +260,7 @@ export default function SalesPage() {
                 <div className="space-y-1">
                   <span className="text-gray-400 text-sm line-through decoration-red-500 decoration-2 font-bold">$1,497 MXN</span>
                   <div className="flex items-center justify-center gap-2">
-                    <span className="text-6xl font-black text-[#FFD700] tracking-tighter">$39</span>
+                    <span className="text-6xl font-black text-[#FFD700] tracking-tighter">$149</span>
                     <span className="text-xs font-bold text-gray-400 uppercase text-left leading-none">MXN<br />Pago Único</span>
                   </div>
                 </div>
@@ -394,7 +394,7 @@ export default function SalesPage() {
             <div className="max-w-xl mx-auto flex items-center gap-4">
               <div className="hidden md:block">
                 <p className="text-xs font-black text-gray-400 uppercase line-through">$1,497</p>
-                <p className="text-2xl font-black text-[#1A1A1A]">$39</p>
+                <p className="text-2xl font-black text-[#1A1A1A]">$149</p>
               </div>
               <Button
                 onClick={handleCheckout}
