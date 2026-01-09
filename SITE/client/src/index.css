@@ -37,6 +37,16 @@
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    overscroll-behavior-y: none;
+  }
+
+  /* Comando para estabilizar transições */
+  .antigravity-section,
+  .antigravity-container,
+  .quiz-step-container {
+    overflow-anchor: none !important;
+    scroll-margin-top: 0;
+    transition: all 0.3s ease-in-out;
   }
 
   /* High-Tech Grid Background */

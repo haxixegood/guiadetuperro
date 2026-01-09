@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { useQuiz } from '@/contexts/QuizContext';
 import ProgressBar from '@/components/ProgressBar';
 import BackButton from '@/components/BackButton';
@@ -27,6 +28,11 @@ export default function Quiz() {
     goToNextStep
   } = useQuiz();
   const [, setLocation] = useLocation();
+
+  // Instant scroll to top on step change to avoid transition "jumps" on mobile
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [currentStep]);
 
   const step = QUIZ_STEPS[currentStep];
 
@@ -121,7 +127,7 @@ export default function Quiz() {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-white flex flex-col relative overflow-hidden font-sans">
+    <div className="min-h-[100dvh] bg-white flex flex-col relative overflow-hidden font-sans antigravity-section">
       <ProgressBar />
       {currentStep > 0 && <BackButton />}
 
@@ -131,8 +137,8 @@ export default function Quiz() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
-          className="w-full h-full max-w-md mx-auto flex flex-col"
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className="w-full h-full min-h-[700px] max-w-md mx-auto flex flex-col antigravity-container"
         >
           {renderStep()}
         </motion.div>
