@@ -136,11 +136,6 @@ export default function Quiz() {
           {renderStep()}
         </motion.div>
       </main>
-
-      {/* FIXED HUD ELEMENTS - Minimalist & Softened */}
-      <div className="fixed top-0 left-0 w-full h-28 bg-gradient-to-b from-white via-white/70 to-transparent pointer-events-none z-20" />
-      <div className="fixed bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white via-white/70 to-transparent pointer-events-none z-20" />
-
     </div>
   );
 }
