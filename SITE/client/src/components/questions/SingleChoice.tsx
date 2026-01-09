@@ -26,11 +26,12 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
   const getIconUrl = (iconStr?: string) => {
     if (!iconStr) return null;
 
-    // Using silhouettes where available, falling back to previously generated high-quality line art
-    if (iconStr === 'age-puppy') return '/assets/icon-silhouette-puppy.png';
-    if (iconStr === 'age-adult') return '/assets/icon-collar.png'; // Fallback
-    if (iconStr === 'age-senior') return '/assets/icon-bed.png';   // Fallback
+    // Mapping icon keys to the best available high-quality assets
+    if (iconStr === 'age-puppy') return '/assets/icon-silhouette-puppy.png'; // Silhouette generated earlier
+    if (iconStr === 'age-adult') return '/assets/icon-collar.png';
+    if (iconStr === 'age-senior') return '/assets/icon-bed.png';
 
+    // Size Icons (using the set of silhouettes generated earlier)
     if (iconStr === 'dog-sm' || iconStr === 'dog-md' || iconStr === 'dog-lg') {
       return '/assets/icon-sizes.png';
     }
@@ -85,23 +86,23 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
                 onClick={() => handleSelect(option.value)}
                 className={`
                   relative w-full rounded-[16px] px-[16px] py-[12px] cursor-pointer transition-all duration-300
-                  flex items-center gap-[16px] text-left overflow-hidden border
+                  flex items-center gap-[20px] text-left overflow-hidden border
                   ${isSelected
                     ? 'bg-[#FFF9E6] border-[#FFCC00] border-[2px]'
                     : 'bg-white border-[#E0E0E0] hover:border-gray-300'
                   }
                 `}
               >
-                {/* Icon Container: 64x64 Circle, #F5F5F5 */}
-                <div className="w-[64px] h-[64px] rounded-full bg-[#F5F5F5] flex-shrink-0 flex items-center justify-center overflow-hidden">
+                {/* Icon Container: 72x72 Circle, #F5F5F5, Edge-to-Edge with Scale Zoom */}
+                <div className="w-[72px] h-[72px] rounded-full bg-[#F5F5F5] flex-shrink-0 flex items-center justify-center overflow-hidden relative">
                   {iconUrl ? (
                     <img
                       src={iconUrl}
                       alt={title}
-                      className="w-full h-full object-contain p-[8px]"
+                      className="w-full h-full object-contain p-0 absolute inset-0 transform scale-[1.2]"
                     />
                   ) : (
-                    <div className="w-8 h-8 bg-gray-200 rounded-full" />
+                    <div className="w-10 h-10 bg-gray-200 rounded-full" />
                   )}
                 </div>
 
