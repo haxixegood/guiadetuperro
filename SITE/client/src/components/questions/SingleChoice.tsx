@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { useQuiz } from '@/contexts/QuizContext';
-import { Baby, Dog, Glasses, Siren, AlertTriangle, Calendar, Heart, Timer, HeartHandshake, Building2, Home, Mountain } from 'lucide-react';
 import { useState } from 'react';
 
 interface SingleChoiceProps {
@@ -24,45 +23,28 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
     }, 300);
   };
 
-  const getIcon = (iconStr?: string) => {
-    const iconProps = {
-      className: "w-6 h-6 text-[#333333] transition-all duration-300",
-      strokeWidth: 2
-    };
+  const getIconUrl = (iconStr?: string) => {
+    if (!iconStr) return null;
 
-    if (!iconStr) return <Dog {...iconProps} />;
+    // Mapping icon keys to generated assets
+    if (iconStr === 'age-puppy') return '/assets/icon-bowl.png';
+    if (iconStr === 'age-adult') return '/assets/icon-collar.png';
+    if (iconStr === 'age-senior') return '/assets/icon-bed.png';
 
-    // Age Icons
-    if (iconStr === 'age-puppy') return <Baby {...iconProps} />;
-    if (iconStr === 'age-adult') return <Dog {...iconProps} />;
-    if (iconStr === 'age-senior') return <Glasses {...iconProps} />;
+    // Size Icons (use same silhouettes for all size steps for now as they represent the scale)
+    if (iconStr === 'dog-sm' || iconStr === 'dog-md' || iconStr === 'dog-lg') {
+      return '/assets/icon-sizes.png';
+    }
 
-    // Size Icons
-    if (iconStr === 'dog-sm' || iconStr === 'dog-md' || iconStr === 'dog-lg') return <Dog {...iconProps} />;
-
-    // Environment Icons
-    if (iconStr === 'env-apt' || iconStr === 'building') return <Building2 {...iconProps} />;
-    if (iconStr === 'env-house' || iconStr === 'home') return <Home {...iconProps} />;
-    if (iconStr === 'env-land' || iconStr === 'tree') return <Mountain {...iconProps} />;
-
-    // Urgency Icons
-    if (iconStr === 'urgency-critical') return <Siren {...iconProps} />;
-    if (iconStr === 'urgency-high') return <AlertTriangle {...iconProps} />;
-    if (iconStr === 'urgency-moderate') return <Calendar {...iconProps} />;
-
-    // Goal Icons
-    if (iconStr === 'goal-love') return <Heart {...iconProps} />;
-    if (iconStr === 'goal-speed') return <Timer {...iconProps} />;
-    if (iconStr === 'goal-bond') return <HeartHandshake {...iconProps} />;
-
-    return <Dog {...iconProps} />;
+    // Default or other assets can be added here
+    return null;
   };
 
   return (
     <div className="w-full h-full flex flex-col items-center bg-white font-sans relative">
 
       {/* 120px top offset for headline */}
-      <div className="pt-[120px] w-full px-6 flex flex-col items-center">
+      <div className="pt-[120px] w-full px-[20px] flex flex-col items-center">
 
         {/* Header Section */}
         <div className="w-full text-center flex flex-col items-center">
@@ -86,7 +68,7 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
           )}
         </div>
 
-        {/* Options Stack: 32px offset from header (similar to TextInput) */}
+        {/* Options Stack: Gap 12px fixo, Horizontal Padding 20px (handled by container) */}
         <div className="mt-[32px] w-full flex flex-col gap-[12px]">
           {options.map((option, idx) => {
             const [title, sub] = option.label.includes(' - ')
@@ -94,6 +76,7 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
               : [option.label, null];
 
             const isSelected = selected === option.value;
+            const iconUrl = getIconUrl(option.icon);
 
             return (
               <motion.div
@@ -103,7 +86,7 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
                 transition={{ delay: idx * 0.05 }}
                 onClick={() => handleSelect(option.value)}
                 className={`
-                  relative w-full rounded-[16px] p-[20px] cursor-pointer transition-all duration-300
+                  relative w-full min-h-[80px] rounded-[16px] p-[20px] cursor-pointer transition-all duration-300
                   flex items-center gap-[16px] text-left overflow-hidden border
                   ${isSelected
                     ? 'bg-[#FFF9E6] border-[#FFCC00] ring-1 ring-[#FFCC00]'
@@ -112,8 +95,16 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
                 `}
               >
                 {/* Icon Container with soft gray circle background */}
-                <div className="w-[48px] h-[48px] rounded-full bg-[#F5F5F5] flex-shrink-0 flex items-center justify-center">
-                  {getIcon(option.icon)}
+                <div className="w-[48px] h-[48px] rounded-full bg-[#F5F5F5] flex-shrink-0 flex items-center justify-center overflow-hidden">
+                  {iconUrl ? (
+                    <img
+                      src={iconUrl}
+                      alt={title}
+                      className="w-full h-full object-contain p-2"
+                    />
+                  ) : (
+                    <div className="w-6 h-6 bg-gray-200 rounded-full" />
+                  )}
                 </div>
 
                 {/* Text Content */}
