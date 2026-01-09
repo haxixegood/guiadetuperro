@@ -42,92 +42,77 @@ export default function TextInput({
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center px-6 pt-12 pb-12 font-sans relative z-10">
+    <div className="w-full h-full flex flex-col items-center bg-white font-sans relative">
 
-      {/* Top/Middle Section: Header + Input */}
-      <div className="flex-1 flex flex-col items-center justify-center w-full max-w-sm pt-12">
+      {/* 120px from top to Headline */}
+      <div className="pt-[120px] w-full px-6 flex flex-col items-center">
 
-        {/* Header - Optimized Typography */}
-        <motion.div
+        {/* Headline: Montserrat Bold, 28px, #1A1A1A */}
+        <motion.h2
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full text-center space-y-4 mb-10"
+          className="w-full text-center font-['Montserrat'] font-bold text-[28px] text-[#1A1A1A] leading-tight uppercase"
         >
-          <div className="inline-block bg-gray-50 text-gray-400 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
-            Paso 1: Personalización
-          </div>
-          <h2 className="text-3xl md:text-4xl font-black text-gray-900 leading-[0.95] tracking-tight uppercase">
-            ¿Cómo se llama<br />tu perrito?
-          </h2>
-        </motion.div>
+          {question}
+        </motion.h2>
 
-        {/* Input Field - High Visibility & Contrast */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.1 }}
-          className="w-full relative group"
-        >
-          <Input
-            type={type}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            onKeyPress={handleKeyPress}
-            placeholder={placeholder || 'Nombre de tu mejor amigo'}
-            className={`
-                w-full h-16 px-6 rounded-2xl text-xl font-bold text-center
-                bg-gray-50 border-2 transition-all duration-300
-                text-gray-900 placeholder:text-gray-300
+        {/* Espaçamento entre Headline e Input: 32px */}
+        <div className="mt-[32px] w-full max-w-sm">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.1 }}
+            className="w-full"
+          >
+            <Input
+              type={type}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              onKeyPress={handleKeyPress}
+              placeholder={placeholder || 'Nombre de tu perrito...'}
+              className={`
+                w-full h-[56px] px-[18px] rounded-[12px] text-[16px] font-['Montserrat'] font-medium
+                bg-[#FFFFFF] border transition-all duration-300
+                text-[#1A1A1A] placeholder:text-[#888888]
                 ${isFocused
-                ? 'border-[#FFD700] bg-white ring-4 ring-[#FFD700]/10'
-                : 'border-transparent hover:bg-gray-100'
-              }
-            `}
-            autoFocus
-          />
-        </motion.div>
-      </div>
+                  ? 'border-[#FFCC00] ring-1 ring-[#FFCC00]'
+                  : 'border-[#DDDDDD]'
+                }
+              `}
+              autoFocus
+            />
+          </motion.div>
+        </div>
 
-      {/* Spacer to push button down precisely */}
-      <div className="flex-1" />
-
-      {/* Bottom Section: Action Button + Skip Link */}
-      <div className="w-full max-w-sm space-y-6 pb-8">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="w-full"
-        >
+        {/* Espaçamento entre Input e Botão: 16px */}
+        <div className="mt-[16px] w-full max-w-sm">
           <Button
             onClick={handleContinue}
             disabled={!value.trim()}
             className={`
-                w-full h-16 rounded-full text-xl font-black tracking-widest uppercase
-                transition-all duration-300 flex items-center justify-center gap-2
-                bg-[#FFD700] text-black hover:bg-[#F0C000] hover:scale-[1.02] shadow-xl shadow-yellow-400/20 cursor-pointer
-                disabled:opacity-40 disabled:grayscale-[0.5] disabled:cursor-not-allowed disabled:hover:scale-100
-              `}
+              w-full h-[56px] rounded-full text-[18px] font-['Montserrat'] font-bold uppercase
+              bg-[#FFCC00] text-[#000000] hover:bg-[#F0C000]
+              shadow-[0px_4px_10px_rgba(0,0,0,0.1)]
+              disabled:opacity-40 disabled:grayscale-[0.5] disabled:cursor-not-allowed
+            `}
           >
             CONTINUAR
           </Button>
-        </motion.div>
+        </div>
 
-        {/* Skip Link - Better Spacing */}
+        {/* Opção de Pular: 24px abaixo do botão, 14px, #999999, sublinhado */}
         {skipText && (
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
+          <button
             onClick={handleSkip}
-            className="w-full text-center text-[10px] font-bold text-gray-300 hover:text-gray-500 transition-colors uppercase tracking-widest py-2"
+            className="mt-[24px] text-[14px] font-medium text-[#999999] hover:text-[#1A1A1A] underline transition-colors"
           >
-            Prefiero no decirlo por ahora
-          </motion.button>
+            {skipText}
+          </button>
         )}
       </div>
+
     </div>
   );
 }

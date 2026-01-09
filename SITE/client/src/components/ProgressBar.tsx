@@ -12,19 +12,15 @@ export default function ProgressBar() {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 h-1 z-[50] bg-white/5">
+    <div className="fixed top-0 left-0 right-0 h-[6px] z-[50] bg-[#F0F0F0]">
       <motion.div
         initial={{ width: 0 }}
         animate={{
           width: `${progress}%`,
-          backgroundColor: getDynamicColor(),
         }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="h-full shadow-[0_0_15px_rgba(255,234,0,0.3)]"
+        className="h-full bg-[#FFCC00]"
       />
-      <div className="absolute top-3 right-6 text-[8px] font-black text-white/30 uppercase tracking-[0.4em]">
-        {Math.round(progress)}% <span className="text-primary">Sync</span>
-      </div>
     </div>
   );
 }

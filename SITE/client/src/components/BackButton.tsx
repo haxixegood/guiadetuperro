@@ -12,10 +12,10 @@ export default function BackButton() {
       variant="ghost"
       size="icon"
       onClick={goToPreviousStep}
-      className="fixed top-10 left-6 z-40 rounded-full hover:bg-muted"
+      className="fixed top-4 left-4 z-40 rounded-full hover:bg-muted text-[#333333]"
       aria-label="Voltar"
     >
-      <ArrowLeft className="h-5 w-5" />
+      <ArrowLeft className="h-6 w-6" />
     </Button>
   );
 }
