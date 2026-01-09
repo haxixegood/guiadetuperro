@@ -29,7 +29,6 @@ const EMAIL_DOMAINS = [
 export default function EmailInput({
   question,
   subtitle,
-  category,
   placeholder,
   skipText,
   onAnswer,
@@ -37,18 +36,16 @@ export default function EmailInput({
   const [value, setValue] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  // Extrair a parte antes do @ e sugerir domínios
-  const { localPart, suggestions } = useMemo(() => {
+  // Suggested domains logic
+  const { suggestions } = useMemo(() => {
     const parts = value.split('@');
     const local = parts[0];
 
     if (!local || parts.length > 1) {
-      return { localPart: local, suggestions: [] };
+      return { suggestions: [] };
     }
 
-    // Mostrar sugestões de domínio
     return {
-      localPart: local,
       suggestions: EMAIL_DOMAINS.map(domain => `${local}@${domain}`),
     };
   }, [value]);
@@ -59,7 +56,6 @@ export default function EmailInput({
   };
 
   const handleContinue = () => {
-    // Validar email básico
     if (value.trim() && value.includes('@') && value.includes('.')) {
       onAnswer(value.trim());
     }
@@ -72,30 +68,17 @@ export default function EmailInput({
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center px-6 pt-12 pb-12 font-sans relative z-10">
+    <div className="w-full h-full flex flex-col items-center bg-white font-sans relative">
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex-1 flex flex-col items-center justify-center w-full max-w-sm space-y-6"
-      >
-        {/* Header */}
-        <div className="space-y-3 text-center w-full">
-          {category && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
-              className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1"
-            >
-              {category}
-            </motion.div>
-          )}
+      {/* 120px top offset */}
+      <div className="pt-[120px] w-full px-6 flex flex-col items-center">
 
+        {/* Header: Montserrat Bold 24px */}
+        <div className="w-full text-center flex flex-col items-center">
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl font-black leading-none text-[#1A1A1A] tracking-tight uppercase"
+            className="font-['Montserrat'] font-bold text-[24px] text-[#1A1A1A] leading-tight uppercase"
           >
             {question}
           </motion.h2>
@@ -104,23 +87,18 @@ export default function EmailInput({
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="text-sm font-medium text-gray-500 leading-relaxed"
+              transition={{ delay: 0.1 }}
+              className="mt-[12px] font-['Roboto'] font-normal text-[16px] text-[#666666] leading-snug max-w-xs"
             >
               {subtitle}
             </motion.p>
           )}
         </div>
 
-        {/* Email Input */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3 }}
-          className="relative w-full"
-        >
-          <div className="relative group">
-            <Mail className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[#FFD700] transition-colors" />
+        {/* Email Input Container */}
+        <div className="mt-[32px] w-full max-w-sm relative">
+          <div className="relative">
+            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             <Input
               type="email"
               value={value}
@@ -131,7 +109,7 @@ export default function EmailInput({
               onFocus={() => setShowSuggestions(true)}
               onKeyPress={handleKeyPress}
               placeholder={placeholder || 'tu@email.com'}
-              className="text-lg h-16 pl-14 pr-6 rounded-2xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-[#FFD700] focus:ring-4 focus:ring-[#FFD700]/10 transition-all shadow-sm"
+              className="text-[16px] font-['Montserrat'] h-[56px] pl-12 pr-6 rounded-[12px] border border-[#E0E0E0] focus:border-[#FFCC00] focus:ring-0 bg-white transition-all"
               autoFocus
             />
           </div>
@@ -141,64 +119,52 @@ export default function EmailInput({
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-20"
+              className="absolute left-0 right-0 top-full mt-2 bg-white rounded-[12px] shadow-xl border border-[#E0E0E0] overflow-hidden z-20"
             >
               {suggestions.slice(0, 5).map((email) => (
                 <button
                   key={email}
                   onClick={() => handleSelectSuggestion(email)}
-                  className="w-full px-6 py-3 text-left hover:bg-yellow-50 transition-colors border-b border-gray-50 last:border-b-0 flex items-center gap-3"
+                  className="w-full px-4 py-3 text-left hover:bg-[#FFF9E6] transition-colors border-b border-gray-50 last:border-b-0 flex items-center gap-3"
                 >
                   <Mail className="w-4 h-4 text-gray-400" />
-                  <span className="font-bold text-gray-700 text-sm">{email}</span>
+                  <span className="font-['Montserrat'] font-bold text-gray-700 text-sm">{email}</span>
                 </button>
               ))}
             </motion.div>
           )}
-        </motion.div>
 
-        {/* Helper text - Cleaned up */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="text-center text-[10px] font-bold text-gray-300 uppercase tracking-widest"
-        >
-          🔒 Tus datos están 100% seguros
-        </motion.p>
-      </motion.div>
+          <p className="mt-4 text-center text-[10px] font-bold text-gray-300 uppercase tracking-widest">
+            🔒 Tus datos están 100% seguros
+          </p>
+        </div>
+      </div>
 
-      {/* Spacer to push button down precisely */}
       <div className="flex-1" />
 
       {/* Bottom Section: Action Button */}
-      <div className="w-full max-w-sm pb-8 space-y-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+      <div className="w-full max-w-sm px-6 pb-8 pt-6">
+        <Button
+          onClick={handleContinue}
+          disabled={!value.trim() || !value.includes('@')}
+          className={`
+            w-full h-[56px] rounded-full text-[18px] font-['Montserrat'] font-bold uppercase
+            bg-[#FFCC00] text-[#000000] hover:bg-[#F0C000]
+            shadow-[0px_4px_10px_rgba(0,0,0,0.1)]
+            disabled:opacity-40 disabled:grayscale-[0.5] disabled:cursor-not-allowed
+          `}
         >
-          <Button
-            onClick={handleContinue}
-            className={`
-                w-full h-16 rounded-full text-xl font-black tracking-widest uppercase shadow-lg transition-all duration-300
-                bg-[#FFD700] text-black hover:bg-[#F0C000] hover:scale-[1.02] shadow-yellow-400/20 shadow-xl
-                disabled:opacity-40 disabled:grayscale-[0.5] disabled:cursor-not-allowed disabled:hover:scale-100
-              `}
-            disabled={!value.trim() || !value.includes('@')}
-          >
-            VER RESULTADOS
-          </Button>
+          VER RESULTADOS
+        </Button>
 
-          {skipText && (
-            <button
-              onClick={() => onAnswer('skip')}
-              className="w-full text-center mt-6 text-[10px] font-bold text-gray-300 uppercase tracking-widest hover:text-gray-500 py-2"
-            >
-              {skipText}
-            </button>
-          )}
-        </motion.div>
+        {skipText && (
+          <button
+            onClick={() => onAnswer('skip')}
+            className="w-full text-center mt-6 text-[14px] font-['Roboto'] font-medium text-[#999999] underline hover:text-[#1A1A1A] py-2 transition-colors uppercase"
+          >
+            {skipText}
+          </button>
+        )}
       </div>
     </div>
   );

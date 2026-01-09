@@ -44,35 +44,35 @@ export default function VisualCardGrid({
     };
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="w-full h-full flex flex-col items-center font-sans relative"
-        >
-            {/* Main Content Area */}
-            <div className="flex-1 flex flex-col items-center justify-center w-full max-w-lg mx-auto space-y-8">
+        <div className="w-full h-full flex flex-col items-center bg-white font-sans relative">
 
-                {/* Header */}
-                <div className="space-y-2 text-center px-4 w-full">
-                    {category && (
-                        <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-                            {category}
-                        </div>
-                    )}
+            {/* 120px top offset to clear progress bar */}
+            <div className="pt-[120px] w-full px-6 flex flex-col items-center">
 
-                    <h2 className="text-3xl font-black leading-none text-[#1A1A1A] tracking-tight">
+                {/* Header: Montserrat Bold 24px */}
+                <div className="w-full text-center flex flex-col items-center">
+                    <motion.h2
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="font-['Montserrat'] font-bold text-[24px] text-[#1A1A1A] leading-tight uppercase"
+                    >
                         {question}
-                    </h2>
+                    </motion.h2>
 
                     {subtitle && (
-                        <p className="text-sm font-medium text-gray-500 leading-relaxed max-w-xs mx-auto">
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.1 }}
+                            className="mt-[12px] font-['Roboto'] font-normal text-[16px] text-[#666666] leading-snug max-w-xs"
+                        >
                             {subtitle}
-                        </p>
+                        </motion.p>
                     )}
                 </div>
 
-                {/* Visual Cards Grid */}
-                <div className="grid grid-cols-2 gap-4 w-full px-4">
+                {/* Visual Cards Grid: 2 Columns */}
+                <div className="mt-[32px] grid grid-cols-2 gap-[12px] w-full max-w-md">
                     {behaviors.map((behavior, index) => (
                         <VisualCard
                             key={behavior.id}
@@ -90,29 +90,20 @@ export default function VisualCardGrid({
 
             {/* Bottom Area - Continue Button */}
             <div className="flex-1" />
-            <div className="w-full max-w-lg mx-auto pt-8 pb-8">
-                <motion.div
-                    animate={selected.length >= minSelection ? { scale: [1, 1.02, 1], transition: { repeat: Infinity, duration: 2 } } : {}}
+            <div className="w-full max-w-sm px-6 pb-8 pt-6">
+                <Button
+                    onClick={handleContinue}
+                    disabled={selected.length < minSelection}
+                    className={`
+                        w-full h-[56px] rounded-full text-[18px] font-['Montserrat'] font-bold uppercase
+                        bg-[#FFCC00] text-[#000000] hover:bg-[#F0C000]
+                        shadow-[0px_4px_10px_rgba(0,0,0,0.1)]
+                        disabled:opacity-40 disabled:grayscale-[0.5] disabled:cursor-not-allowed
+                    `}
                 >
-                    <Button
-                        onClick={handleContinue}
-                        disabled={selected.length < minSelection}
-                        className={`
-                            w-full h-16 rounded-full text-lg font-black tracking-wide uppercase shadow-lg transition-all duration-300
-                            bg-[#FFD700] text-black hover:bg-[#F0C000] hover:shadow-xl cursor-pointer
-                            disabled:opacity-40 disabled:grayscale-[0.5] disabled:cursor-not-allowed disabled:hover:scale-100
-                        `}
-                    >
-                        {selected.length >= minSelection ? 'CONTINUAR' : 'SELECCIONA 1 OPCIÓN'}
-                    </Button>
-                </motion.div>
-
-                {selected.length > 0 && (
-                    <p className="text-center text-[10px] font-bold text-gray-400 mt-4 uppercase tracking-widest animate-in fade-in slide-in-from-bottom-2 py-2">
-                        {selected.length} comportamiento{selected.length > 1 ? 's' : ''} seleccionado{selected.length > 1 ? 's' : ''}
-                    </p>
-                )}
+                    {selected.length >= minSelection ? 'CONTINUAR' : 'SELECCIONA 1 OPCIÓN'}
+                </Button>
             </div>
-        </motion.div>
+        </div>
     );
 }

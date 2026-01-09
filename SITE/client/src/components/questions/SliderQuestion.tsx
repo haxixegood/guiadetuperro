@@ -24,7 +24,6 @@ const illustrations: Record<string, string> = {
 export default function SliderQuestion({
   question,
   subtitle,
-  category,
   min = 0,
   max = 100,
   minLabel = 'De jeito nenhum',
@@ -39,29 +38,17 @@ export default function SliderQuestion({
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center px-6 pt-12 pb-12 font-sans relative z-10">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex-1 flex flex-col items-center justify-center w-full max-w-sm space-y-6"
-      >
-        {/* Header */}
-        <div className="space-y-3 text-center w-full">
-          {category && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
-              className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1"
-            >
-              {category}
-            </motion.div>
-          )}
+    <div className="w-full h-full flex flex-col items-center bg-white font-sans relative">
 
+      {/* 120px top offset */}
+      <div className="pt-[120px] w-full px-6 flex flex-col items-center">
+
+        {/* Header: Montserrat Bold 24px */}
+        <div className="w-full text-center flex flex-col items-center">
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl font-black leading-none text-[#1A1A1A] tracking-tight uppercase"
+            className="font-['Montserrat'] font-bold text-[24px] text-[#1A1A1A] leading-tight uppercase"
           >
             {question}
           </motion.h2>
@@ -70,7 +57,8 @@ export default function SliderQuestion({
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-sm font-medium text-gray-500 leading-relaxed"
+              transition={{ delay: 0.1 }}
+              className="mt-[12px] font-['Roboto'] font-normal text-[16px] text-[#666666] leading-snug max-w-xs"
             >
               {subtitle}
             </motion.p>
@@ -83,7 +71,7 @@ export default function SliderQuestion({
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="mx-auto w-full aspect-video rounded-[24px] overflow-hidden shadow-sm"
+            className="mt-8 mx-auto w-full max-w-sm aspect-video rounded-[24px] overflow-hidden shadow-sm border border-gray-100"
           >
             <img
               src={illustrations[illustration]}
@@ -98,7 +86,7 @@ export default function SliderQuestion({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="space-y-8 pt-4 w-full"
+          className="mt-12 space-y-8 w-full max-w-sm px-4"
         >
           <div className="px-2">
             <Slider
@@ -111,32 +99,28 @@ export default function SliderQuestion({
             />
           </div>
 
-          <div className="flex justify-between items-center text-xs font-bold text-gray-400 uppercase tracking-wide px-2">
+          <div className="flex justify-between items-center text-[10px] font-bold text-gray-400 uppercase tracking-widest px-2">
             <span>{minLabel}</span>
-            <span className="text-3xl font-black text-[#FFD700]">{value[0]}%</span>
+            <span className="text-4xl font-black text-[#FFCC00] font-['Montserrat']">{value[0]}%</span>
             <span>{maxLabel}</span>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
 
-      {/* Spacer to push button down */}
       <div className="flex-1" />
 
       {/* Bottom Section: Continue Button */}
-      <div className="w-full max-w-sm pb-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="pt-4"
+      <div className="w-full max-w-sm px-6 pb-8 pt-6">
+        <Button
+          onClick={handleContinue}
+          className={`
+            w-full h-[56px] rounded-full text-[18px] font-['Montserrat'] font-bold uppercase
+            bg-[#FFCC00] text-[#000000] hover:bg-[#F0C000]
+            shadow-[0px_4px_10px_rgba(0,0,0,0.1)]
+          `}
         >
-          <Button
-            onClick={handleContinue}
-            className="w-full h-16 rounded-full text-xl font-black tracking-widest uppercase bg-[#FFD700] text-black hover:bg-[#F0C000] shadow-xl shadow-yellow-400/20 transition-all hover:scale-[1.02]"
-          >
-            CONTINUAR
-          </Button>
-        </motion.div>
+          CONTINUAR
+        </Button>
       </div>
     </div>
   );
