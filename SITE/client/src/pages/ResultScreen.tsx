@@ -17,68 +17,70 @@ export default function ResultScreen() {
     }, []);
 
     return (
-        <div className="w-full max-w-md mx-auto flex flex-col pt-14 px-4 font-sans relative pb-24">
+        <div className="w-full max-w-md mx-auto flex flex-col pt-6 px-4 font-sans relative pb-24">
 
-            {/* HEADER - Clean & Tight */}
-            <div className="text-center mb-6 relative z-10">
+            {/* HEADER - Tightened Spacing */}
+            <div className="text-center mb-4 relative z-10">
                 <motion.div
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="w-12 h-12 mx-auto bg-green-50 rounded-full flex items-center justify-center mb-3 text-green-500"
+                    className="w-10 h-10 mx-auto bg-green-50 rounded-full flex items-center justify-center mb-2 text-green-500"
                 >
-                    <CheckCircle2 className="w-6 h-6" />
+                    <CheckCircle2 className="w-5 h-5" />
                 </motion.div>
 
-                <h1 className="text-2xl font-black text-[#1A1A1A] leading-tight mb-1 uppercase">
+                <h1 className="text-2xl font-black text-[#1A1A1A] leading-tight mb-1 uppercase tracking-tight">
                     ANÁLISIS COMPLETADO
                 </h1>
-                <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest">
+                <h2 className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
                     PERFIL DE {quizData.name || 'TU PERRITO'}
                 </h2>
             </div>
 
             <div className="space-y-4 relative z-10 w-full">
 
-                {/* 1. HERO CARD - COMPATIBILITY */}
+                {/* 1. HERO CARD - LINEAR COMPATIBILITY */}
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-white rounded-[24px] p-6 shadow-sm border border-gray-100 flex flex-col items-center text-center space-y-4"
+                    className="bg-white rounded-[24px] p-6 shadow-sm border border-gray-100 flex flex-col items-center text-center space-y-6"
                 >
                     <div className="space-y-1">
-                        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                        <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                             Compatibilidad Detectada
                         </h3>
                         <div className="flex items-center justify-center gap-2 text-yellow-500">
                             <Zap className="w-3 h-3 fill-current" />
-                            <span className="text-[10px] font-black uppercase tracking-wide">Protocolo Sync</span>
+                            <span className="text-[11px] font-black uppercase tracking-widest">Protocolo Sync</span>
                         </div>
                     </div>
 
-                    {/* Circular Chart - Fixed Layout */}
-                    <div className="relative w-40 h-40 flex items-center justify-center">
-                        <svg className="w-full h-full transform -rotate-90">
-                            <circle cx="80" cy="80" r="70" stroke="#F3F4F6" strokeWidth="8" fill="transparent" />
-                            <motion.circle
-                                cx="80" cy="80" r="70"
-                                stroke="#FFD700" strokeWidth="8" strokeLinecap="round" fill="transparent"
-                                strokeDasharray={440}
-                                strokeDashoffset={440 - (440 * progress) / 100}
-                                initial={{ strokeDashoffset: 440 }}
-                                animate={{ strokeDashoffset: 440 - (440 * 88) / 100 }}
-                                transition={{ duration: 1.5, ease: "easeOut" }}
-                            />
-                        </svg>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center pt-2">
+                    {/* Linear Compatibility Gauge */}
+                    <div className="w-full space-y-4">
+                        <div className="flex items-baseline justify-center gap-2">
                             <span className="text-5xl font-black text-[#1A1A1A] tracking-tighter">{progress}%</span>
-                            <span className="text-[10px] font-black text-yellow-500 uppercase tracking-widest bg-yellow-50 px-2 py-1 rounded-full mt-1">
-                                ALTA
-                            </span>
+                            <span className="text-sm font-black text-yellow-500 uppercase tracking-widest">MATCH</span>
+                        </div>
+
+                        <div className="relative w-full h-4 bg-gray-50 rounded-full overflow-hidden border border-gray-100">
+                            <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: `${progress}%` }}
+                                transition={{ duration: 1.5, ease: "easeOut" }}
+                                className="h-full bg-[#FFD700] relative"
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/20" />
+                            </motion.div>
+                        </div>
+
+                        <div className="flex justify-between text-[9px] font-black text-gray-300 uppercase tracking-widest px-1">
+                            <span>Bajo</span>
+                            <span className="text-yellow-500">Excelente</span>
                         </div>
                     </div>
 
                     <p className="text-xs font-medium text-gray-500 leading-relaxed max-w-xs">
-                        Según las respuestas, <span className="font-bold text-black">{quizData.name || 'tu perro'}</span> es el candidato ideal para el método sin castigos.
+                        Según las respuestas, <span className="font-bold text-black uppercase">{quizData.name || 'tu perro'}</span> tiene una <span className="text-black font-black">alta sintonía</span> con el método sin castigos.
                     </p>
                 </motion.div>
 
