@@ -61,9 +61,9 @@ export const QUIZ_STEPS: QuizStep[] = [
     question: '¿Qué edad tiene {name}?',
     subtitle: 'Su etapa de vida define el método de aprendizaje.',
     options: [
-      { value: '0-6', label: 'Cachorro (0–12 meses)', icon: 'age-puppy' },
-      { value: '1-7', label: 'Adulto (1–7 años)', icon: 'age-adult' },
-      { value: '7+', label: 'Senior (+7 años)', icon: 'age-senior' },
+      { value: '0-6', label: 'Cachorro - Etapa crítica (0-12 meses)', icon: 'age-puppy' },
+      { value: '1-7', label: 'Adulto - Refuerzo de conducta (1-7 años)', icon: 'age-adult' },
+      { value: '7+', label: 'Senior - Salud y bienestar (+7 años)', icon: 'age-senior' },
     ],
   },
 

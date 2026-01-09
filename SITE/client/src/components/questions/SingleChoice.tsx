@@ -1,8 +1,7 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useQuiz } from '@/contexts/QuizContext';
-import { Check, Dog, Home, Building2, Trees, Siren, AlertTriangle, Calendar, Heart, Timer, HeartHandshake, Baby, Glasses, ShieldCheck, Mountain } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import { Baby, Dog, Glasses, Siren, AlertTriangle, Calendar, Heart, Timer, HeartHandshake, Building2, Home, Mountain } from 'lucide-react';
+import { useState } from 'react';
 
 interface SingleChoiceProps {
   question: string;
@@ -19,69 +18,76 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
 
   const handleSelect = (value: string) => {
     setSelected(value);
-    // Auto-advance with slight delay for visual feedback
+    // Auto-advance with 300ms delay for visual feedback
     setTimeout(() => {
       onAnswer(value);
-    }, 450);
+    }, 300);
   };
 
-  const getIcon = (iconStr?: string, isSelected: boolean = false) => {
-    const colorClass = isSelected ? "text-[#FFD700]" : "text-[#1A1A1A]";
+  const getIcon = (iconStr?: string) => {
+    const iconProps = {
+      className: "w-6 h-6 text-[#333333] transition-all duration-300",
+      strokeWidth: 2
+    };
 
-    if (!iconStr) return <span className={`text-2xl ${isSelected ? 'grayscale-0' : 'grayscale'}`}>🐾</span>;
+    if (!iconStr) return <Dog {...iconProps} />;
+
     // Age Icons
-    if (iconStr === 'age-puppy') return <Baby className={`w-8 h-8 ${colorClass}`} />;
-    if (iconStr === 'age-adult') return <Dog className={`w-9 h-9 ${colorClass}`} />;
-    if (iconStr === 'age-senior') return <Glasses className={`w-8 h-8 ${colorClass}`} />;
+    if (iconStr === 'age-puppy') return <Baby {...iconProps} />;
+    if (iconStr === 'age-adult') return <Dog {...iconProps} />;
+    if (iconStr === 'age-senior') return <Glasses {...iconProps} />;
 
-    // Size Icons - VISUAL HIERARCHY
-    if (iconStr === 'dog-sm') return <Dog className={`w-5 h-5 ${colorClass}`} />;
-    if (iconStr === 'dog-md') return <Dog className={`w-8 h-8 ${colorClass}`} />;
-    if (iconStr === 'dog-lg') return <Dog className={`w-11 h-11 ${colorClass}`} />;
+    // Size Icons
+    if (iconStr === 'dog-sm' || iconStr === 'dog-md' || iconStr === 'dog-lg') return <Dog {...iconProps} />;
 
     // Environment Icons
-    if (iconStr === 'env-apt' || iconStr === 'building') return <Building2 className={`w-8 h-8 ${colorClass}`} />;
-    if (iconStr === 'env-house' || iconStr === 'home') return <Home className={`w-8 h-8 ${colorClass}`} />;
-    if (iconStr === 'env-land' || iconStr === 'tree') return <Mountain className={`w-8 h-8 ${colorClass}`} />;
+    if (iconStr === 'env-apt' || iconStr === 'building') return <Building2 {...iconProps} />;
+    if (iconStr === 'env-house' || iconStr === 'home') return <Home {...iconProps} />;
+    if (iconStr === 'env-land' || iconStr === 'tree') return <Mountain {...iconProps} />;
 
     // Urgency Icons
-    if (iconStr === 'urgency-critical') return <Siren className={`w-8 h-8 ${colorClass}`} />;
-    if (iconStr === 'urgency-high') return <AlertTriangle className={`w-8 h-8 ${colorClass}`} />;
-    if (iconStr === 'urgency-moderate') return <Calendar className={`w-8 h-8 ${colorClass}`} />;
+    if (iconStr === 'urgency-critical') return <Siren {...iconProps} />;
+    if (iconStr === 'urgency-high') return <AlertTriangle {...iconProps} />;
+    if (iconStr === 'urgency-moderate') return <Calendar {...iconProps} />;
 
-    // Goal Icons - Unified Brand Colors
-    if (iconStr === 'goal-love') return <Heart className={`w-8 h-8 ${colorClass}`} />;
-    if (iconStr === 'goal-speed') return <Timer className={`w-8 h-8 ${colorClass}`} />;
-    if (iconStr === 'goal-bond') return <HeartHandshake className={`w-8 h-8 ${colorClass}`} />;
+    // Goal Icons
+    if (iconStr === 'goal-love') return <Heart {...iconProps} />;
+    if (iconStr === 'goal-speed') return <Timer {...iconProps} />;
+    if (iconStr === 'goal-bond') return <HeartHandshake {...iconProps} />;
 
-    return iconStr;
+    return <Dog {...iconProps} />;
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center font-sans relative">
+    <div className="w-full h-full flex flex-col items-center bg-white font-sans relative">
 
-      {/* Main Content Area - Pushed down from top HUD */}
-      <div className="flex-1 flex flex-col items-center justify-center w-full max-w-md mx-auto">
+      {/* 120px top offset for headline */}
+      <div className="pt-[120px] w-full px-6 flex flex-col items-center">
 
-        {/* Header Section - Clean & Harmonious */}
-        <div className="text-center space-y-3 mb-10 w-full px-4">
-          {category && (
-            <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-              {category}
-            </div>
-          )}
-          <h2 className="text-3xl font-black text-[#1A1A1A] leading-none tracking-tight">
+        {/* Header Section */}
+        <div className="w-full text-center flex flex-col items-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-['Montserrat'] font-bold text-[28px] text-[#1A1A1A] leading-tight uppercase"
+          >
             {question.replace('{name}', quizData.name || 'tu perro')}
-          </h2>
+          </motion.h2>
+
           {subtitle && (
-            <p className="text-sm text-gray-500 font-medium leading-relaxed max-w-xs mx-auto">
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.1 }}
+              className="mt-[12px] font-['Roboto'] font-normal text-[16px] text-[#666666] leading-snug max-w-xs"
+            >
               {subtitle}
-            </p>
+            </motion.p>
           )}
         </div>
 
-        {/* Options Stack - Minimalist */}
-        <div className="w-full flex flex-col gap-3 px-4">
+        {/* Options Stack: 32px offset from header (similar to TextInput) */}
+        <div className="mt-[32px] w-full flex flex-col gap-[12px]">
           {options.map((option, idx) => {
             const [title, sub] = option.label.includes(' - ')
               ? option.label.split(' - ')
@@ -94,48 +100,45 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
                 key={idx}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
+                transition={{ delay: idx * 0.05 }}
                 onClick={() => handleSelect(option.value)}
                 className={`
-                  relative w-full rounded-[20px] p-5 cursor-pointer transition-all duration-300
-                  flex items-center gap-5 text-left group overflow-hidden
+                  relative w-full rounded-[16px] p-[20px] cursor-pointer transition-all duration-300
+                  flex items-center gap-[16px] text-left overflow-hidden border
                   ${isSelected
-                    ? 'bg-[#FFD700] shadow-lg scale-[1.01] z-10'
-                    : 'bg-gray-50 hover:bg-gray-100 active:scale-[0.99]'
+                    ? 'bg-[#FFF9E6] border-[#FFCC00] ring-1 ring-[#FFCC00]'
+                    : 'bg-white border-[#E0E0E0] hover:border-gray-300'
                   }
                 `}
               >
-                {/* Icon Container - Simplified */}
-                <div className={`
-                  w-12 h-12 flex-shrink-0 rounded-2xl flex items-center justify-center transition-all duration-300
-                  ${isSelected ? 'bg-white/90' : 'bg-white shadow-sm'}
-                `}>
-                  {getIcon(option.icon, isSelected)}
+                {/* Icon Container with soft gray circle background */}
+                <div className="w-[48px] h-[48px] rounded-full bg-[#F5F5F5] flex-shrink-0 flex items-center justify-center">
+                  {getIcon(option.icon)}
                 </div>
 
-                {/* Text Content - Easier on eyes */}
+                {/* Text Content */}
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <h3 className={`text-base font-bold leading-tight ${isSelected ? 'text-black' : 'text-gray-900'}`}>
-                      {title}
-                    </h3>
-                  </div>
+                  <h3 className="font-['Montserrat'] font-bold text-[16px] text-[#1A1A1A] leading-tight flex items-center gap-1.5 uppercase">
+                    {title}
+                  </h3>
                   {sub && (
-                    <p className={`text-xs font-medium mt-0.5 ${isSelected ? 'text-black/70' : 'text-gray-500'}`}>
+                    <p className="font-['Roboto'] font-normal text-[14px] text-[#888888] mt-0.5">
                       {sub}
                     </p>
                   )}
                 </div>
 
-                {/* Selection Check Circle - Less aggressive */}
+                {/* Radio Circle */}
                 <div className={`
-                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-300 flex-shrink-0
+                  w-[24px] h-[24px] rounded-full border-[2px] flex items-center justify-center transition-all duration-300 flex-shrink-0
                   ${isSelected
-                    ? 'border-black bg-black'
-                    : 'border-gray-300 bg-transparent'
+                    ? 'border-[#FFCC00]'
+                    : 'border-[#DDDDDD]'
                   }
                 `}>
-                  {isSelected && <Check className="w-3.5 h-3.5 text-[#FFD700] stroke-[3]" />}
+                  {isSelected && (
+                    <div className="w-[12px] h-[12px] rounded-full bg-[#FFCC00]" />
+                  )}
                 </div>
               </motion.div>
             );
@@ -143,17 +146,19 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
         </div>
       </div>
 
-      {/* Bottom Area - Skip Option */}
-      <div className="w-full mt-auto pt-6">
-        {skipText && (
+      <div className="flex-1" />
+
+      {/* Skip Link */}
+      {skipText && (
+        <div className="pb-8">
           <button
             onClick={() => onAnswer('skip')}
-            className="block mx-auto text-[10px] font-bold text-gray-300 hover:text-gray-500 uppercase tracking-widest py-4"
+            className="text-[14px] font-['Roboto'] font-medium text-[#999999] underline hover:text-[#1A1A1A] transition-colors"
           >
             {skipText}
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
