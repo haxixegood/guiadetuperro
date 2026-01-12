@@ -1,148 +1,117 @@
-import React, { useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useQuiz } from '@/contexts/QuizContext';
-import ProgressBar from '@/components/ProgressBar';
-import BackButton from '@/components/BackButton';
-import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 import WelcomeScreen from './WelcomeScreen';
-import ProcessingScreen from './ProcessingScreen';
-import ResultScreen from './ResultScreen';
-import BonusSelection from './BonusSelection';
-import DiscountReveal from './DiscountReveal';
-
 import SingleChoice from '@/components/questions/SingleChoice';
 import MultipleChoice from '@/components/questions/MultipleChoice';
-import VisualCardGrid from '@/components/questions/VisualCardGrid';
-import TextInput from '@/components/questions/TextInput';
-import SliderQuestion from '@/components/questions/SliderQuestion';
-import EmailInput from '@/components/questions/EmailInput';
-
+import RevelationScreen from './RevelationScreen';
 import { QUIZ_STEPS } from '@/types/quiz';
-import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 export default function Quiz() {
-  const {
-    currentStep,
-    updateQuizData,
-    quizData,
-    goToNextStep
-  } = useQuiz();
-  const [, setLocation] = useLocation();
+  const { currentStep, handleAnswer } = useQuiz();
 
-  // Instant scroll to top on step change to avoid transition "jumps" on mobile
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    // RESET NAVIGATION: Load from Top (0,0)
+    window.scrollTo(0, 0);
   }, [currentStep]);
 
   const step = QUIZ_STEPS[currentStep];
 
-  if (!step) {
-    return <div className="min-h-screen bg-background flex items-center justify-center text-primary font-black uppercase tracking-[0.5em] animate-pulse">Syncing...</div>;
-  }
-
-  const question = step.question?.replace('{name}', quizData.name || 'tu perrito') || '';
-
-  const handleAnswer = (value: any) => {
-    if (step.id === 'name' && (value === 'skip' || !value)) {
-      value = 'tu perrito';
-    }
-
-    const key = step.id as keyof typeof quizData;
-    updateQuizData({ [key]: value });
-
-    if (step.id === 'email') {
-      setLocation('/sales');
-      return;
-    }
-
-    goToNextStep();
-  };
+  if (!step) return null;
 
   const renderStep = () => {
-    switch (step.id) {
-      case 'welcome':
+    if (step.id === 'revelation') {
+      return <RevelationScreen />;
+    }
+
+    switch (step.type) {
+      case 'info':
+        if (step.id === 'welcome') return <WelcomeScreen />;
         return <WelcomeScreen />;
 
-      case 'behaviors':
-        // VISUAL CARD GRID for behavior selection
+      case 'single':
         return (
-          <VisualCardGrid
-            question={question}
+          <SingleChoice
+            question={step.question}
             subtitle={step.subtitle}
-            category={step.category}
-            behaviors={(step.options || []).map(opt => ({
-              id: opt.value,
-              label: opt.label,
-              emoji: opt.icon || '🐾',
-              image: opt.image
-            }))}
+            options={step.options || []}
             onAnswer={handleAnswer}
-            minSelection={1}
           />
         );
 
-      case 'bonus-selection':
-        return <BonusSelection onBonusSelected={handleAnswer} />;
+      case 'multiple':
+        return (
+          <MultipleChoice
+            question={step.question}
+            subtitle={step.subtitle}
+            options={step.options || []}
+            onAnswer={handleAnswer}
+          />
+        );
 
-      case 'discount-reveal':
-        return <DiscountReveal onContinue={() => handleAnswer('continue')} />;
-
-      case 'processing':
-        return <ProcessingScreen />;
-
-      case 'result':
-        return <ResultScreen />;
+      case 'text':
+        return (
+          <div className="flex flex-col items-center min-h-screen px-6 pt-16 font-sans">
+            <h2 className="text-2xl font-[900] text-center uppercase mb-8">{step.question || ''}</h2>
+            <div className="w-full max-w-sm space-y-6">
+              <Input
+                type={step.id === 'email' ? 'email' : 'text'}
+                placeholder={step.placeholder || ''}
+                className="h-16 rounded-2xl border-2 border-gray-100 focus:border-[#28a745] px-6 text-lg font-medium"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    const val = (e.currentTarget as HTMLInputElement).value;
+                    if (val) handleAnswer(val);
+                  }
+                }}
+              />
+              <Button
+                onClick={() => {
+                  const input = document.querySelector('input');
+                  if (input && input.value) {
+                    handleAnswer(input.value);
+                  }
+                }}
+                className="w-full h-16 rounded-full bg-[#28a745] text-white font-bold text-lg uppercase shadow-lg"
+              >
+                CONTINUAR
+              </Button>
+            </div>
+          </div>
+        );
 
       default:
-        switch (step.type) {
-          case 'single':
-            return <SingleChoice question={question} subtitle={step.subtitle} options={step.options || []} category={step.category} skipText={step.skipText} onAnswer={handleAnswer} />;
-
-          case 'multiple':
-            return <MultipleChoice question={question} subtitle={step.subtitle} options={step.options || []} category={step.category} skipText={step.skipText} onAnswer={handleAnswer} />;
-
-          case 'text':
-            return <TextInput question={question} subtitle={step.subtitle} category={step.category} placeholder={step.placeholder} skipText={step.skipText} type="text" onAnswer={handleAnswer} />;
-
-          case 'slider':
-            return <SliderQuestion question={question} subtitle={step.subtitle} category={step.category} min={step.min} max={step.max} minLabel={step.minLabel} maxLabel={step.maxLabel} illustration={step.illustration} onAnswer={handleAnswer} />;
-
-          case 'email':
-            return <EmailInput question={question} subtitle={step.subtitle} placeholder={step.placeholder} onAnswer={handleAnswer} />;
-
-          case 'info':
-            return (
-              <div className="space-y-6 text-center">
-                <h3 className="text-2xl font-black">{question}</h3>
-                <Button onClick={() => handleAnswer('next')} className="yellow-cta px-12 py-8">
-                  CONTINUAR
-                </Button>
-              </div>
-            );
-
-          default:
-            return <div className="organic-card p-10 text-center">Tipo não mapeado: {step.type}</div>;
-        }
+        return null;
     }
   };
 
   return (
-    <div className="min-h-[100dvh] bg-white flex flex-col relative overflow-hidden font-sans antigravity-section">
-      <ProgressBar />
-      {currentStep > 0 && <BackButton />}
+    <div className="min-h-screen bg-white">
+      {/* Dynamic Header / Progress */}
+      {step.id !== 'revelation' && step.id !== 'welcome' && (
+        <div className="fixed top-0 left-0 w-full h-[6px] bg-gray-100 z-[100]">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${(currentStep / (QUIZ_STEPS.length - 1)) * 100}%` }}
+            className="h-full bg-[#28a745]"
+          />
+        </div>
+      )}
 
-      <main className="flex-1 flex flex-col relative z-10">
+      <AnimatePresence mode="wait">
         <motion.div
           key={currentStep}
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="w-full h-full min-h-[700px] max-w-md mx-auto flex flex-col antigravity-container"
+          transition={{ duration: 0.3 }}
+          className="w-full h-full"
         >
           {renderStep()}
         </motion.div>
-      </main>
+      </AnimatePresence>
     </div>
   );
 }

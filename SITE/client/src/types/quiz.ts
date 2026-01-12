@@ -32,10 +32,7 @@ export type QuizStep = {
 };
 
 // ======================
-// QUIZ STEPS
-// ======================
-// ======================
-// QUIZ STEPS - OPTIMIZED FOR MEXICO (8 STEPS)
+// QUIZ STEPS - OPTIMIZED FOR CONVERSION
 // ======================
 export const QUIZ_STEPS: QuizStep[] = [
   // 1. Welcome
@@ -44,141 +41,98 @@ export const QUIZ_STEPS: QuizStep[] = [
     type: 'info',
   },
 
-  // 2. Name
-  {
-    id: 'name',
-    type: 'text',
-    question: 'Para empezar este análisis personalizado, ¿cómo se llama tu perrito?',
-    placeholder: 'Nombre de tu mejor amigo',
-    skipText: 'Prefiero no decir el nombre',
-  },
-
-  // 3. Age
+  // 2. Age (REPLACES NAME STEP)
   {
     id: 'age',
     category: 'PERFIL INDIVIDUAL',
     type: 'single',
-    question: '¿Qué edad tiene {name}?',
+    question: '¿Qué edad tiene tu mejor amigo?',
     subtitle: 'Su etapa de vida define el método de aprendizaje.',
     options: [
-      { value: '0-6', label: 'Cachorro - Etapa crítica (0-12 meses)', icon: 'age-puppy' },
-      { value: '1-7', label: 'Adulto - Refuerzo de conducta (1-7 años)', icon: 'age-adult' },
-      { value: '7+', label: 'Senior - Salud y bienestar (+7 años)', icon: 'age-senior' },
+      { value: '0-12m', label: 'CACHORRO (0-12 meses)', icon: '3d-age-puppy' },
+      { value: '1-7y', label: 'ADULTO (1-7 años)', icon: '3d-age-adult' },
+      { value: '+7y', label: 'SENIOR (+7 años)', icon: '3d-age-senior' },
     ],
   },
 
-  // 4. Size
+  // 3. Energy Level (REPLACES SIZE)
   {
-    id: 'size',
-    category: 'COMPORTAMIENTO',
+    id: 'energy',
+    category: 'NIVEL DE ENERGÍA',
     type: 'single',
-    question: '¿De qué tamaño es {name}?',
-    subtitle: 'El gasto de energía varía según su peso.',
+    question: '¿Cómo definirías el nivel de energía de tu perro?',
+    subtitle: 'Su gasto de energía varía según su personalidad y tamaño.',
     options: [
-      { value: 'chico', label: 'Chico (0-10kg)', icon: 'dog-sm' },
-      { value: 'mediano', label: 'Mediano (11-25kg)', icon: 'dog-md' },
-      { value: 'grande', label: 'Grande (+26kg)', icon: 'dog-lg' },
+      { value: 'tranquilo', label: 'TRANQUILO (Prefiere dormir y muerde poco)', icon: '3d-energy-tranquilo' },
+      { value: 'activo', label: 'ACTIVO (Le gusta jugar pero se distrae fácil)', icon: '3d-energy-activo' },
+      { value: 'hiperactivo', label: 'HIPERACTIVO (No para quieto y destruye cosas)', icon: '3d-energy-hiperactivo' },
     ],
   },
 
-  // 5. Environment
+  // 4. Tutor Reaction (REPLACES ENVIRONMENT)
   {
-    id: 'environment',
-    category: 'ANÁLISIS DE ENTORNO',
+    id: 'reaction',
+    category: 'REACCIÓN DEL TUTOR',
     type: 'single',
-    question: '¿Dónde vive {name}?',
-    subtitle: 'El entorno influye en su nivel de estrés.',
+    question: '¿Cómo reaccionas cuando tu perro se porta mal?',
+    subtitle: 'Entender tu reacción es clave para desbloquear su aprendizaje.',
     options: [
-      { value: 'apt', label: 'Departamento / Flat', icon: 'env-apt' },
-      { value: 'house', label: 'Casa con patio', icon: 'env-house' },
-      { value: 'other', label: 'Terreno / Espacio abierto', icon: 'env-land' },
+      { value: 'grito', label: 'LE GRITO O LO CASTIGO (Siento que no me escucha)', icon: '3d-reaction-megaphone' },
+      { value: 'ignoro', label: 'INTENTO IGNORARLO (Pero el problema persiste)', icon: '3d-reaction-cloud' },
+      { value: 'frustrado', label: 'NO SÉ QUÉ HACER (Me siento frustrado/a)', icon: '3d-reaction-question' },
     ],
   },
 
-  // 4. Comportamentos Indesejados (VISUAL CARDS)
+  // 5. Behaviors (MULTIPLE CHOICE)
   {
     id: 'behaviors',
     category: 'ANÁLISIS DE COMPORTAMIENTO',
     type: 'multiple',
-    question: '¿Qué desafíos está enfrentando tu perrito actualmente?',
-    subtitle: 'Selecciona los comportamientos que vamos a transformar. No te preocupes, todos tienen solución.',
+    question: '¿Qué comportamientos vamos a transformar hoy?',
+    subtitle: 'Tu plan personalizado incluirá soluciones para cada opción que selecciones.',
     options: [
-      {
-        value: 'pulling',
-        label: 'Tira de la correa',
-        icon: 'behavior-leash',
-      },
-      {
-        value: 'peeing',
-        label: 'Pipí en lugar incorrecto',
-        icon: 'behavior-pee',
-      },
-      {
-        value: 'biting',
-        label: 'Muerde muebles o manos',
-        icon: 'behavior-biting',
-      },
-      {
-        value: 'barking',
-        label: 'Ladra excesivamente',
-        icon: 'behavior-barking',
-      },
-      {
-        value: 'jumping',
-        label: 'Salta sobre las personas',
-        icon: 'behavior-jumping',
-      },
-      {
-        value: 'alone',
-        label: 'Ansiedad por soledad',
-        icon: 'behavior-alone',
-      },
+      { value: 'morder', label: 'Morder', icon: '3d-behavior-bite' },
+      { value: 'pipi', label: 'Pipí / Higiene', icon: '3d-behavior-pee' },
+      { value: 'correa', label: 'Correa / Paseo', icon: '3d-behavior-leash' },
+      { value: 'ladridos', label: 'Ladridos', icon: '3d-behavior-bark' },
     ],
   },
 
-  // 5. Nivel de Urgencia
+  // 6. Urgency (PULSE EFFECT ON CRITICO)
   {
     id: 'urgency',
     category: 'PRIORIDAD',
     type: 'single',
-    question: '¿Qué tan urgente es resolver esto para {name}?',
+    question: '¿Qué tan urgente es para ti resolver esto hoy?',
+    subtitle: 'Priorizaremos tu plan de acción según tu necesidad de cambio.',
     options: [
-      { value: 'critical', label: 'Crítico: No aguanto más', icon: 'urgency-critical' },
-      { value: 'high', label: 'Alto: Necesito solución', icon: 'urgency-high' },
-      { value: 'moderate', label: 'Moderado: Evitar que empeore', icon: 'urgency-moderate' },
+      { value: 'critical', label: 'CRÍTICO', icon: '3d-urgency-siren' },
+      { value: 'high', label: 'ALTO', icon: '3d-urgency-alert' },
+      { value: 'moderate', label: 'MODERADO', icon: '3d-urgency-clock' },
     ],
   },
 
-  // 6. Objetivo Principal
+  // 7. Main Goal
   {
     id: 'goal',
     category: 'TU OBJETIVO',
     type: 'single',
-    question: '¿Cuál de estos resultados es el más prioritario para ti y para {name} hoy?',
+    question: '¿Cuál de estos resultados es el más prioritario para ti hoy?',
     options: [
-      { value: 'no-punish', label: 'Educar con amor, sin castigos', icon: 'goal-love' },
-      { value: 'fast', label: 'Resultados en 15 min al día', icon: 'goal-speed' },
-      { value: 'bonding', label: 'Vínculo profundo y real', icon: 'goal-bond' },
+      { value: 'love', label: 'EDUCAR CON AMOR', icon: '3d-goal-heart' },
+      { value: 'fast', label: 'RESULTADOS RÁPIDOS', icon: '3d-goal-speed' },
+      { value: 'bond', label: 'VÍNCULO PROFUNDO', icon: '3d-goal-bond' },
     ],
   },
 
-  // 7. Bonus Selection (GAMIFICATION)
-  { id: 'bonus-selection', type: 'info' },
+  // 8. Consolidation into RevelationScreen
+  { id: 'revelation', type: 'info' },
 
-  // 8. Discount Reveal (GAMIFICATION)
-  { id: 'discount-reveal', type: 'info' },
-
-  // 9. Processing
-  { id: 'processing', type: 'info' },
-
-  // 10. Result
-  { id: 'result', type: 'info' },
-
-  // 11. Email (Optional - can be removed if going straight to sales)
+  // 9. Email step (Final)
   {
     id: 'email',
     type: 'text',
-    question: '¡Diagnóstico casi listo! ¿A qué email enviamos el plan de {name}?',
+    question: '¡Diagnóstico casi listo! ¿A qué email enviamos tu plan?',
     placeholder: 'Introduce tu email principal'
   },
 ];

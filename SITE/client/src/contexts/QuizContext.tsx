@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { QuizData } from '@/types/quiz';
+import { QuizData, QUIZ_STEPS } from '@/types/quiz';
+import { useLocation } from 'wouter';
 
 interface QuizContextType {
   quizData: QuizData;
@@ -8,10 +9,11 @@ interface QuizContextType {
   setCurrentStep: (step: number) => void;
   goToNextStep: () => void;
   goToPreviousStep: () => void;
+  handleAnswer: (answer: any) => void;
   progress: number;
-  initialPain: string | null;     // Dor principal selecionada na Landing (Budge Page)
-  unlockedRewards: string[];      // Recompensas ganhas (ex: 'bonus-1', 'audio-relax')
-  showRewardAnimation: boolean;   // Controla o pop-up de conquista
+  initialPain: string | null;
+  unlockedRewards: string[];
+  showRewardAnimation: boolean;
   unlockReward: (id: string) => void;
   hideRewardAnimation: () => void;
   setInitialPain: (pain: string) => void;
@@ -25,8 +27,9 @@ export function QuizProvider({ children }: { children: ReactNode }) {
   const [initialPain, setInitialPain] = useState<string | null>(null);
   const [unlockedRewards, setUnlockedRewards] = useState<string[]>([]);
   const [showRewardAnimation, setShowRewardAnimation] = useState(false);
+  const [, setLocation] = useLocation();
 
-  const totalSteps = 27; // Total de etapas do quiz (inclui discount-wheel)
+  const totalSteps = QUIZ_STEPS.length;
   const progress = (currentStep / totalSteps) * 100;
 
   const unlockReward = (id: string) => {
@@ -42,8 +45,23 @@ export function QuizProvider({ children }: { children: ReactNode }) {
     setQuizData((prev: QuizData) => ({ ...prev, ...data }));
   };
 
+  const handleAnswer = (answer: any) => {
+    const step = QUIZ_STEPS[currentStep];
+    if (!step) return;
+
+    // Persist answer
+    updateQuizData({ [step.id]: answer });
+
+    // Handle flow logic
+    if (step.id === 'email') {
+      setLocation('/sales');
+    } else {
+      goToNextStep();
+    }
+  };
+
   const goToNextStep = () => {
-    setCurrentStep(prev => Math.min(prev + 1, totalSteps));
+    setCurrentStep(prev => Math.min(prev + 1, totalSteps - 1));
   };
 
   const goToPreviousStep = () => {
@@ -59,6 +77,7 @@ export function QuizProvider({ children }: { children: ReactNode }) {
         setCurrentStep,
         goToNextStep,
         goToPreviousStep,
+        handleAnswer,
         progress,
         initialPain,
         unlockedRewards,
