@@ -71,7 +71,7 @@ export default function EmailStep() {
     const isValid = validateEmail(email);
 
     return (
-        <div className="flex flex-col items-center min-h-screen px-6 pt-16 font-sans bg-white">
+        <div className="flex flex-col items-center min-h-screen px-6 pt-16 pb-32 font-sans bg-white">
             {/* 3D Envelope Asset */}
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
@@ -82,6 +82,7 @@ export default function EmailStep() {
                     src="/assets/3d-email-envelope.png"
                     alt="Email"
                     className="w-32 h-32 object-contain"
+                    style={{ mixBlendMode: 'multiply' }}
                 />
             </motion.div>
 
@@ -147,8 +148,8 @@ export default function EmailStep() {
                         onClick={handleSubmit}
                         disabled={!isValid || isSubmitting}
                         className={`w-full h-16 rounded-full font-bold text-lg uppercase shadow-lg transition-all duration-300 mt-6 ${isValid && !isSubmitting
-                                ? 'bg-[#28a745] text-white'
-                                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                            ? 'bg-[#28a745] text-white'
+                            : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                             }`}
                     >
                         {isSubmitting ? 'Enviando...' : 'CONTINUAR'}

@@ -46,78 +46,83 @@ export default function RevelationScreen() {
         <div className="min-h-screen bg-white font-sans text-[#1A1A1A] overflow-x-hidden">
 
             {/* Fase 1: El Diagnóstico (Above the Fold) */}
-            <section className="min-h-screen flex flex-col items-center justify-center px-[20px] text-center pt-10">
-                <div className="relative mb-24 flex flex-col items-center">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="relative"
-                    >
-                        {/* Circular Graph: 88% Match */}
-                        <div className="w-[180px] h-[180px] rounded-full border-[10px] border-gray-100 flex items-center justify-center relative bg-white">
-                            <svg className="absolute inset-0 w-full h-full -rotate-90">
-                                <circle
-                                    cx="90" cy="90" r="80"
-                                    fill="transparent"
-                                    stroke="#28a745"
-                                    strokeWidth="10"
-                                    strokeDasharray="502.6"
-                                    strokeDashoffset="60" // ~88%
-                                    strokeLinecap="round"
-                                    className="transition-all duration-[2000ms] ease-out"
-                                />
-                            </svg>
-                            <div className="flex flex-col items-center">
-                                <span className="text-[42px] font-[900] text-[#28a745]">88%</span>
-                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none">Compatibilidad</span>
-                            </div>
-                        </div>
-
-                        <motion.div
-                            animate={{ scale: [1, 1.1, 1] }}
-                            transition={{ repeat: Infinity, duration: 2 }}
-                            className="absolute -top-2 -right-2 bg-[#28a745] text-white p-2 rounded-full shadow-lg z-30"
-                        >
-                            <CheckCircle2 size={24} />
-                        </motion.div>
-                    </motion.div>
-
-                    {/* 3D Celebration Dog - Positioned BELOW the chart */}
-                    {phase === 'revelation' && (
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="absolute -bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center z-20 pointer-events-none"
-                        >
-                            <img
-                                src="/assets/3d-revelation-dog.png"
-                                alt="Celebration Dog"
-                                className="w-56 h-56 object-contain"
-                                style={{ filter: 'drop-shadow(0 10px 10px rgba(0,0,0,0.1))' }}
+            <section className="min-h-screen flex flex-col items-center justify-center px-[20px] text-center py-16">
+                {/* Circular Graph: 88% Match */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="relative mb-8"
+                >
+                    <div className="w-[200px] h-[200px] rounded-full border-[12px] border-gray-100 flex items-center justify-center relative bg-white shadow-lg">
+                        <svg className="absolute inset-0 w-full h-full -rotate-90">
+                            <circle
+                                cx="100" cy="100" r="88"
+                                fill="transparent"
+                                stroke="#28a745"
+                                strokeWidth="12"
+                                strokeDasharray="552.9"
+                                strokeDashoffset="66" // ~88%
+                                strokeLinecap="round"
+                                className="transition-all duration-[2000ms] ease-out"
                             />
-                            {/* Improved soft shadow under the dog */}
-                            <div className="w-32 h-4 bg-black/5 blur-xl rounded-full -mt-8" />
-                        </motion.div>
-                    )}
-                </div>
+                        </svg>
+                        <div className="flex flex-col items-center relative z-10">
+                            <span className="text-[52px] font-[900] text-[#28a745] leading-none">88%</span>
+                            <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mt-1">Compatibilidad</span>
+                        </div>
+                    </div>
 
-                <motion.h1
+                    <motion.div
+                        animate={{ scale: [1, 1.1, 1] }}
+                        transition={{ repeat: Infinity, duration: 2 }}
+                        className="absolute -top-3 -right-3 bg-[#28a745] text-white p-3 rounded-full shadow-xl z-30"
+                    >
+                        <CheckCircle2 size={28} />
+                    </motion.div>
+                </motion.div>
+
+                {/* Headline - Properly spaced */}
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-[28px] font-black leading-tight uppercase mb-4 relative z-10"
+                    transition={{ delay: 0.3 }}
+                    className="py-8 space-y-4"
                 >
-                    ¡Análisis Completado! <br />
-                    <span className="text-[#28a745]">Tu perro</span> es el candidato ideal
-                </motion.h1>
+                    <h1 className="text-[28px] md:text-[32px] font-black leading-tight uppercase">
+                        ¡Análisis Completado! <br />
+                        <span className="text-[#28a745]">Tu perro</span> es el candidato ideal
+                    </h1>
+                </motion.div>
+
+                {/* 3D Celebration Dog - Properly spaced below */}
+                {phase === 'revelation' && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 }}
+                        className="py-8 flex flex-col items-center"
+                    >
+                        <img
+                            src="/assets/3d-revelation-dog.png"
+                            alt="Celebration Dog"
+                            className="w-48 h-48 object-contain"
+                            style={{
+                                filter: 'drop-shadow(0 15px 20px rgba(0,0,0,0.12))',
+                                mixBlendMode: 'multiply'
+                            }}
+                        />
+                        {/* Soft shadow under the dog */}
+                        <div className="w-32 h-3 bg-black/5 blur-xl rounded-full -mt-4" />
+                    </motion.div>
+                )}
 
                 <motion.p
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 1 }}
-                    className="text-gray-500 font-medium max-w-xs"
+                    transition={{ delay: 0.7 }}
+                    className="text-gray-500 font-medium text-[15px] max-w-md leading-relaxed"
                 >
-                    El perfil analizado muestra una respuesta del 98.2% al Método Moderno Sin Castigos.
+                    Basado en su perfil, hemos diseñado un plan de entrenamiento personalizado que transformará su comportamiento en solo 15 minutos al día.
                 </motion.p>
 
                 {/* Scroll Indicator */}

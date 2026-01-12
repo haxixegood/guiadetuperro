@@ -98,19 +98,20 @@ export default function SalesPage() {
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="relative flex justify-center py-6"
+            className="relative flex justify-center py-8"
           >
             <div className="relative z-10">
               <img
                 src="/assets/3d-ebook-mockup.png"
                 alt="Ebook Entrenamiento en Casa"
-                className="w-64 h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.15)] rounded-lg"
+                className="w-72 md:w-80 h-auto drop-shadow-[0_25px_60px_rgba(0,0,0,0.18)] rounded-lg mx-auto"
+                style={{ mixBlendMode: 'multiply' }}
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/assets/dog-hero-new.png'; // Fallback
+                  (e.target as HTMLImageElement).src = '/assets/dog-hero-new.png';
                 }}
               />
               {/* 3D Reflection Effect */}
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[80%] h-4 bg-black/5 blur-xl rounded-full" />
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[70%] h-5 bg-black/5 blur-2xl rounded-full" />
             </div>
           </motion.div>
 
@@ -131,7 +132,12 @@ export default function SalesPage() {
               whileHover={{ y: -5 }}
               className="bg-[#FDFCF9] p-6 rounded-[24px] border border-gray-100 flex flex-col items-center text-center shadow-sm space-y-4"
             >
-              <img src={benefit.img} alt="" className="w-16 h-16 object-contain" />
+              <img
+                src={benefit.img}
+                alt=""
+                className="w-24 h-24 object-contain"
+                style={{ mixBlendMode: 'multiply' }}
+              />
               <p className="text-[14px] font-black uppercase leading-tight tracking-tight">
                 {benefit.text}
               </p>
@@ -140,7 +146,7 @@ export default function SalesPage() {
         </section>
 
         {/* SECTION: OFERTA IRRESISTIBLE (Bonos Desbloqueados) */}
-        <section className="space-y-8 bg-gray-50 -mx-5 px-5 py-12 rounded-[40px]">
+        <section className="space-y-8 bg-gradient-to-br from-[#FFF9E6] via-[#FDFCF9] to-[#FFF9E6] -mx-5 px-5 py-12 rounded-[40px] border border-[#FFD700]/20 shadow-[0_10px_40px_rgba(255,215,0,0.1)]">
           <div className="text-center space-y-2">
             <h2 className="text-2xl font-black uppercase tracking-tight">Oferta Irresistible</h2>
             <p className="text-sm text-gray-500 font-medium">Al inscribirte hoy por <span className="text-black font-bold">149 MXN</span>, te llevas estos 3 bonos valorados en $61 totalmente <span className="text-[#28a745] font-black underline">GRATIS</span></p>
