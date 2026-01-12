@@ -1,9 +1,16 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useQuiz } from '@/contexts/QuizContext';
+import { useEffect } from 'react';
+import { trackWelcomeView } from '@/lib/tracking';
 
 export default function WelcomeScreen() {
   const { goToNextStep } = useQuiz();
+
+  // Track welcome screen view
+  useEffect(() => {
+    trackWelcomeView();
+  }, []);
 
   return (
     <div className="flex flex-col items-center min-h-[100dvh] bg-[#FDFCF9] relative overflow-hidden font-sans text-[#1A1A1A] px-[20px] py-10">

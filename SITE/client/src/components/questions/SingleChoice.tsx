@@ -86,8 +86,9 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
       {/* Header Section: 80px top offset for better hierarchy */}
       <div className="pt-[40px] sm:pt-[80px] w-full flex flex-col items-center mb-8">
         <motion.h2
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
           className="font-['Montserrat'] font-[900] text-[28px] text-[#1A1A1A] leading-tight text-center uppercase"
         >
           {question}
@@ -114,10 +115,10 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
           return (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.05 }}
-              whileTap={{ scale: 1.05 }}
+              transition={{ delay: idx * 0.03, duration: 0.2 }}
+              whileTap={{ scale: 1.02 }}
               onClick={() => handleSelect(option.value)}
               className={`
                 relative w-full rounded-[15px] p-[16px] cursor-pointer transition-all duration-300
@@ -126,14 +127,8 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
                   ? 'bg-[#E6F4EA] border-[#28a745] border-[2px] shadow-md scale-[1.02]'
                   : 'bg-[#FDFCF9] border-[#E0E0E0] hover:border-gray-300'
                 }
-                ${isCritico && !isSelected ? 'animate-pulse ring-2 ring-red-500/20' : ''}
               `}
             >
-              {/* Pulse Glow for 'Crítico' */}
-              {isCritico && !isSelected && (
-                <div className="absolute inset-0 rounded-[15px] bg-red-500/5 animate-ping -z-1" />
-              )}
-
               {/* Icon Container: 60x60, subtle bg */}
               <div className="w-[60px] h-[60px] rounded-xl bg-gray-50 flex-shrink-0 flex items-center justify-center p-2">
                 {getIcon(option.icon)}

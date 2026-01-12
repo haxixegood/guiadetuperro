@@ -1,225 +1,279 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useQuiz } from '@/contexts/QuizContext';
+import { trackRevelation } from '@/lib/tracking';
 import { Button } from '@/components/ui/button';
-import { CheckCircle2, Gift, Zap, Sparkles } from 'lucide-react';
+import { CheckCircle2, Gift, Zap, Sparkles, TrendingUp, Award } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function RevelationScreen() {
-    const { handleAnswer } = useQuiz();
-    const [phase, setPhase] = useState<'diagnosis' | 'revelation'>('diagnosis');
-    const [showBonuses, setShowBonuses] = useState(false);
+    const { handleAnswer, quizData } = useQuiz();
+    const [giftOpened, setGiftOpened] = useState(false);
+    const [showContent, setShowContent] = useState(false);
 
-    useEffect(() => {
-        // Phase transition: 3s for diagnosis, then move to revelation
-        const timer = setTimeout(() => {
-            setPhase('revelation');
-            // Initial burst of confetti when phase changes to revelation
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#28a745', '#FFD700', '#ffffff']
-            });
-        }, 3500);
+    const dogName = quizData.name || 'tu perro';
 
-        return () => clearTimeout(timer);
-    }, []);
-
-    const handleReveal = () => {
+    const handleOpenGift = () => {
+        // Confetti explosion
         confetti({
             particleCount: 150,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#28a745', '#FFD700', '#ffffff']
+            spread: 100,
+            origin: { y: 0.5 },
+            colors: ['#2ecc71', '#FFD700', '#ffffff', '#3498db']
         });
-        setShowBonuses(true);
+
+        setGiftOpened(true);
+
+        // Show content after animation
+        setTimeout(() => {
+            setShowContent(true);
+            // Track revelation view
+            trackRevelation(dogName, 88);
+        }, 800);
     };
 
     const bonuses = [
-        { title: 'Guía Adiós Ansiedad', desc: 'Elimina el estrés por soledad.', icon: '3d-bonus-anxiety' },
-        { title: 'Audio Calma Instantánea', desc: 'Sonidos de alta frecuencia para relajar.', icon: '3d-bonus-audio' },
-        { title: 'Checklist Casa Limpia', desc: 'Protocolo para accidentes de higiene.', icon: '3d-bonus-clean' }
+        { title: 'Guía Adiós Ansiedad', desc: 'Control total del estrés', value: '$199 MXN' },
+        { title: 'Audio Calma Instantánea', desc: 'Relajación profunda', value: '$149 MXN' },
+        { title: 'Checklist Casa Limpia', desc: 'Higiene infalible', value: '$99 MXN' }
     ];
 
     return (
-        <div className="min-h-screen bg-white font-sans text-[#1A1A1A] overflow-x-hidden">
+        <div className="min-h-screen bg-gradient-to-br from-white via-green-50/30 to-white font-sans text-[#1A1A1A] overflow-x-hidden">
 
-            {/* Fase 1: El Diagnóstico (Above the Fold) */}
-            <section className="min-h-screen flex flex-col items-center justify-center px-[20px] text-center py-16">
-                {/* Circular Graph: 88% Match */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="relative mb-8"
-                >
-                    <div className="w-[200px] h-[200px] rounded-full border-[12px] border-gray-100 flex items-center justify-center relative bg-white shadow-lg">
-                        <svg className="absolute inset-0 w-full h-full -rotate-90">
-                            <circle
-                                cx="100" cy="100" r="88"
-                                fill="transparent"
-                                stroke="#28a745"
-                                strokeWidth="12"
-                                strokeDasharray="552.9"
-                                strokeDashoffset="66" // ~88%
-                                strokeLinecap="round"
-                                className="transition-all duration-[2000ms] ease-out"
-                            />
-                        </svg>
-                        <div className="flex flex-col items-center relative z-10">
-                            <span className="text-[52px] font-[900] text-[#28a745] leading-none">88%</span>
-                            <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mt-1">Compatibilidad</span>
-                        </div>
-                    </div>
-
-                    <motion.div
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ repeat: Infinity, duration: 2 }}
-                        className="absolute -top-3 -right-3 bg-[#28a745] text-white p-3 rounded-full shadow-xl z-30"
+            <AnimatePresence mode="wait">
+                {!giftOpened ? (
+                    /* FASE 1: GIFT BOX - GAMIFICACIÓN */
+                    <motion.section
+                        key="gift"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        className="min-h-screen flex flex-col items-center justify-center px-6 text-center"
                     >
-                        <CheckCircle2 size={28} />
-                    </motion.div>
-                </motion.div>
+                        <motion.div
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ delay: 0.2, duration: 0.6 }}
+                            className="space-y-8"
+                        >
+                            <h2 className="text-[28px] md:text-[36px] font-black uppercase leading-tight">
+                                ¡Análisis Completado!<br />
+                                <span className="text-[#2ecc71]">Toca para descubrir</span>
+                            </h2>
 
-                {/* Headline - Properly spaced */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="py-8 space-y-4"
-                >
-                    <h1 className="text-[28px] md:text-[32px] font-black leading-tight uppercase">
-                        ¡Análisis Completado! <br />
-                        <span className="text-[#28a745]">Tu perro</span> es el candidato ideal
-                    </h1>
-                </motion.div>
+                            {/* 3D Gift Box - Interactive */}
+                            <motion.div
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={handleOpenGift}
+                                className="cursor-pointer relative"
+                            >
+                                <motion.div
+                                    animate={{
+                                        y: [0, -15, 0],
+                                        rotate: [0, 5, -5, 0]
+                                    }}
+                                    transition={{
+                                        duration: 2,
+                                        repeat: Infinity,
+                                        ease: "easeInOut"
+                                    }}
+                                >
+                                    <img
+                                        src="/assets/3d-revelation-gift.png"
+                                        alt="Gift"
+                                        className="w-64 h-64 mx-auto object-contain drop-shadow-2xl"
+                                        style={{ mixBlendMode: 'multiply' }}
+                                    />
+                                </motion.div>
 
-                {/* 3D Celebration Dog - Properly spaced below */}
-                {phase === 'revelation' && (
-                    <motion.div
+                                {/* Glow effect */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-[#2ecc71]/20 via-[#FFD700]/20 to-[#2ecc71]/20 blur-3xl -z-10 animate-pulse" />
+                            </motion.div>
+
+                            <motion.p
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.5 }}
+                                className="text-[16px] text-gray-600 font-medium max-w-sm mx-auto"
+                            >
+                                Hemos preparado algo especial para <span className="font-black text-[#2ecc71]">{dogName}</span>
+                            </motion.p>
+
+                            <motion.div
+                                animate={{ scale: [1, 1.1, 1] }}
+                                transition={{ duration: 1.5, repeat: Infinity }}
+                                className="text-[14px] font-bold text-gray-400 uppercase tracking-widest"
+                            >
+                                👆 Toca para abrir
+                            </motion.div>
+                        </motion.div>
+                    </motion.section>
+                ) : (
+                    /* FASE 2: INFOGRAPHIC REVEAL - RESULTADO + BONUSES */
+                    <motion.section
+                        key="reveal"
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.5 }}
-                        className="py-8 flex flex-col items-center"
+                        className="min-h-screen px-6 py-16 space-y-12"
                     >
-                        <img
-                            src="/assets/3d-revelation-dog.png"
-                            alt="Celebration Dog"
-                            className="w-48 h-48 object-contain"
-                            style={{
-                                filter: 'drop-shadow(0 15px 20px rgba(0,0,0,0.12))',
-                                mixBlendMode: 'multiply'
-                            }}
-                        />
-                        {/* Soft shadow under the dog */}
-                        <div className="w-32 h-3 bg-black/5 blur-xl rounded-full -mt-4" />
-                    </motion.div>
+                        {showContent && (
+                            <>
+                                {/* INFOGRAPHIC HEADER */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="text-center space-y-4"
+                                >
+                                    <div className="inline-flex items-center gap-2 px-5 py-2 bg-green-50 border-2 border-[#2ecc71] rounded-full">
+                                        <CheckCircle2 className="w-5 h-5 text-[#2ecc71]" />
+                                        <span className="text-[12px] font-black uppercase tracking-widest text-[#2ecc71]">Diagnóstico Completo</span>
+                                    </div>
+
+                                    <h1 className="text-[32px] md:text-[40px] font-black leading-tight uppercase">
+                                        ¡Increíble! <span className="text-[#2ecc71]">{dogName}</span><br />
+                                        es candidato ideal
+                                    </h1>
+                                </motion.div>
+
+                                {/* MODERN INFOGRAPHIC - 88% RESULT */}
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ delay: 0.2 }}
+                                    className="max-w-md mx-auto"
+                                >
+                                    <div className="bg-gradient-to-br from-[#2ecc71]/10 to-[#27ae60]/10 p-8 rounded-3xl border-2 border-[#2ecc71]/30 shadow-xl relative overflow-hidden">
+                                        {/* Background pattern */}
+                                        <div className="absolute inset-0 opacity-5">
+                                            <div className="absolute inset-0" style={{
+                                                backgroundImage: 'radial-gradient(circle, #2ecc71 1px, transparent 1px)',
+                                                backgroundSize: '20px 20px'
+                                            }} />
+                                        </div>
+
+                                        <div className="relative z-10 space-y-6">
+                                            {/* Main Score */}
+                                            <div className="text-center">
+                                                <div className="inline-flex items-baseline gap-2">
+                                                    <TrendingUp className="w-12 h-12 text-[#2ecc71]" />
+                                                    <span className="text-[80px] font-black text-[#2ecc71] leading-none">88</span>
+                                                    <span className="text-[40px] font-black text-[#2ecc71]">%</span>
+                                                </div>
+                                                <p className="text-[14px] font-bold text-gray-600 uppercase tracking-widest mt-2">
+                                                    Compatibilidad con el Método
+                                                </p>
+                                            </div>
+
+                                            {/* Progress Bar */}
+                                            <div className="space-y-2">
+                                                <div className="h-4 bg-gray-200 rounded-full overflow-hidden">
+                                                    <motion.div
+                                                        initial={{ width: 0 }}
+                                                        animate={{ width: '88%' }}
+                                                        transition={{ duration: 1.5, delay: 0.5 }}
+                                                        className="h-full bg-gradient-to-r from-[#2ecc71] to-[#27ae60] rounded-full"
+                                                    />
+                                                </div>
+                                                <div className="flex justify-between text-[11px] font-bold text-gray-500">
+                                                    <span>Bajo</span>
+                                                    <span>Medio</span>
+                                                    <span className="text-[#2ecc71]">Alto ✓</span>
+                                                </div>
+                                            </div>
+
+                                            {/* Key Metrics */}
+                                            <div className="grid grid-cols-3 gap-3 pt-4">
+                                                {[
+                                                    { label: 'Edad', value: 'Ideal', icon: '🐕' },
+                                                    { label: 'Energía', value: 'Óptima', icon: '⚡' },
+                                                    { label: 'Urgencia', value: 'Alta', icon: '🎯' }
+                                                ].map((metric, i) => (
+                                                    <motion.div
+                                                        key={i}
+                                                        initial={{ opacity: 0, y: 10 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        transition={{ delay: 0.7 + i * 0.1 }}
+                                                        className="bg-white/60 backdrop-blur-sm p-3 rounded-xl text-center"
+                                                    >
+                                                        <div className="text-2xl mb-1">{metric.icon}</div>
+                                                        <div className="text-[10px] font-bold text-gray-500 uppercase">{metric.label}</div>
+                                                        <div className="text-[13px] font-black text-[#2ecc71]">{metric.value}</div>
+                                                    </motion.div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+
+                                {/* BONUSES SECTION */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.5 }}
+                                    className="max-w-md mx-auto space-y-6"
+                                >
+                                    <div className="text-center">
+                                        <div className="inline-flex items-center gap-2 mb-4">
+                                            <Award className="w-6 h-6 text-[#FFD700]" />
+                                            <h3 className="text-[24px] font-black uppercase">Bonos Desbloqueados</h3>
+                                        </div>
+                                        <p className="text-[14px] text-gray-600 font-medium">
+                                            Valorados en <span className="line-through">$447 MXN</span>, hoy <span className="text-[#2ecc71] font-black">GRATIS</span>
+                                        </p>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        {bonuses.map((bonus, i) => (
+                                            <motion.div
+                                                key={i}
+                                                initial={{ opacity: 0, x: -20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ delay: 0.7 + i * 0.1 }}
+                                                className="bg-white p-4 rounded-2xl border-2 border-green-100 shadow-sm flex items-center gap-4"
+                                            >
+                                                <div className="w-12 h-12 bg-gradient-to-br from-[#2ecc71] to-[#27ae60] rounded-xl flex items-center justify-center flex-shrink-0">
+                                                    <Sparkles className="w-6 h-6 text-white" />
+                                                </div>
+                                                <div className="flex-1">
+                                                    <h4 className="font-black text-[14px] uppercase">{bonus.title}</h4>
+                                                    <p className="text-[12px] text-gray-500 font-medium">{bonus.desc}</p>
+                                                </div>
+                                                <div className="text-right">
+                                                    <div className="text-[10px] text-gray-400 line-through">{bonus.value}</div>
+                                                    <div className="text-[12px] font-black text-[#2ecc71]">GRATIS</div>
+                                                </div>
+                                            </motion.div>
+                                        ))}
+                                    </div>
+                                </motion.div>
+
+                                {/* CTA BUTTON */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 1 }}
+                                    className="max-w-md mx-auto"
+                                >
+                                    <Button
+                                        onClick={() => handleAnswer('continue')}
+                                        className="w-full h-20 rounded-full bg-gradient-to-r from-[#2ecc71] to-[#27ae60] hover:from-[#27ae60] hover:to-[#2ecc71] text-white text-[20px] font-black uppercase shadow-[0_20px_60px_rgba(46,204,113,0.4)] relative overflow-hidden group"
+                                    >
+                                        <div className="absolute inset-0 bg-white/20 -skew-x-12 translate-x-[-150%] group-hover:translate-x-[150%] transition-transform duration-1000" />
+                                        <span className="relative z-10">Ver Mi Plan Personalizado →</span>
+                                    </Button>
+
+                                    <p className="text-center text-[12px] text-gray-500 font-bold mt-4">
+                                        🔒 Acceso inmediato • Sin compromisos
+                                    </p>
+                                </motion.div>
+                            </>
+                        )}
+                    </motion.section>
                 )}
+            </AnimatePresence>
 
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.7 }}
-                    className="text-gray-500 font-medium text-[15px] max-w-md leading-relaxed"
-                >
-                    Basado en su perfil, hemos diseñado un plan de entrenamiento personalizado que transformará su comportamiento en solo 15 minutos al día.
-                </motion.p>
-
-                {/* Scroll Indicator */}
-                <motion.div
-                    animate={{ y: [0, 10, 0] }}
-                    transition={{ repeat: Infinity, duration: 2 }}
-                    className="mt-12 text-gray-300"
-                >
-                    <Zap size={32} fill="currentColor" />
-                </motion.div>
-            </section>
-
-            {/* Fase 2: El Regalo Sorpresa */}
-            <section className="min-h-screen flex flex-col items-center justify-center px-[20px] bg-gray-50 relative py-20">
-                <div className="text-center mb-6">
-                    <h2 className="text-[24px] font-[900] uppercase tracking-tighter">
-                        REGALO SORPRESA <br />
-                        <span className="text-[#DAA520]">DESBLOQUEADO</span>
-                    </h2>
-                </div>
-
-                <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    animate={!showBonuses ? {
-                        scale: [1, 1.05, 1],
-                        rotate: [0, -2, 2, 0]
-                    } : {}}
-                    transition={{ repeat: Infinity, duration: 2 }}
-                    onClick={handleReveal}
-                    className="relative cursor-pointer mb-12"
-                >
-                    <div className="w-[200px] h-[200px] bg-white rounded-3xl shadow-2xl flex items-center justify-center border-4 border-[#FFD700] relative overflow-hidden">
-                        {/* Golden radial gradient background */}
-                        <div className="absolute inset-0 bg-[radial-gradient(circle,_#FFD700_0%,_transparent_70%)] opacity-20" />
-
-                        <motion.img
-                            src="/assets/3d-revelation-gift.png"
-                            alt="Surprise Gift"
-                            className="w-40 h-40 object-contain relative z-10"
-                            style={{ mixBlendMode: 'multiply' }}
-                            animate={!showBonuses ? {
-                                rotate: [0, -3, 3, 0]
-                            } : {}}
-                            transition={{ repeat: Infinity, duration: 1.5 }}
-                        />
-                    </div>
-                    {!showBonuses && (
-                        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#1A1A1A] text-white px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest animate-bounce">
-                            Toca para abrir
-                        </div>
-                    )}
-                </motion.div>
-
-                {/* Fase 3: Los Bonus (Conditional) */}
-                <div className="w-full max-w-sm space-y-4">
-                    {showBonuses && bonuses.map((bonus, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, x: -50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.3 }}
-                            className="bg-white p-4 rounded-2xl flex items-center gap-4 border border-gray-100 shadow-sm"
-                        >
-                            <div className="w-12 h-12 bg-yellow-50 rounded-xl flex items-center justify-center text-[#DAA520]">
-                                <Sparkles size={24} />
-                            </div>
-                            <div className="flex-1">
-                                <h4 className="font-bold text-[14px] uppercase">{bonus.title}</h4>
-                                <p className="text-[12px] text-gray-400">{bonus.desc}</p>
-                            </div>
-                            <div className="bg-[#1A1A1A] text-white text-[10px] font-black px-2 py-0.5 rounded">
-                                GRATIS
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-
-                {/* Fase 4: Premium CTA */}
-                {showBonuses && (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="mt-16 w-full max-w-sm flex flex-col items-center"
-                    >
-                        <Button
-                            onClick={() => handleAnswer('next')}
-                            className="w-full h-16 rounded-[50px] bg-[#FFD700] hover:bg-[#F0C000] text-[#1A1A1A] font-black text-[18px] uppercase shadow-[0px_10px_30px_rgba(255,215,0,0.3)] relative overflow-hidden group"
-                        >
-                            <div className="absolute inset-0 bg-white/20 -skew-x-[45deg] translate-x-[-150%] group-hover:translate-x-[150%] transition-transform duration-1000 ease-in-out" />
-                            VER MI PLAN
-                        </Button>
-                        <p className="mt-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                            Oferta limitada para nuevos tutores
-                        </p>
-                    </motion.div>
-                )}
-            </section>
         </div>
     );
 }

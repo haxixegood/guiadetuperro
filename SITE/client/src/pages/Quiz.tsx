@@ -1,11 +1,11 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useQuiz } from '@/contexts/QuizContext';
 import { useEffect } from 'react';
+import { trackQuizStep } from '@/lib/tracking';
 import WelcomeScreen from './WelcomeScreen';
 import SingleChoice from '@/components/questions/SingleChoice';
 import MultipleChoice from '@/components/questions/MultipleChoice';
 import RevelationScreen from './RevelationScreen';
-import EmailStep from '@/components/questions/EmailStep';
 import { QUIZ_STEPS } from '@/types/quiz';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,12 +13,17 @@ import { Input } from '@/components/ui/input';
 export default function Quiz() {
   const { currentStep, handleAnswer } = useQuiz();
 
+  const step = QUIZ_STEPS[currentStep];
+
   useEffect(() => {
     // RESET NAVIGATION: Load from Top (0,0)
     window.scrollTo(0, 0);
-  }, [currentStep]);
 
-  const step = QUIZ_STEPS[currentStep];
+    // Track quiz step changes (except welcome and revelation)
+    if (step && step.id !== 'welcome' && step.id !== 'revelation') {
+      trackQuizStep(currentStep, step.id, step.type);
+    }
+  }, [currentStep, step]);
 
   if (!step) return null;
 
@@ -53,7 +58,6 @@ export default function Quiz() {
         );
 
       case 'text':
-        if (step.id === 'email') return <EmailStep />;
         return (
           <div className="flex flex-col items-center min-h-screen px-6 pt-16 font-sans">
             <h2 className="text-2xl font-[900] text-center uppercase mb-8">{step.question || ''}</h2>
@@ -102,13 +106,13 @@ export default function Quiz() {
         </div>
       )}
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         <motion.div
           key={currentStep}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.15 }}
           className="w-full h-full"
         >
           {renderStep()}

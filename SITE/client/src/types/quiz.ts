@@ -85,9 +85,9 @@ export const QUIZ_STEPS: QuizStep[] = [
     question: '¿Cómo reaccionas cuando tu perro se porta mal?',
     subtitle: 'Entender tu reacción es clave para desbloquear su aprendizaje.',
     options: [
-      { value: 'tranquilo', label: 'Espera tranquilo a que le sirva', icon: '3d-reaction-question' },
-      { value: 'activo', label: 'Se emociona y salta mucho', icon: '3d-reaction-cloud' },
-      { value: 'intenso', label: 'Ladra o se desespera por comer', icon: '3d-reaction-megaphone' },
+      { value: 'grito', label: 'Le grito o lo regaño en el momento', icon: '3d-reaction-megaphone' },
+      { value: 'ignoro', label: 'Lo ignoro totalmente para que se calme', icon: '3d-reaction-cloud' },
+      { value: 'distraccion', label: 'Intento distraerlo con un juguete o premio', icon: '3d-reaction-question' },
     ],
   },
 
@@ -133,14 +133,6 @@ export const QUIZ_STEPS: QuizStep[] = [
     ],
   },
 
-  // 8. Consolidation into RevelationScreen
+  // 8. Consolidation into RevelationScreen (Final step before sales page)
   { id: 'revelation', type: 'info' },
-
-  // 9. Email step (Final)
-  {
-    id: 'email',
-    type: 'text',
-    question: '¡Diagnóstico casi listo! ¿A qué email enviamos tu plan?',
-    placeholder: 'Introduce tu email principal'
-  },
 ];

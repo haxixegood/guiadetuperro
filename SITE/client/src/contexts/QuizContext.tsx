@@ -52,8 +52,8 @@ export function QuizProvider({ children }: { children: ReactNode }) {
     // Persist answer
     updateQuizData({ [step.id]: answer });
 
-    // Handle flow logic
-    if (step.id === 'email') {
+    // Handle flow logic: After revelation screen, go to sales page
+    if (step.id === 'revelation') {
       setLocation('/sales');
     } else {
       goToNextStep();

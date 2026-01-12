@@ -65,8 +65,9 @@ export default function MultipleChoice({ question, subtitle, options, onAnswer, 
       {/* Header Section */}
       <div className="pt-[40px] sm:pt-[80px] w-full flex flex-col items-center mb-8">
         <motion.h2
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
           className="font-['Montserrat'] font-black text-[24px] md:text-[28px] text-[#1A1A1A] leading-tight text-center uppercase"
         >
           {question}
@@ -92,10 +93,10 @@ export default function MultipleChoice({ question, subtitle, options, onAnswer, 
           return (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.05 }}
-              whileTap={{ scale: 1.05 }}
+              transition={{ delay: idx * 0.03, duration: 0.2 }}
+              whileTap={{ scale: 1.02 }}
               onClick={() => toggle(option.value)}
               className={`
                 relative w-full rounded-[15px] p-[16px] cursor-pointer transition-all duration-300
