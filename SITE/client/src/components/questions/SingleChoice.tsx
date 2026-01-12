@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useQuiz } from '@/contexts/QuizContext';
 import { useState } from 'react';
 import {
-  Dog, Baby, Moon, Sun, Zap, Megaphone, Cloud, HelpCircle,
+  Dog, Bone, Shield, Moon, Sun, Zap, Megaphone, Cloud, HelpCircle,
   Siren, AlertTriangle, Clock, Heart, Timer, Users, Gift
 } from 'lucide-react';
 
@@ -38,7 +38,7 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
           <img
             src={assetPath}
             alt=""
-            className="w-full h-full object-contain z-10"
+            className="w-20 h-20 object-contain z-10 rounded-lg"
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = 'none';
               // The fallback Lucide icon behind it will show up
@@ -56,9 +56,9 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
 
   const renderFallbackIcon = (iconStr: string) => {
     const iconMap: Record<string, any> = {
-      '3d-age-puppy': { icon: Baby, color: 'text-orange-500' },
-      '3d-age-adult': { icon: Dog, color: 'text-green-500' },
-      '3d-age-senior': { icon: Dog, color: 'text-blue-500' },
+      '3d-age-puppy': { icon: Bone, color: 'text-orange-500' },
+      '3d-age-adult': { icon: Dog, color: 'text-emerald-500' },
+      '3d-age-senior': { icon: Shield, color: 'text-slate-500' },
       '3d-energy-tranquilo': { icon: Moon, color: 'text-blue-400' },
       '3d-energy-activo': { icon: Sun, color: 'text-orange-400' },
       '3d-energy-hiperactivo': { icon: Zap, color: 'text-red-500' },
@@ -123,8 +123,8 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
                 relative w-full rounded-[15px] p-[16px] cursor-pointer transition-all duration-300
                 flex items-center gap-[16px] text-left border shadow-sm
                 ${isSelected
-                  ? 'bg-[#FFF9E6] border-[#28a745] border-[2px] shadow-md scale-[1.02]'
-                  : 'bg-white border-[#E0E0E0] hover:border-gray-300'
+                  ? 'bg-[#E6F4EA] border-[#28a745] border-[2px] shadow-md scale-[1.02]'
+                  : 'bg-[#FDFCF9] border-[#E0E0E0] hover:border-gray-300'
                 }
                 ${isCritico && !isSelected ? 'animate-pulse ring-2 ring-red-500/20' : ''}
               `}
@@ -141,7 +141,7 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
 
               {/* Text Content */}
               <div className="flex-1">
-                <h3 className="font-['Montserrat'] font-black text-[16px] text-[#1A1A1A] leading-none uppercase">
+                <h3 className="font-['Montserrat'] font-[900] text-[16px] text-[#1A1A1A] leading-none uppercase">
                   {option.label}
                 </h3>
               </div>

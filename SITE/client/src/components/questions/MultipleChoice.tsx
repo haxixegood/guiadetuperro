@@ -31,7 +31,7 @@ export default function MultipleChoice({ question, subtitle, options, onAnswer, 
           <img
             src={assetPath}
             alt=""
-            className="w-full h-full object-contain z-10"
+            className="w-20 h-20 object-contain z-10 rounded-lg"
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = 'none';
             }}
@@ -102,7 +102,7 @@ export default function MultipleChoice({ question, subtitle, options, onAnswer, 
                 flex items-center gap-[16px] text-left border shadow-sm
                 ${isSelected
                   ? 'bg-[#E6F4EA] border-[#28a745] border-[2px] shadow-[0_0_15px_rgba(40,167,69,0.3)]'
-                  : 'bg-white border-[#E0E0E0] hover:border-gray-300'
+                  : 'bg-[#FDFCF9] border-[#E0E0E0] hover:border-gray-300'
                 }
               `}
             >

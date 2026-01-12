@@ -14,6 +14,13 @@ export default function RevelationScreen() {
         // Phase transition: 3s for diagnosis, then move to revelation
         const timer = setTimeout(() => {
             setPhase('revelation');
+            // Initial burst of confetti when phase changes to revelation
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#28a745', '#FFD700', '#ffffff']
+            });
         }, 3500);
 
         return () => clearTimeout(timer);
@@ -39,45 +46,66 @@ export default function RevelationScreen() {
         <div className="min-h-screen bg-white font-sans text-[#1A1A1A] overflow-x-hidden">
 
             {/* Fase 1: El Diagnóstico (Above the Fold) */}
-            <section className="min-h-screen flex flex-col items-center justify-center px-[20px] text-center">
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="relative mb-8"
-                >
-                    {/* Circular Graph: 88% Match */}
-                    <div className="w-[180px] h-[180px] rounded-full border-[10px] border-gray-100 flex items-center justify-center relative">
-                        <svg className="absolute inset-0 w-full h-full -rotate-90">
-                            <circle
-                                cx="90" cy="90" r="80"
-                                fill="transparent"
-                                stroke="#28a745"
-                                strokeWidth="10"
-                                strokeDasharray="502.6"
-                                strokeDashoffset="60" // ~88%
-                                strokeLinecap="round"
-                                className="transition-all duration-[2000ms] ease-out"
-                            />
-                        </svg>
-                        <div className="flex flex-col items-center">
-                            <span className="text-[42px] font-[900] text-[#28a745]">88%</span>
-                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none">Compatibilidad</span>
-                        </div>
-                    </div>
-
+            <section className="min-h-screen flex flex-col items-center justify-center px-[20px] text-center pt-10">
+                <div className="relative mb-24 flex flex-col items-center">
                     <motion.div
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ repeat: Infinity, duration: 2 }}
-                        className="absolute -top-2 -right-2 bg-[#28a745] text-white p-2 rounded-full shadow-lg"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="relative"
                     >
-                        <CheckCircle2 size={24} />
+                        {/* Circular Graph: 88% Match */}
+                        <div className="w-[180px] h-[180px] rounded-full border-[10px] border-gray-100 flex items-center justify-center relative bg-white">
+                            <svg className="absolute inset-0 w-full h-full -rotate-90">
+                                <circle
+                                    cx="90" cy="90" r="80"
+                                    fill="transparent"
+                                    stroke="#28a745"
+                                    strokeWidth="10"
+                                    strokeDasharray="502.6"
+                                    strokeDashoffset="60" // ~88%
+                                    strokeLinecap="round"
+                                    className="transition-all duration-[2000ms] ease-out"
+                                />
+                            </svg>
+                            <div className="flex flex-col items-center">
+                                <span className="text-[42px] font-[900] text-[#28a745]">88%</span>
+                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none">Compatibilidad</span>
+                            </div>
+                        </div>
+
+                        <motion.div
+                            animate={{ scale: [1, 1.1, 1] }}
+                            transition={{ repeat: Infinity, duration: 2 }}
+                            className="absolute -top-2 -right-2 bg-[#28a745] text-white p-2 rounded-full shadow-lg z-30"
+                        >
+                            <CheckCircle2 size={24} />
+                        </motion.div>
                     </motion.div>
-                </motion.div>
+
+                    {/* 3D Celebration Dog - Positioned BELOW the chart */}
+                    {phase === 'revelation' && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="absolute -bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center z-20 pointer-events-none"
+                        >
+                            <img
+                                src="/assets/3d-revelation-dog.png"
+                                alt="Celebration Dog"
+                                className="w-56 h-56 object-contain"
+                                style={{ filter: 'drop-shadow(0 10px 10px rgba(0,0,0,0.1))' }}
+                            />
+                            {/* Improved soft shadow under the dog */}
+                            <div className="w-32 h-4 bg-black/5 blur-xl rounded-full -mt-8" />
+                        </motion.div>
+                    )}
+                </div>
 
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-[28px] font-black leading-tight uppercase mb-4"
+                    transition={{ delay: 0.2 }}
+                    className="text-[28px] font-black leading-tight uppercase mb-4 relative z-10"
                 >
                     ¡Análisis Completado! <br />
                     <span className="text-[#28a745]">Tu perro</span> es el candidato ideal
@@ -104,7 +132,7 @@ export default function RevelationScreen() {
 
             {/* Fase 2: El Regalo Sorpresa */}
             <section className="min-h-screen flex flex-col items-center justify-center px-[20px] bg-gray-50 relative py-20">
-                <div className="text-center mb-12">
+                <div className="text-center mb-6">
                     <h2 className="text-[24px] font-[900] uppercase tracking-tighter">
                         REGALO SORPRESA <br />
                         <span className="text-[#DAA520]">DESBLOQUEADO</span>
@@ -121,12 +149,20 @@ export default function RevelationScreen() {
                     onClick={handleReveal}
                     className="relative cursor-pointer mb-12"
                 >
-                    <div className="w-[180px] h-[180px] bg-white rounded-3xl shadow-2xl flex items-center justify-center border-4 border-[#FFD700] relative overflow-hidden">
-                        <motion.div
-                            animate={{ opacity: [0.3, 1, 0.3] }}
-                            className="absolute inset-0 bg-gradient-to-tr from-[#FFD700]/20 to-transparent"
+                    <div className="w-[200px] h-[200px] bg-white rounded-3xl shadow-2xl flex items-center justify-center border-4 border-[#FFD700] relative overflow-hidden">
+                        {/* Golden radial gradient background */}
+                        <div className="absolute inset-0 bg-[radial-gradient(circle,_#FFD700_0%,_transparent_70%)] opacity-20" />
+
+                        <motion.img
+                            src="/assets/3d-revelation-gift.png"
+                            alt="Surprise Gift"
+                            className="w-40 h-40 object-contain relative z-10"
+                            style={{ mixBlendMode: 'multiply' }}
+                            animate={!showBonuses ? {
+                                rotate: [0, -3, 3, 0]
+                            } : {}}
+                            transition={{ repeat: Infinity, duration: 1.5 }}
                         />
-                        <Gift size={80} className="text-[#DAA520] relative z-10" />
                     </div>
                     {!showBonuses && (
                         <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#1A1A1A] text-white px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest animate-bounce">

@@ -5,6 +5,7 @@ import WelcomeScreen from './WelcomeScreen';
 import SingleChoice from '@/components/questions/SingleChoice';
 import MultipleChoice from '@/components/questions/MultipleChoice';
 import RevelationScreen from './RevelationScreen';
+import EmailStep from '@/components/questions/EmailStep';
 import { QUIZ_STEPS } from '@/types/quiz';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -52,12 +53,13 @@ export default function Quiz() {
         );
 
       case 'text':
+        if (step.id === 'email') return <EmailStep />;
         return (
           <div className="flex flex-col items-center min-h-screen px-6 pt-16 font-sans">
             <h2 className="text-2xl font-[900] text-center uppercase mb-8">{step.question || ''}</h2>
             <div className="w-full max-w-sm space-y-6">
               <Input
-                type={step.id === 'email' ? 'email' : 'text'}
+                type="text"
                 placeholder={step.placeholder || ''}
                 className="h-16 rounded-2xl border-2 border-gray-100 focus:border-[#28a745] px-6 text-lg font-medium"
                 onKeyDown={(e) => {

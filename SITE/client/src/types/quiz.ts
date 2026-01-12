@@ -41,6 +41,14 @@ export const QUIZ_STEPS: QuizStep[] = [
     type: 'info',
   },
 
+  // 1.5 Name (Personalization)
+  {
+    id: 'name',
+    type: 'text',
+    question: '¿Cómo se llama tu mejor amigo?',
+    placeholder: 'Introduce el nombre de tu perro',
+  },
+
   // 2. Age (REPLACES NAME STEP)
   {
     id: 'age',
@@ -49,9 +57,9 @@ export const QUIZ_STEPS: QuizStep[] = [
     question: '¿Qué edad tiene tu mejor amigo?',
     subtitle: 'Su etapa de vida define el método de aprendizaje.',
     options: [
-      { value: '0-12m', label: 'CACHORRO (0-12 meses)', icon: '3d-age-puppy' },
-      { value: '1-7y', label: 'ADULTO (1-7 años)', icon: '3d-age-adult' },
-      { value: '+7y', label: 'SENIOR (+7 años)', icon: '3d-age-senior' },
+      { value: '0-12m', label: 'CACHORRO (0-12 MESES)', icon: '3d-age-puppy' },
+      { value: '1-7y', label: 'ADULTO (1-7 AÑOS)', icon: '3d-age-adult' },
+      { value: '+7y', label: 'SENIOR (8+ AÑOS)', icon: '3d-age-senior' },
     ],
   },
 
@@ -77,9 +85,9 @@ export const QUIZ_STEPS: QuizStep[] = [
     question: '¿Cómo reaccionas cuando tu perro se porta mal?',
     subtitle: 'Entender tu reacción es clave para desbloquear su aprendizaje.',
     options: [
-      { value: 'grito', label: 'LE GRITO O LO CASTIGO (Siento que no me escucha)', icon: '3d-reaction-megaphone' },
-      { value: 'ignoro', label: 'INTENTO IGNORARLO (Pero el problema persiste)', icon: '3d-reaction-cloud' },
-      { value: 'frustrado', label: 'NO SÉ QUÉ HACER (Me siento frustrado/a)', icon: '3d-reaction-question' },
+      { value: 'tranquilo', label: 'Espera tranquilo a que le sirva', icon: '3d-reaction-question' },
+      { value: 'activo', label: 'Se emociona y salta mucho', icon: '3d-reaction-cloud' },
+      { value: 'intenso', label: 'Ladra o se desespera por comer', icon: '3d-reaction-megaphone' },
     ],
   },
 

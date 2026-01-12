@@ -76,20 +76,67 @@ export default function SalesPage() {
       <main className="pt-24 px-5 max-w-xl mx-auto space-y-20">
 
         {/* HEADER DE DIAGNÓSTICO (Dobra Superior) */}
-        <section className="text-center space-y-6">
+        <section className="text-center space-y-8">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-50 border border-green-100 rounded-full">
             <CheckCircle2 className="w-3.5 h-3.5 text-[#28a745]" />
             <span className="text-[11px] font-black uppercase tracking-widest text-[#28a745]">Diagnóstico Listado</span>
           </div>
 
-          <h1 className="text-[32px] md:text-[40px] font-[900] leading-[1.1] tracking-tighter text-[#1A1A1A] uppercase">
-            ¡Análisis Completado! <br />
-            Tu perro es el candidato ideal para el <span className="text-[#28a745]">Método SYNC</span>
-          </h1>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-4"
+          >
+            <h1 className="text-[32px] md:text-[42px] font-[900] leading-[1.1] tracking-tighter text-[#1A1A1A] uppercase">
+              ¡Todo listo! <br />
+              El plan personalizado para <span className="text-[#28a745]">{quizData.name || 'tu perro'}</span> está aquí
+            </h1>
+          </motion.div>
+
+          {/* Ebook Mockup Image - Principal Visual Element */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="relative flex justify-center py-6"
+          >
+            <div className="relative z-10">
+              <img
+                src="/assets/3d-ebook-mockup.png"
+                alt="Ebook Entrenamiento en Casa"
+                className="w-64 h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.15)] rounded-lg"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/assets/dog-hero-new.png'; // Fallback
+                }}
+              />
+              {/* 3D Reflection Effect */}
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[80%] h-4 bg-black/5 blur-xl rounded-full" />
+            </div>
+          </motion.div>
 
           <p className="text-[18px] font-medium text-gray-500 leading-snug max-w-sm mx-auto">
-            Descubre el camino de 15 min al día para eliminar mordidas y desobediencia por solo <span className="text-[#1A1A1A] font-black">149 MXN</span>.
+            Descubre el camino de 15 min al día para transformar su comportamiento por solo <span className="text-[#1A1A1A] font-black">149 MXN</span>.
           </p>
+        </section>
+
+        {/* SECTION: 3D BENEFIT CARDS */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+          {[
+            { img: '/assets/3d-urgency-clock.png', text: 'Solo 15 minutos al día' },
+            { img: '/assets/3d-urgency-alert.png', text: 'Método 100% Seguro' },
+            { img: '/assets/3d-revelation-dog.png', text: 'Entrenamiento en casa' }
+          ].map((benefit, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ y: -5 }}
+              className="bg-[#FDFCF9] p-6 rounded-[24px] border border-gray-100 flex flex-col items-center text-center shadow-sm space-y-4"
+            >
+              <img src={benefit.img} alt="" className="w-16 h-16 object-contain" />
+              <p className="text-[14px] font-black uppercase leading-tight tracking-tight">
+                {benefit.text}
+              </p>
+            </motion.div>
+          ))}
         </section>
 
         {/* SECTION: OFERTA IRRESISTIBLE (Bonos Desbloqueados) */}
@@ -121,31 +168,45 @@ export default function SalesPage() {
 
         {/* PRICING & CTA */}
         <section ref={checkoutRef} className="space-y-8">
-          <div className="bg-[#1A1A1A] text-white rounded-[32px] p-8 md:p-10 relative overflow-hidden shadow-2xl">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#28a745] rounded-full blur-[100px] opacity-20 pointer-events-none" />
+          <div className="bg-[#1A1A1A] text-white rounded-[40px] p-8 md:p-12 relative overflow-hidden shadow-2xl border-b-[8px] border-[#28a745]">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#28a745] rounded-full blur-[120px] opacity-20 pointer-events-none" />
 
-            <div className="relative z-10 text-center space-y-8">
+            <div className="relative z-10 text-center space-y-10">
+              {/* Modern 3D Countdown Timer */}
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">La oferta expira en:</span>
+                <div className="bg-white/5 backdrop-blur-md border border-white/10 px-6 py-3 rounded-2xl flex items-center gap-2 shadow-inner">
+                  <Clock className="w-4 h-4 text-[#28a745] animate-pulse" />
+                  <span className="font-mono text-[24px] font-black text-[#FFD700] tabular-nums tracking-tighter">
+                    {formatTime(timeLeft)}
+                  </span>
+                </div>
+              </div>
+
               <div className="space-y-1">
-                <span className="text-gray-400 text-lg line-through decoration-red-500 decoration-[3px] font-black">De $499 MXN</span>
+                <span className="text-gray-400 text-xl line-through decoration-red-500 decoration-[3px] font-black opacity-50">De $499 MXN</span>
                 <div className="flex flex-col items-center">
-                  <span className="text-7xl font-black text-[#28a745] tracking-tighter leading-none">$149</span>
-                  <span className="text-xs font-black text-gray-400 uppercase tracking-[0.3em] mt-2">MXN • PAGO ÚNICO</span>
+                  <span className="text-8xl font-black text-white tracking-tighter leading-none">$149<span className="text-3xl text-[#28a745]">.00</span></span>
+                  <span className="text-[10px] font-black text-[#28a745] uppercase tracking-[0.4em] mt-3">MÉXICO • PAGO ÚNICO</span>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <Button
                   onClick={handleCheckout}
-                  className="w-full h-20 rounded-full bg-[#28a745] hover:bg-[#218838] text-white text-[20px] font-[900] uppercase shadow-[0_10px_40px_rgba(40,167,69,0.4)] relative overflow-hidden group"
+                  className="w-full h-22 rounded-full bg-[#28a745] hover:bg-[#218838] text-white text-[22px] font-[900] uppercase shadow-[0_15px_60px_rgba(40,167,69,0.6)] relative overflow-hidden group py-10 animate-bounce transition-all duration-300 active:scale-95"
+                  style={{ animationDuration: '3s' }}
                 >
-                  <div className="absolute inset-0 bg-white/20 -skew-x-[45deg] translate-x-[-150%] group-hover:translate-x-[150%] transition-transform duration-[1200ms]" />
-                  SÍ, QUIERO MI PLAN POR 149 MXN →
+                  <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.3)_50%,transparent_75%)] bg-[length:200%_100%] animate-[shine_3s_infinite]" />
+                  ¡Quiero Mi Guía Ahora!
                 </Button>
 
-                {/* GARANTÍA SELL */}
-                <div className="flex items-center justify-center gap-3 py-2">
-                  <ShieldCheck className="w-5 h-5 text-[#28a745]" />
-                  <span className="text-[12px] font-black uppercase tracking-wider text-gray-300">7 Días de Garantía Total</span>
+                {/* GARANTÍA SELL 3D */}
+                <div className="flex flex-col items-center gap-2 pt-6">
+                  <div className="bg-white/5 px-5 py-2.5 rounded-2xl flex items-center gap-3 border border-white/10 backdrop-blur-sm">
+                    <ShieldCheck className="w-5 h-5 text-[#28a745]" />
+                    <span className="text-[12px] font-black uppercase tracking-wider text-gray-200">Garantía Total de 7 Días</span>
+                  </div>
                 </div>
               </div>
             </div>
