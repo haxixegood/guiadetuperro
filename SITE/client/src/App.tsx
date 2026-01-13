@@ -10,6 +10,8 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { QuizProvider } from "./contexts/QuizContext";
 import Quiz from "./pages/Quiz";
 import PixelTracker from "./components/PixelTracker";
+import { useEffect } from "react";
+import { preloadImages, getQuizIconImages } from "./lib/imagePreload";
 
 function Router() {
   return (
@@ -41,6 +43,12 @@ function Router() {
 }
 
 function App() {
+  // Preload all quiz images on app mount
+  useEffect(() => {
+    const images = getQuizIconImages();
+    preloadImages(images);
+  }, []);
+
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="light">

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Check, Scissors, Droplets, Navigation, Volume2, Dog } from 'lucide-react';
+import { addCacheBuster } from '@/lib/imagePreload';
 
 interface MultipleChoiceProps {
   question?: string;
@@ -25,12 +26,13 @@ export default function MultipleChoice({ question, subtitle, options, onAnswer, 
 
   const getIcon = (iconStr?: string) => {
     if (iconStr?.startsWith('3d-')) {
-      const assetPath = `/assets/${iconStr}.png`;
+      const assetPath = addCacheBuster(`/assets/${iconStr}.png`);
       return (
         <div className="relative w-full h-full flex items-center justify-center">
           <img
             src={assetPath}
             alt=""
+            loading="eager"
             className="w-20 h-20 object-contain z-10 rounded-lg"
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = 'none';

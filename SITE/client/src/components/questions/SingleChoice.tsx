@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useQuiz } from '@/contexts/QuizContext';
 import { useState } from 'react';
+import { addCacheBuster } from '@/lib/imagePreload';
 import {
   Dog, Bone, Shield, Moon, Sun, Zap, Megaphone, Cloud, HelpCircle,
   Siren, AlertTriangle, Clock, Heart, Timer, Users, Gift
@@ -30,14 +31,15 @@ export default function SingleChoice({ question, subtitle, options, onAnswer, ca
   };
 
   const getIcon = (iconStr?: string) => {
-    // 3D Asset Loading
+    // 3D Asset Loading with cache busting
     if (iconStr?.startsWith('3d-')) {
-      const assetPath = `/assets/${iconStr}.png`;
+      const assetPath = addCacheBuster(`/assets/${iconStr}.png`);
       return (
         <div className="relative w-full h-full flex items-center justify-center">
           <img
             src={assetPath}
             alt=""
+            loading="eager"
             className="w-20 h-20 object-contain z-10 rounded-lg"
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = 'none';
